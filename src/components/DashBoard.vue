@@ -2,9 +2,9 @@
     <HeaderCard />
 
     <!-- Bootstrap alert -->
-    <div class="alert shadow rounded-4 alert-dismissible fade show mt-5 mx-4 py-4" role="alert">
+    <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4" role="alert">
       Du har <strong> {{ itemCount }} </strong> varer, som snart udløber.
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <button type="button" class="btn-close" aria-label="Luk" @click="dismissAlert"></button>
     </div>
 
 </template>
@@ -22,10 +22,23 @@ export default {
   },
 
   data() {
+    // Her tjekker vi om brugeren allerede har lukket den
+    const dismissed = localStorage.getItem('dashAlertDismissed') === '1'
+    
     return {
-      itemCount: 3,
-    };
-  }
+      showAlert: !dismissed, // hvis dismissed er true → skjul
+      itemCount: 3
+    }
+  },
+
+  methods: {
+    dismissAlert() {
+      this.showAlert = false
+      localStorage.setItem('dashAlertDismissed', '1')
+    }
+  },
+
+
 
 }
 
