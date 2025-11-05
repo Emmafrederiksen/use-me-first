@@ -1,11 +1,11 @@
 <template> 
-  <h1> Welcome to OverView </h1>
+  <h1> Velkommen til forsiden </h1>
   
 </template>
 
 <script>
 export default {
-  name: 'OverView',
+  name: 'DashBoard',
   props: {
     
   }

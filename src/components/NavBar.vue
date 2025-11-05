@@ -3,7 +3,19 @@
         <nav>
             <ul>
                 <li>
-                    <router-link to="/overview">OverView</router-link>
+                    <router-link to="/">Forside</router-link>
+                </li>
+                <li>
+                    <router-link to="/opskrifter">Opskrifter</router-link>
+                </li>
+                <li>
+                    <router-link to="/indtast">Indtast varer</router-link>
+                </li>
+                <li>
+                    <router-link to="/mitkøleskab">Mit køleskab</router-link>
+                </li>
+                <li>
+                    <router-link to="/indkøbsliste">Indkøbsliste</router-link>
                 </li>
             </ul>
         </nav>
