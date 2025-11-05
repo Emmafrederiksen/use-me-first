@@ -6,6 +6,9 @@ import AddItem from './components/AddItem.vue'
 import AllRecipes from './components/AllRecipes.vue'
 import MyFridge from './components/MyFridge.vue'
 import ShoppingList from './components/ShoppingList.vue'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const router = createRouter({
     history: createWebHistory(),
