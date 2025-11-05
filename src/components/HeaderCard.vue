@@ -1,5 +1,5 @@
 <template>
-    <section class="header-card pt-5 pb-5">
+    <section class="header-card pt-5 pb-5 px-4">
         <h1 class="title"> {{ heading }}</h1>
         <p class="subtitle"> {{ subheading }}</p>
     </section>
@@ -27,7 +27,6 @@ export default {
 
     .header-card {
         background: linear-gradient(90deg,#A6C48A  0%,#7CA982 100%);
-        padding: 1.5rem;
         width: 100%;
         color: white;
         text-align: start;   
