@@ -13,13 +13,53 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        {path: '/', component: DashBoard},
-        {path: '/opskrifter', component: AllRecipes},
-        {path: '/indtast',component: AddItem},
-        {path: '/mitkoeleskab', component: MyFridge},
-        {path: '/indkoebsliste', component: ShoppingList}
+        {
+            path: '/', 
+            component: DashBoard,
+            meta: {
+                title: 'Godmorgen, Laura! 👋',
+                subtitle: 'Her er et overblik over dit køleskab i dag.',
+            }
+        },
+
+        {
+            path: '/opskrifter',
+            component: AllRecipes,
+            meta: {
+                title: 'Opskrifter',
+                subtitle: 'Find opskrifter baseret på dine varer.',
+            }
+        },
+
+        {
+            path: '/indtast',
+            component: AddItem,
+            meta: {
+                title: 'Tilføj varer',
+                subtitle: 'Udfyld oplysningerne nedenfor for at tilføje en ny madvare.',
+            }
+        },
+
+        {
+            path: '/mitkoeleskab', 
+            component: MyFridge,
+            meta: {
+                title: 'Mit køleskab',
+                subtitle: 'Her er en oversigt over alle dine nuværende madvarer.',
+            }
+        },
+
+        {
+            path: '/indkoebsliste',
+            component: ShoppingList,
+            meta: {
+                title: 'Indkøbsliste',
+                subtitle: 'Her er en liste over de varer, du skal købe.',
+            },
+        },
     ]
 });
+
 
 const app = createApp(App);
 

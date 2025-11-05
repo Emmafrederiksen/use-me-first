@@ -1,18 +1,18 @@
 <template>
-    <h1> Indkøbsliste </h1>
+    <HeaderCard />
 </template>
 
-
 <script>
-export default {
-    name: 'ShoppingList',
-    data() {
-        return {
-            //
-        }
-    },
-    props: {
 
-    }
+import HeaderCard from './HeaderCard.vue';
+
+export default {
+
+    name: 'ShoppingList',
+
+    components: {
+        HeaderCard,
+    },  
+    
 }
 </script>

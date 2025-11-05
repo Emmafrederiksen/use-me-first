@@ -1,12 +1,19 @@
 <template> 
-  <h1> Velkommen til forsiden </h1>  
+    <HeaderCard />
 </template>
 
 <script>
+
+import HeaderCard from './HeaderCard.vue';
+
 export default {
+
   name: 'DashBoard',
-  props: {
-    
-  }
+
+  components: {
+    HeaderCard,
+  },
+
 }
+
 </script>
