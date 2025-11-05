@@ -7,11 +7,13 @@
       <button type="button" class="btn-close" aria-label="Luk" @click="dismissAlert"></button>
     </div>
 
+    <AddNewCard />
 </template>
 
 <script>
 
 import HeaderCard from './HeaderCard.vue';
+import AddNewCard from './AddNewCard.vue';
 
 export default {
 
@@ -19,6 +21,7 @@ export default {
 
   components: {
     HeaderCard,
+    AddNewCard,
   },
 
   data() {
