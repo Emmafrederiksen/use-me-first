@@ -1,8 +1,8 @@
 <template>
-  <NavBar />
   <main>
     <router-view></router-view>
   </main>
+  <NavBar />
 </template>
 
 
@@ -13,18 +13,19 @@ import NavBar from './components/NavBar.vue';
 export default {
   name: 'App',
   components: {
-    NavBar
+    NavBar,
+    
   }
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'inter', sans-serif;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background: #FEFBF6;
 }
+
 </style>

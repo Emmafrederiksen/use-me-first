@@ -1,6 +1,5 @@
 <template> 
-  <h1> Velkommen til forsiden </h1>
-  
+  <h1> Velkommen til forsiden </h1>  
 </template>
 
 <script>

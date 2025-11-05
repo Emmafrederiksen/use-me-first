@@ -1,21 +1,21 @@
 <template>
-    <header>
+    <header class="fixed-bottom">
         <nav>
             <ul>
                 <li>
-                    <router-link to="/">Forside</router-link>
+                    <router-link to="/"> <i class="bi bi-house d-flex justify-content-center nav-icon py-1"></i> Forside</router-link>
                 </li>
                 <li>
-                    <router-link to="/opskrifter">Opskrifter</router-link>
+                    <router-link to="/opskrifter"> <i class="bi bi-fork-knife d-flex justify-content-center nav-icon py-1"></i> Opskrifter</router-link>
                 </li>
                 <li>
-                    <router-link to="/indtast">Indtast varer</router-link>
+                    <router-link to="/indtast"> <i class="bi bi-plus-circle d-flex justify-content-center nav-icon py-1"></i> Indtast varer</router-link>
                 </li>
                 <li>
-                    <router-link to="/mitkøleskab">Mit køleskab</router-link>
+                    <router-link to="/mitkøleskab"> <i class="bi bi-file-post d-flex justify-content-center nav-icon py-1"></i> Mit køleskab</router-link>
                 </li>
                 <li>
-                    <router-link to="/indkøbsliste">Indkøbsliste</router-link>
+                    <router-link to="/indkøbsliste"><i class="bi bi-pencil-square d-flex justify-content-center nav-icon py-1"></i> Indkøbsliste</router-link>
                 </li>
             </ul>
         </nav>
@@ -26,9 +26,17 @@
 
 <style scoped>
     header {
-        background-color: #42b983;
+        background: linear-gradient(90deg,#A6C48A  0%,#7CA982 100%);
         padding: 1rem;
         color: white;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        box-shadow: 0.5rem -0.5rem 1rem rgba(0, 0, 0, 0.1);
+        font-size: 12px;
+        font-family: 'Inter', sans-serif;
     }
 
     nav ul {
@@ -42,10 +50,18 @@
     nav a {
         color: white;
         text-decoration: none;
+        font-weight:200;
+    }
+    nav a .nav-icon {
+        font-size: 1.5rem;
+        transition: transform 0.3s;
     }
 
     nav a.router-link-active {
-        font-weight: bold;
-        text-decoration: underline;
+        font-weight:800;
+        color: #08300F;
+    }
+    nav a.router-link-active .nav-icon {
+        transform: scale(1.3);
     }
 </style>
