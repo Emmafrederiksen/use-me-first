@@ -16,8 +16,8 @@ const router = createRouter({
         {path: '/', component: DashBoard},
         {path: '/opskrifter', component: AllRecipes},
         {path: '/indtast',component: AddItem},
-        {path: '/mitkøleskab', component: MyFridge},
-        {path: '/indkøbsliste', component: ShoppingList}
+        {path: '/mitkoeleskab', component: MyFridge},
+        {path: '/indkoebsliste', component: ShoppingList}
     ]
 });
 
