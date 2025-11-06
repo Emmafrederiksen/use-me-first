@@ -10,7 +10,7 @@
         </router-link>
 
 
-        <img :src="bagImg" alt="Indkøbspose" class="add-img" />
+        <img v-bind:src="bagImg" alt="Indkøbspose" class="add-img" />
 
 
   </div>
@@ -19,14 +19,16 @@
 
 <script>
 
-import bagImg from '@/assets/groceries.png';
+import bagImg from '@/assets/groceriebag.png';
 
 export default {
 
   name: 'AddNewCard',
 
   data() {
-    return { bagImg }
+    return { 
+      bagImg,
+      };
   },
   
 }
