@@ -4,7 +4,7 @@
     <form @submit.prevent="submitForm" class="mx-4">
         <div class="mb-4 mt-5">
             <label for="name" class="form-label bold-label">Varenavn *</label>
-            <input type="text" class="form-control" id="name" placeholder="Indtast navn..." v-model="Name">
+            <input type="text" class="form-control" id="name" placeholder="Indtast navn..." v-model="Name" required>
         </div>
 
         <div class="mb-4">
@@ -18,7 +18,7 @@
 
         <div class="mb-4">
             <label for="date" class="form-label bold-label">Udløbsdato *</label>
-            <input type="date" class="form-control" id="date" v-model="Date">
+            <input type="date" class="form-control" id="date" v-model="Date" required>
         </div>
 
         <div class="d-flex align-items-center gap-3">
@@ -70,31 +70,36 @@ export default {
     },
     methods: {
         submitForm() {
-
-            // Validate required fields
-            if(!this.Name || !this.Date) {
-                alert('Udfyld venligst alle påkrævede felter markeret med *');
-                return;
-            }
-
             //Log data for testing - replace with actual save logic
             console.log('Name:' + this.Name);
-            this.Name = '';
-
-            console.log('Location:' + this.Location);
-            this.Location = '1';
-
-            console.log('Date:' + this.Date);
-            this.Date = '';
-
-            console.log('Amount:' + this.Amount);
-            this.Amount = null;
-
-            console.log('Unit:' + this.Unit);
-            this.Unit = '5';
             
-            //acyual save logic here
+            console.log('Location:' + this.Location);
+            
+            console.log('Date:' + this.Date);
+            
+            console.log('Amount:' + this.Amount);
+            
+            console.log('Unit:' + this.Unit);
+            
 
+            //actual save logic here
+            const newItem = {
+                name: this.Name,
+                location: this.Location,
+                date: this.Date,
+                amount: this.Amount,
+                unit: this.Unit,
+            };
+
+            // Emit event to parent component
+            this.$emit('item-added', newItem);
+
+            // Reset form fields
+            this.Name = '';
+            this.Location = '1';
+            this.Date = '';
+            this.Amount = null;
+            this.Unit = '5';
 
             // Toast message when succes
             toast.success('Din vare er blevet gemt!', {
