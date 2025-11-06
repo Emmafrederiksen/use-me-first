@@ -1,5 +1,50 @@
 <template>
     <HeaderCard />
+
+    <form class="mx-4">
+        <div class="mb-4 mt-5">
+            <label for="name" class="form-label bold-label">Varenavn *</label>
+            <input type="text" class="form-control" id="name" placeholder="Indtast navn..." required>
+        </div>
+
+        <div class="mb-4">
+            <label for="location" class="form-label bold-label">Placering</label>
+            <select id="location" class="form-select" aria-label="Vælg placering">
+                <option selected>Vælg placering</option>
+                <option value="1">Køleskab</option>
+                <option value="2">Fryser</option>
+                <option value="3">Depot</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="date" class="form-label bold-label">Udløbsdato *</label>
+            <input type="date" class="form-control" id="date" required>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+            <div class="mb-4" style="width: 30%;">
+                <label for="amount" class="form-label bold-label">Mængde</label>
+                <input type="number" class="form-control" id="amount" placeholder="1">
+            </div>
+
+            <div class="mb-4" style="width: 70%;">
+                <select id="value" class="form-select" aria-label="Vælg enhed" style="margin-top: 32px;">
+                    <option selected>Enhed</option>
+                    <option value="1">Gram</option>
+                    <option value="2">Bakker</option>
+                    <option value="3">Stk.</option>
+                    <option value="4">Kilo</option>
+                    <option value="5">Liter</option>
+                </select>
+            </div>
+        </div>
+
+        <router-link to="/indtast" class="add-btn mt-3">
+            <i class="bi bi-check2-circle me-2"></i>
+            Gem vare
+        </router-link>
+    </form>
 </template>
 
 <script>
@@ -17,3 +62,30 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.add-btn {
+  background: #F27405;
+  color: #ffffff;
+  font-weight: 500;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  box-shadow: 0 10px 14px rgba(0,0,0,0.14);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-btn i {
+  font-size: 1.2rem; 
+  line-height: 1;
+}
+
+.bold-label {
+    font-weight: 600;
+}
+
+</style>
