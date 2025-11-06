@@ -30,7 +30,7 @@
             <div class="mb-4" style="width: 70%;">
                 <select id="value" class="form-select" aria-label="Vælg enhed" style="margin-top: 32px;" v-model="Unit">
                     <option value="1">Gram</option>
-                    <option value="2">Bakker</option>
+                    <option value="2">Bakke(r)</option>
                     <option value="3">Stk.</option>
                     <option value="4">Kilo</option>
                     <option value="5">Liter</option>
