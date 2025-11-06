@@ -10,7 +10,6 @@
         <div class="mb-4">
             <label for="location" class="form-label bold-label">Placering</label>
             <select id="location" class="form-select" aria-label="Vælg placering" v-model="Location">
-                <option selected>Vælg placering</option>
                 <option value="1">Køleskab</option>
                 <option value="2">Fryser</option>
                 <option value="3">Depot</option>
@@ -30,7 +29,6 @@
 
             <div class="mb-4" style="width: 70%;">
                 <select id="value" class="form-select" aria-label="Vælg enhed" style="margin-top: 32px;" v-model="Unit">
-                    <option selected>Enhed</option>
                     <option value="1">Gram</option>
                     <option value="2">Bakker</option>
                     <option value="3">Stk.</option>
@@ -40,7 +38,7 @@
             </div>
         </div>
 
-        <button to="/indtast" class="add-btn mt-3">
+        <button to="/indtast" class="add-btn mt-3" type="submit">
             <i class="bi bi-check2-circle me-2"></i>
             Gem vare
         </button>
@@ -50,6 +48,8 @@
 <script>
 
 import HeaderCard from './HeaderCard.vue';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
 
@@ -58,10 +58,10 @@ export default {
     data() {
         return {
             Name: '',
-            Location: '',
+            Location: '1',
             Date: '',
             Amount: null,
-            Unit: '',
+            Unit: '5',
         }
     },
     
@@ -71,16 +71,18 @@ export default {
     methods: {
         submitForm() {
 
+            // Validate required fields
             if(!this.Name || !this.Date) {
                 alert('Udfyld venligst alle påkrævede felter markeret med *');
                 return;
             }
 
+            //Log data for testing - replace with actual save logic
             console.log('Name:' + this.Name);
             this.Name = '';
 
             console.log('Location:' + this.Location);
-            this.Location = '';
+            this.Location = '1';
 
             console.log('Date:' + this.Date);
             this.Date = '';
@@ -89,10 +91,22 @@ export default {
             this.Amount = null;
 
             console.log('Unit:' + this.Unit);
-            this.Unit = '';
-        }
+            this.Unit = '5';
+            
+            //acyual save logic here
+
+
+            // Toast message when succes
+            toast.success('Din vare er blevet gemt!', {
+                autoClose: 4000,
+                position: toast.POSITION.BOTTOM_CENTER
+            });
+
+        },
+        
     }
 
+   
 
 }
 </script>
@@ -121,5 +135,6 @@ export default {
 .bold-label {
     font-weight: 600;
 }
+
 
 </style>
