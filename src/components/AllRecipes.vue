@@ -1,18 +1,19 @@
 <template>
-    <h1> Opskrifter </h1>
+    <HeaderCard />
 </template>
 
-
 <script>
-export default {
-    name: 'AllRecipes',
-    data() {
-        return {
-            //
-        }
-    },
-    props: {
 
-    }
+import HeaderCard from './HeaderCard.vue';
+
+export default {
+
+    name: 'AllRecipes',
+
+    components: {
+        HeaderCard
+    },
+   
+
 }
 </script>

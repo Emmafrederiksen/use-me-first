@@ -1,18 +1,19 @@
 <template>
-    <h1> Indtast varer </h1>
+    <HeaderCard />
 </template>
 
-
 <script>
-export default {
-    name: 'AddItem',
-    data() {
-        return {
-            //
-        }
-    },
-    props: {
 
-    }
+import HeaderCard from './HeaderCard.vue';
+
+export default {
+
+    name: 'AddItem',
+    
+    components: {
+        HeaderCard,
+    },
+
+
 }
 </script>

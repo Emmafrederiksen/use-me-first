@@ -1,12 +1,57 @@
 <template> 
-  <h1> Velkommen til forsiden </h1>  
+    <HeaderCard />
+
+    <!-- Bootstrap alert -->
+    <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4" role="alert">
+      Du har <strong> {{ itemCount }} </strong> varer, som snart udløber.
+      <button type="button" class="btn-close" aria-label="Luk" @click="dismissAlert"></button>
+    </div>
+
+    <AddNewCard />
 </template>
 
 <script>
+
+import HeaderCard from './HeaderCard.vue';
+import AddNewCard from './AddNewCard.vue';
+
 export default {
+
   name: 'DashBoard',
-  props: {
+
+  components: {
+    HeaderCard,
+    AddNewCard,
+  },
+
+  data() {
+    // Her tjekker vi om brugeren allerede har lukket den
+    const dismissed = localStorage.getItem('dashAlertDismissed') === '1'
     
-  }
+    return {
+      showAlert: !dismissed, // hvis dismissed er true → skjul
+      itemCount: 3
+    }
+  },
+
+  methods: {
+    dismissAlert() {
+      this.showAlert = false
+      localStorage.setItem('dashAlertDismissed', '1')
+    }
+  },
+
+
+
 }
+
 </script>
+
+<style scoped>
+
+.alert {
+  background: #ffffff;
+  color: #2c2c2c;
+}
+
+</style>

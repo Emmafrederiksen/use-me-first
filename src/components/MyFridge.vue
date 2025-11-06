@@ -1,18 +1,24 @@
 <template>
-    <h1> Mit køleskab </h1>
+    <HeaderCard />
 </template>
 
 
 <script>
+
+import HeaderCard from './HeaderCard.vue';
+
 export default {
     name: 'MyFridge',
-    data() {
-        return {
-            //
-        }
+    components: {
+        HeaderCard,
     },
-    props: {
-
+    computed: {
+        heading() {
+            return this.$route?.meta?.title || '';
+        },
+        subheading() {
+            return this.$route?.meta?.subtitle || '';
+        }
     }
 }
 </script>
