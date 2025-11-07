@@ -9,7 +9,6 @@
       <div class="modal-content">
         <div class="modal-header justify-content-center position-relative">
           <h5 class="modal-title">{{ product.name }}</h5>
-          <!-- dette skal være produktnavnet !-->
           <button
             type="button"
             class="close-icon position-absolute end-0 me-3"
@@ -22,33 +21,41 @@
         <div class="modal-body">
           <p>
             <i class="bi bi-circle-fill red-circle"></i>
-            Udløber om <span class="date">2 dage</span>
+            Udløber om <span class="date">{{ date }}</span>
           </p>
-          <!-- dette skal være dynamisk baseret på udløbsdato !-->
           <p class="info-row">
             <span class="label">Udløbsdato</span
-            ><span class="value">{{product.date}}</span>
+            ><span class="value">{{ product.date }}</span>
           </p>
           <p class="info-row">
-            <span class="label">Mængde</span><span class="value">{{product.quantity}}</span>
+            <span class="label">Mængde</span
+            ><span class="value">{{ product.quantity }}</span>
           </p>
           <p class="info-row">
             <span class="label">Placering</span
-            ><span class="value">{{product.location}}</span>
+            ><span class="value">{{ product.location }}</span>
           </p>
         </div>
         <button type="button" class="btn btn-recipe mt-3 mb-2">
-            <i class="bi bi-fork-knife"></i>
-            Se opskrifer med mælk
+          <i class="bi bi-fork-knife"></i>
+          Se opskrifer med mælk
         </button>
         <div class="modal-footer justify-content-center">
-          <button type="button" class="btn btn-delete">
+          <button
+            type="button"
+            class="btn btn-delete"
+            v-on:click="openConfirmModal('delete')"
+          >
             <i class="bi bi-trash3"></i>
           </button>
           <button type="button" class="btn btn-edit">
             <i class="bi bi-pencil"></i>
           </button>
-          <button type="button" class="btn btn-primary">
+          <button
+            type="button"
+            class="btn btn-primary"
+            v-on:click="openConfirmModal('markUsed')"
+          >
             <i class="bi bi-check2-circle"></i>
             Marker som brugt
           </button>
@@ -56,19 +63,70 @@
       </div>
     </div>
   </div>
+  <ConfirmModal
+    v-bind:visible="showConfirmModal"
+    v-bind:actionType="currentAction"
+    v-bind:productName="product.name"
+    v-bind:description="description"
+    v-on:close="showConfirmModal = false"
+    v-on:confirm="handleConfirm"
+  />
 </template>
 
 <script>
+import ConfirmModal from "./ConfirmModal.vue";
 export default {
   name: "ProductModal",
+  components: {
+    ConfirmModal,
+  },
   props: {
     product: {
-        type: Object,
-        required: true,
+      type: Object,
+      required: true,
     },
     visible: {
       type: Boolean,
       default: false,
+    },
+  },
+  data() {
+    return {
+      showConfirmModal: false,
+      description: "",
+      currentAction: "",
+    };
+  },
+  methods: {
+    openConfirmModal(action) {
+      this.currentAction = action;
+      if (action === "delete") {
+        this.description = `Er du sikker på, at du vil slette ${this.product.name}? Denne handling kan ikke fortrydes.`;
+      } else if (action === "markUsed") {
+        this.description = `Er du sikker på, at du vil markere ${this.product.name} som brugt?`;
+      }
+      this.showConfirmModal = true;
+    },
+    handleConfirm(action) {
+      this.showConfirmModal = false;
+      this.$emit("close");
+      // Logik til at håndtere bekræftelsen
+      if (action === "delete") {
+        console.log(`Produktet ${this.product.name} er blevet slettet.`);
+      } else if (action === "markUsed") {
+        console.log(
+          `Produktet ${this.product.name} er blevet markeret som brugt.`
+        );
+      }
+    },
+  },
+  computed: {
+    date() {
+      const today = new Date();
+      const expiryDate = new Date(this.product.date);
+      const timeDiff = expiryDate - today;
+      const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+      return daysDiff > 0 ? `${daysDiff} dage` : "Udløbet";
     },
   },
 };
@@ -84,7 +142,8 @@ export default {
 .modal-body {
   text-align: center;
 }
-.date, .label {
+.date,
+.label {
   font-weight: bold;
 }
 .red-circle {
@@ -183,15 +242,15 @@ export default {
 
 .info-row {
   display: flex;
-  justify-content: space-between; /* Label til venstre, value til højre */
-  margin: 0.3rem 0; /* lidt mellemrum mellem rækker */
+  justify-content: space-between;
+  margin: 0.3rem 0;
 }
 
 .label {
-  font-weight: bold; /* gør label tydeligere */
+  font-weight: bold;
 }
 
 .value {
-  text-align: right; /* sikre, at value er højrestillet */
+  text-align: right;
 }
 </style>
