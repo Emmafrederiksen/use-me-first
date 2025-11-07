@@ -118,6 +118,12 @@
     overflow: hidden;
     margin-bottom: 2rem;
   }
+  .recipe-header-card .card {
+    border: none;       /* fjerner Bootstrap-card border */
+    border-radius: 0;   /* selve card’et behøver ikke radius, parent styrer det */
+}
+
+  
   
   .recipe-header-card .recipe-card {
     position: relative;
@@ -128,6 +134,7 @@
     height: 230px;
     object-fit: cover;
     filter: brightness(70%);
+    border-radius: inherit; /* arver parentens border-radius*/
   }
   
   .recipe-header-card .card-img-overlay {
