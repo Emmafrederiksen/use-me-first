@@ -5,16 +5,17 @@
   <div class="row g-3">
 
     <div class="col-6">
-      <div class="card recipe-card mb-2">
-        <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
-        <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
-          <h5 class="card-title text-white">Rugbrødschips</h5>
-        </div>
-      </div>
+        <router-link to="/opskrifter/rugbroedschips" class="card recipe-card mb-2 text-decoration-none">
+            <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
+            <div class="card-img-overlay d-flex flex-column justify-content-end">
+                <div class="icon-top d-flex justify-content-end">
+                    <i class="bi bi-arrow-right-circle fs-1"></i>
+                </div>
+                <h5 class="card-title text-white">Rugbrødschips</h5>
+            </div>
+        </router-link>
     </div>
+
 
     <div class="col-6">
       <div class="card recipe-card mb-2">
