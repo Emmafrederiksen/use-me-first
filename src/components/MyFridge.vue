@@ -12,6 +12,10 @@
     </div>
 
     <!-- liste -->
+
+    <router-link to="{ name: 'ItemOverview', params: { name: item.name } }"
+    class="text-decoration-none">
+
     <div class="mt-5 mx-4">
       
       <div v-for="item in filtered" :key="item.id" class="card item-card mb-3 shadow-sm">
@@ -21,13 +25,15 @@
             <small class="d-block">Udløber om <strong>{{ daysLabel(item.expiresAt) }}</strong></small>
             <small>Antal: {{ item.qty }}</small>
           </div>
-          <span class="dot" :class="badgeClass(dl(item.expiresAt))"></span>
+          <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))"></span>
         </div>
       </div>
 
       <p v-if="filtered.length === 0" class="text-muted mt-4">Ingen varer matcher “{{ query }}”.</p>
 
     </div>
+
+    </router-link>  
 
 </template>
 
@@ -48,11 +54,10 @@ export default {
             query: '',
 
             items: [
-                { }
-            ]
-
-
-
+                { id: 1, name: 'Mælk', expiresAt: '2025-11-10', qty: 3 },
+                { id: 2, name: 'Rugbrød', expiresAt: '2025-11-12', qty: 1 },
+                { id: 3, name: 'Kyllingebryst', expiresAt: '2025-11-08', qty: 2 },
+            ],
         }
     },
 
@@ -65,7 +70,43 @@ export default {
             return this.$route?.meta?.subtitle || '';
         },
 
+
+        // Sortér efter dato og filtrér på søgning (uden at ændre original-listen)
+        filtered() {
+            const q = (this.query || '').toLowerCase();
+            return this.items
+            .slice() // Slice = laver en kopi af arrayet, så originalen ikke ændres
+            .sort((a, b) => new Date(a.expiresAt) - new Date(b.expiresAt)) // Sort = sorterer varerne, så de med tidligst udløbsdato kommer først
+            .filter(item => item.name.toLowerCase().includes(q)); // Filter = filtrerer varerne baseret på søgningen
+        },
+
     },
+
+
+    methods: {
+
+        // Beregn antal dage til udløbsdato
+        daysLeft(dateString) { // dateString = den dato, varen udløber
+            const today = new Date(); // today = den dato, det er i dag
+            const targetDate = new Date(dateString); // targetDate = den dato, varen udløber
+            const diffTime = targetDate - today; // diffTime = forskellen i tid mellem i dag og udløbsdatoen (i millisekunder)
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Konverterer millisekunder til dage og runder op
+        }, 
+
+        daysLabel(dateString) { // Returnerer en tekst baseret på antal dage til udløbsdato
+            const days = this.daysLeft(dateString);
+            if (days < 0) return `${Math.abs(days)} dage siden`; // Math.abs = tager det positive tal af et negativt tal
+            if (days === 0) return 'i dag';
+            if (days === 1) return '1 dag';
+            return `${days} dage`; 
+        },
+
+        badgeClass(days) { // Vælger farve baseret på antal dage til udløbsdato
+            if (days < 2) return 'danger'; 
+            if (days <= 4) return 'warning';
+            return 'success';
+        },
+    }
 
 }
 </script>
