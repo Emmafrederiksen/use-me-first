@@ -13,27 +13,27 @@
 
     <!-- liste -->
 
-    <router-link to="{ name: 'ItemOverview', params: { name: item.name } }"
-    class="text-decoration-none">
+    
 
     <div class="mt-5 mx-4">
-      
-      <div v-for="item in filtered" :key="item.id" class="card item-card mb-3 shadow-sm">
-        <div class="card-body d-flex justify-content-between align-items-start">
-          <div class="text-white">
-            <div class="fw-bold">{{ item.name }}</div>
-            <small class="d-block">Udløber om <strong>{{ daysLabel(item.expiresAt) }}</strong></small>
-            <small>Antal: {{ item.qty }}</small>
-          </div>
-          <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))"></span>
-        </div>
-      </div>
 
-      <p v-if="filtered.length === 0" class="text-muted mt-4">Ingen varer matcher “{{ query }}”.</p>
+      <div v-for="group in groupedItems" :key="group.name" class="card item-card mb-3 shadow-sm">
+        <div class="card-body d-flex justify-content-between align-items-start">
+            <div class="text-white">
+            <div class="fw-bold">{{ group.name }}</div>
+            <small class="d-block">Du har <strong>{{ group.count }}</strong> stk.</small>
+            <small class="d-block">Udløber om: <strong>{{ daysLabel(group.earliest) }}</strong></small>
+            </div>
+            <span class="dot" :class="badgeClass(daysLeft(group.earliest))"></span>
+        </div>
+        </div>
+
+
+      <p v-if="groupedItems.length === 0" class="text-muted mt-4">Ingen varer matcher “{{ query }}”.</p>
 
     </div>
 
-    </router-link>  
+    
 
 </template>
 
@@ -54,9 +54,11 @@ export default {
             query: '',
 
             items: [
-                { id: 1, name: 'Mælk', expiresAt: '2025-11-10', qty: 3 },
-                { id: 2, name: 'Rugbrød', expiresAt: '2025-11-12', qty: 1 },
-                { id: 3, name: 'Kyllingebryst', expiresAt: '2025-11-08', qty: 2 },
+                { id: 1, name: 'Mælk',          expiresAt: '2025-11-11', addedAt: '2025-11-01' },
+                { id: 2, name: 'Mælk',          expiresAt: '2025-11-17', addedAt: '2025-11-03' },
+                { id: 3, name: 'Mælk',          expiresAt: '2025-11-19', addedAt: '2025-11-05' },
+                { id: 4, name: 'Rugbrød',       expiresAt: '2025-11-11', addedAt: '2025-11-07' },
+                { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-013', addedAt: '2025-11-06' },
             ],
         }
     },
@@ -71,14 +73,53 @@ export default {
         },
 
 
-        // Sortér efter dato og filtrér på søgning (uden at ændre original-listen)
-        filtered() {
+        groupedItems() {
             const q = (this.query || '').toLowerCase();
-            return this.items
-            .slice() // Slice = laver en kopi af arrayet, så originalen ikke ændres
-            .sort((a, b) => new Date(a.expiresAt) - new Date(b.expiresAt)) // Sort = sorterer varerne, så de med tidligst udløbsdato kommer først
-            .filter(item => item.name.toLowerCase().includes(q)); // Filter = filtrerer varerne baseret på søgningen
-        },
+
+            // 1️⃣ Filtrér først listen ud fra søgning
+            const filtered = this.items.filter(x =>
+                (x.name || '').toLowerCase().includes(q)
+            );
+
+            // 2️⃣ Lav et "Map" hvor vi samler varer med samme navn
+            const map = new Map();
+
+            for (const item of filtered) {
+                const key = (item.name || '').toLowerCase(); // navnet bruges som nøgle, fx “mælk”
+
+                // Hvis der ikke findes en gruppe for navnet, opret én
+                if (!map.has(key)) {
+                map.set(key, {
+                    name: item.name,   // navnet (fx Mælk)
+                    entries: [],       // alle de mælk vi finder
+                });
+                }
+
+                // tilføj varen til gruppen
+                map.get(key).entries.push(item);
+            }
+
+            // 3️⃣ Lav et array ud af grupperne
+            const groups = Array.from(map.values()).map(group => {
+                // find den tidligste udløbsdato i gruppen
+                const earliest = group.entries
+                .slice()
+                .sort((a, b) => new Date(a.expiresAt) - new Date(b.expiresAt))[0]?.expiresAt;
+
+                return {
+                name: group.name,
+                count: group.entries.length,  // hvor mange af denne type
+                earliest: earliest,           // tidligste udløbsdato
+                entries: group.entries,       // selve listen (skal bruges senere)
+                };
+            });
+
+            // 4️⃣ Sortér grupperne så dem der udløber først kommer først
+            return groups.sort(
+                (a, b) => new Date(a.earliest) - new Date(b.earliest)
+            );
+            },
+
 
     },
 
@@ -102,11 +143,12 @@ export default {
         },
 
         badgeClass(days) { // Vælger farve baseret på antal dage til udløbsdato
-            if (days < 2) return 'danger'; 
+            if (days < 3) return 'danger'; 
             if (days <= 4) return 'warning';
             return 'success';
         },
-    }
+
+    },
 
 }
 </script>
@@ -147,6 +189,6 @@ export default {
     
 .dot.success { 
     background:#1FBF62; 
-    }
+}
 
 </style>
