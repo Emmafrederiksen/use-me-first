@@ -20,7 +20,8 @@
 
     <div class="mx-4 mt-4">
         <h3>Beskrivelse</h3>
-        <p>Nem opskrift på sprøde rugbrødschips. Brug rester af rugbrød til ristet rugbrød. De er gode til tapas, til dip og snack.</p>
+        <p>Nem opskrift på sprøde rugbrødschips. Brug rester af rugbrød til ristet rugbrød.
+           De er gode til tapas, til dip og snack.</p>
     </div>
 
     <div class="mx-4 mt-5">
@@ -43,48 +44,11 @@
     <div class="mx-4 mt-5">
         <h3>Fremgangsmåde</h3>
         <div>
-            <div class="col-12">
+            <div class="col-12" v-for="(step, index) in steps" :key="index">
                 <div class="card step-card">
                     <div class="card-body d-flex align-items-start gap-4">
-                        <p class="step-number">01</p>
-                        <p class="step-text">Tænd ovnen på 155 grader varmluft.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="card step-card">
-                    <div class="card-body d-flex align-items-start gap-3">
-                        <p class="step-number">02</p>
-                        <p class="step-text">Skær rugbrød ud i tynde skiver og del herefter i trekanter.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="card step-card">
-                    <div class="card-body d-flex align-items-start gap-3">
-                        <p class="step-number">03</p>
-                        <p class="step-text">Vend de tynde trekanter i olie og salt. Fordel ud på en bageplade med bagepapir.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="card step-card">
-                    <div class="card-body d-flex align-items-start gap-3">
-                        <p class="step-number">04</p>
-                        <p class="step-text">Bag dem først i 20 minutter. Tag dem herefter ud og vend godt rundt.
-                            Giv dem yderligere 20 minutter.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="card step-card">
-                    <div class="card-body d-flex align-items-start gap-3">
-                        <p class="step-number">05</p>
-                        <p class="step-text">Lad dem køle helt af og opbevar så i en lufttæt beholder.</p>
+                        <p class="step-number"> {{ step.number }}</p>
+                        <p class="step-text"> {{ step.text }}</p>
                     </div>
                 </div>
             </div>
@@ -109,7 +73,14 @@
             { name: 'Rasp- eller solsikkeolie', baseAmount: 3, unit: 'spsk.' },
             { name: 'Salt', baseAmount: 2, unit: 'tsk.' },
         ],
-        }
+        steps: [
+            {number: '01', text: 'Tænd ovnen på 155 grader varmluft.'},
+            {number: '02', text: 'Skær rugbrød ud i tynde skiver og del herefter i trekanter.'},
+            {number: '03', text: 'Vend de tynde trekanter i olie og salt. Fordel ud på en bageplade med bagepapir.'},
+            {number: '04', text: 'Bag dem først i 20 minutter. Tag dem herefter ud og vend godt rundt. Giv dem yderligere 20 minutter.'},
+            {number: '05', text: 'Lad dem køle helt af og opbevar så i en lufttæt beholder.'},
+        ]
+      }
     },
     methods: {
         increasePortion() {
@@ -227,6 +198,5 @@
     font-weight: 400;
     margin-top: 0.5rem;
 }
-
   </style>
   
