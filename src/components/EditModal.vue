@@ -201,8 +201,8 @@ export default {
           }
 
           // Date (konverter til YYYY-MM-DD format, som input[type=date] kræver)
-          if (newProduct.date) {
-            const dateObj = new Date(newProduct.date);
+          if (newProduct.expiresAt) {
+            const dateObj = new Date(newProduct.expiresAt);
             // Korrigér for tidszoneforskydning, ellers viser den forkert dato
             const localDate = new Date(
               dateObj.getTime() - dateObj.getTimezoneOffset() * 60000

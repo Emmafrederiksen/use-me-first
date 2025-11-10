@@ -22,7 +22,7 @@
           <p>
             <span
               class="dot"
-              v-bind:class="badgeClass(daysLeft(product.date))"
+              v-bind:class="badgeClass(daysLeft(product.expiresAt))"
             ></span>
             Udløber om <span class="date">{{ date }}</span>
           </p>
@@ -170,7 +170,7 @@ export default {
     date() {
       // Antal dage til udløbsdato
       const today = new Date();
-      const expiryDate = new Date(this.product.date);
+      const expiryDate = new Date(this.product.expiresAt);
       const timeDiff = expiryDate - today;
       const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
       return daysDiff > 0 ? `${daysDiff} dage` : "Udløbet";
@@ -180,7 +180,7 @@ export default {
       return `${this.product.amount} ${this.product.unit}`;
     },
     dateDisplay() {
-      const dateObj = new Date(this.product.date); // Opretter et Date-objekt fra produktets dato
+      const dateObj = new Date(this.product.expiresAt); // Opretter et Date-objekt fra produktets dato
 
       const day = String(dateObj.getDate()).padStart(2, "0"); // Henter dagen og sørger for to cifre
       const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Henter måneden (0-baseret, så +1) og sørger for to cifre
