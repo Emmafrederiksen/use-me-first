@@ -24,11 +24,16 @@
               class="dot"
               v-bind:class="badgeClass(daysLeft(product.expiresAt))"
             ></span>
-            Udløber om <span class="date">{{ date }}</span>
+            <span v-if="daysLeft(product.expiresAt) < 0">
+              Udløbet for <strong>{{ daysLabel() }} </strong>
+            </span>
+            <span v-else>
+              Udløber om <strong>{{ daysLabel() }} </strong>
+            </span>
           </p>
           <p class="info-row">
-            <span class="label">Udløbsdato</span
-            ><span class="value">{{ dateDisplay }}</span>
+            <span class="label">Udløbsdato</span>
+            <span class="value">{{ dateDisplay }}</span>
           </p>
           <p class="info-row">
             <span class="label">Mængde</span
@@ -158,6 +163,15 @@ export default {
       return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Konverterer millisekunder til dage og runder op
     },
 
+    daysLabel() {
+      // Returnerer en tekst baseret på antal dage til udløbsdato
+      const days = this.daysLeft(this.product.expiresAt);
+      if (days < 0) return ` ${Math.abs(days)} dage siden`; // Math.abs = tager det positive tal af et negativt tal
+      if (days === 0) return "i dag";
+      if (days === 1) return "1 dag";
+      return `${days} dage`;
+    },
+
     badgeClass(days) {
       // Vælger farve baseret på antal dage til udløbsdato
       if (days < 3) return "danger";
@@ -173,7 +187,10 @@ export default {
       const expiryDate = new Date(this.product.expiresAt);
       const timeDiff = expiryDate - today;
       const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-      return daysDiff > 0 ? `${daysDiff} dage` : "Udløbet";
+      if (daysDiff < 0) return `${Math.abs(daysDiff)} dage siden`;
+      if (daysDiff === 0) return "i dag";
+      if (daysDiff === 1) return "1 dag";
+      return `${daysDiff} dage`;
     },
     amountUnit() {
       // Formateret mængde og enhed
