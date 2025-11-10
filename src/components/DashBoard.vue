@@ -18,9 +18,9 @@
       <div class="card recipe-card mb-3">
         <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
+          <router-link to="/rugbroedschips" class="icon-top d-flex justify-content-end text-decoration-none">
             <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
+          </router-link>
           <h3 class="card-title text-white">Rugbrødschips</h3>
         </div>
       </div>
@@ -127,6 +127,7 @@ export default {
   position: absolute;
   top: 10px;
   right: 15px;
+  color: white;
 }
 
 h2 {
