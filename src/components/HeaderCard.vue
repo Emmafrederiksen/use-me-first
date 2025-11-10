@@ -1,15 +1,15 @@
 <template>
   <section class="header-card pt-5 pb-5 px-4">
-    <div class="d-flex align-items-start">
+    <div class="d-flex align-items-center">
       <!-- Tilbagepil ud for overskriften -->
       <button
         v-if="showBack"
-        class="btn  rounded-circle border me-3 mt-1"
         @click="$router.back()"
-        style="width:40px; height:40px;"
+        class="back-btn me-3"
       >
-        <i class="bi bi-arrow-left"></i>
+        <i class="bi bi-arrow-left-circle fs-1 text-white"></i>
       </button>
+
 
       <div>
         <h1 class="title mb-1">{{ heading }}</h1>
@@ -99,15 +99,12 @@ export default {
         font-weight:300; 
     }
 
-  .btn {
-  background: white;
-  color: #4b4b4b;
-  border: none;
-  transition: background 0.2s ease;
-}
 
-.btn:hover {
-  background: #f1f1f1;
+  .back-btn {
+  background: transparent;
+  border: none; 
+  transition: all 0.2s ease;
 }
+ 
 
 </style>
