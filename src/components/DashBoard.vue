@@ -12,7 +12,7 @@
     <div class="mx-4 mt-5">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <h5 class="recipes-text">Opskriftsforlag</h5>
-        <a href="#" class="see-all-text">Se alle</a>
+        <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
       </div>
 
       <div class="card recipe-card mb-3">

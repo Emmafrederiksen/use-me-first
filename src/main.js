@@ -6,6 +6,7 @@ import AddItem from './components/AddItem.vue'
 import AllRecipes from './components/AllRecipes.vue'
 import MyFridge from './components/MyFridge.vue'
 import ShoppingList from './components/ShoppingList.vue'
+import RecipeDetail from './components/RecipeDetail.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -57,6 +58,13 @@ const router = createRouter({
                 subtitle: 'Her er en liste over de varer, du skal købe.',
             },
         },
+
+        {
+            path: '/opskrifter/rugbroedschips',
+            name: 'Rugbroedschips',
+            component: RecipeDetail
+          }
+          
     ]
 });
 

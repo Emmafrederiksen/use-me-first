@@ -6,7 +6,7 @@
                     <router-link to="/"> <i class="bi bi-house d-flex justify-content-center nav-icon py-1"></i> Forside</router-link>
                 </li>
                 <li>
-                    <router-link to="/opskrifter"> <i class="bi bi-fork-knife d-flex justify-content-center nav-icon py-1"></i> Opskrifter</router-link>
+                    <router-link to="/opskrifter" v-bind:class="{ 'router-link-active': $route.path.startsWith('/opskrifter') }"> <i class="bi bi-fork-knife d-flex justify-content-center nav-icon py-1"></i> Opskrifter</router-link>
                 </li>
                 <li>
                     <router-link to="/indtast"> <i class="bi bi-plus-circle d-flex justify-content-center nav-icon py-1"></i> Indtast varer</router-link>
