@@ -104,7 +104,7 @@ export default {
             // Toast message when succes
             toast.success('Din vare er blevet gemt!', {
                 autoClose: 4000,
-                position: toast.POSITION.BOTTOM_CENTER
+                position: toast.POSITION.TOP_CENTER
             });
 
         },
