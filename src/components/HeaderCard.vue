@@ -1,23 +1,62 @@
 <template>
-    <section class="header-card pt-5 pb-5 px-4">
-        <h1 class="title"> {{ heading }}</h1>
-        <p class="subtitle"> {{ subheading }}</p>
-    </section>
+  <section class="header-card pt-5 pb-5 px-4">
+    <div class="d-flex align-items-start">
+      <!-- Tilbagepil ud for overskriften -->
+      <button
+        v-if="showBack"
+        class="btn  rounded-circle border me-3 mt-1"
+        @click="$router.back()"
+        style="width:40px; height:40px;"
+      >
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <div>
+        <h1 class="title mb-1">{{ heading }}</h1>
+        
+      </div>
+    </div>
+
+    <p class="subtitle mb-0">{{ subheading }}</p>
+    
+  </section>
 </template>
+
+
 
 
 <script>
 
 export default {
     name: 'HeaderCard',
+
+    props: {
+        titleOverride: {
+            type: String,
+            default: '',
+        },
+        subtitleOverride: {
+            type: String,
+            default: '',
+        },
+
+        showBack: {
+            type: Boolean, 
+            default: false,
+        },
+    },
+
     computed: {
         heading() {
-            return this.$route?.meta?.title || '';
+            // Brug override først, ellers :name, ellers meta.title
+            return this.titleOverride || this.$route?.params?.name || this.$route?.meta?.title || '';
         },
         subheading() {
-            return this.$route?.meta?.subtitle || '';
-        }
-    }
+            // Brug override først, ellers meta.subtitle
+            return this.subtitleOverride || this.$route?.meta?.subtitle || '';
+        },
+    },
+
 }
 
 </script>
@@ -60,5 +99,15 @@ export default {
         font-weight:300; 
     }
 
+    .btn {
+  background: white;
+  color: #4b4b4b;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: #f1f1f1;
+}
 
 </style>

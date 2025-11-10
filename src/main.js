@@ -9,6 +9,7 @@ import ShoppingList from './components/ShoppingList.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import ItemOverview from './components/ItemOverview.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -46,6 +47,17 @@ const router = createRouter({
             meta: {
                 title: 'Mit køleskab',
                 subtitle: 'Her er en oversigt over alle dine nuværende madvarer.',
+            }
+        },
+
+        {
+            path: '/mitkoeleskab/:name',
+            name: 'ItemOverview',
+            component: ItemOverview,
+            props: true,
+            meta: {
+                title: '{{ itemName }}',
+                subtitle: 'Her er en oversigt over dine varer af denne type.',
             }
         },
 

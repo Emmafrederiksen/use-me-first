@@ -17,7 +17,12 @@
 
     <div class="mt-5 mx-4">
 
-      <div v-for="group in groupedItems" :key="group.name" class="card item-card mb-3 shadow-sm">
+      <div v-for="group in groupedItems" 
+      :key="group.name" 
+      class="card item-card mb-3 shadow-sm"
+      @click="goToGroup(group)"
+      >
+
         <div class="card-body d-flex justify-content-between align-items-start">
             <div class="text-white">
             <div class="fw-bold">{{ group.name }}</div>
@@ -54,11 +59,11 @@ export default {
             query: '',
 
             items: [
-                { id: 1, name: 'Mælk',          expiresAt: '2025-11-11', addedAt: '2025-11-01' },
-                { id: 2, name: 'Mælk',          expiresAt: '2025-11-17', addedAt: '2025-11-03' },
-                { id: 3, name: 'Mælk',          expiresAt: '2025-11-19', addedAt: '2025-11-05' },
-                { id: 4, name: 'Rugbrød',       expiresAt: '2025-11-11', addedAt: '2025-11-07' },
-                { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-013', addedAt: '2025-11-06' },
+                { id: 1, name: 'Mælk', expiresAt: '2025-11-11'},
+                { id: 2, name: 'Mælk', expiresAt: '2025-11-17'},
+                { id: 3, name: 'Mælk', expiresAt: '2025-11-19'},
+                { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11'},
+                { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13'},
             ],
         }
     },
@@ -74,14 +79,16 @@ export default {
 
 
         groupedItems() {
+
+            // lav søgestrengen om til små bogstaver
             const q = (this.query || '').toLowerCase();
 
-            // 1️⃣ Filtrér først listen ud fra søgning
+            // Filtrér først listen ud fra søgning
             const filtered = this.items.filter(x =>
                 (x.name || '').toLowerCase().includes(q)
             );
 
-            // 2️⃣ Lav et "Map" hvor vi samler varer med samme navn
+            // Lav et "Map" hvor vi samler varer med samme navn
             const map = new Map();
 
             for (const item of filtered) {
@@ -96,15 +103,15 @@ export default {
                 }
 
                 // tilføj varen til gruppen
-                map.get(key).entries.push(item);
+                map.get(key).entries.push(item); 
             }
 
             // 3️⃣ Lav et array ud af grupperne
             const groups = Array.from(map.values()).map(group => {
                 // find den tidligste udløbsdato i gruppen
                 const earliest = group.entries
-                .slice()
-                .sort((a, b) => new Date(a.expiresAt) - new Date(b.expiresAt))[0]?.expiresAt;
+                .slice() // lav en kopi af arrayet
+                .sort((a, b) => new Date(a.expiresAt) - new Date(b.expiresAt))[0]?.expiresAt; // sorter stigende og tag den første
 
                 return {
                 name: group.name,
@@ -146,6 +153,20 @@ export default {
             if (days < 3) return 'danger'; 
             if (days <= 4) return 'warning';
             return 'success';
+        },
+
+        goToGroup(group) {
+            
+            // gem gruppens varer (f.eks. alle mælk) i sessionStorage
+            sessionStorage.setItem('groupEntries', JSON.stringify(group.entries));
+
+            // naviger til ItemOverview og send gruppens navn som parameter
+            this.$router.push({
+                name: 'ItemOverview',
+                params: {
+                    name: group.name, // navn vises i URL, f.eks. /mitkoeleskab/Mælk
+                }
+            });
         },
 
     },
