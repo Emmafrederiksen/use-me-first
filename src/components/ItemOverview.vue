@@ -16,7 +16,7 @@
       :key="item.id"
       class="card item-card mb-3 shadow-sm"
     >
-      <div class="card-body d-flex justify-content-between align-items-start">
+      <div class="card-body d-flex justify-content-between align-items-start" v-on:click="openProductModal(item)">
         <div class="text-white">
           <div class="fw-bold">{{ item.name }}</div>
           <small class="d-block">Udløber om <strong>{{ daysLabel(item.expiresAt) }}</strong></small>
@@ -25,17 +25,24 @@
       </div>
     </div>
   </div>
+  <ProductModal 
+        v-if="selectedProduct && showModal" 
+        v-bind:visible="showModal" 
+        v-bind:product="selectedProduct" 
+        v-on:close="showModal = false"
+    />
 
 </template>
 
 <script>
 
 import HeaderCard from './HeaderCard.vue';
+import ProductModal from './ProductModal.vue';
 
 export default {
 
   name: 'ItemOverview',
-  components: { HeaderCard }, 
+  components: { HeaderCard, ProductModal }, 
 
   // fordi ruten har props:true i routeren
   props: { 
@@ -51,6 +58,8 @@ export default {
     return {
       entries,
       itemName: this.name || this.$route.params.name || '',
+      selectedProduct: null,
+      showModal: false,
     };
   },
 
@@ -97,6 +106,12 @@ export default {
             if (days <= 4) return 'warning';
             return 'success';
         },
+        openProductModal(item) {
+            this.selectedProduct = item;
+            this.showModal = true;
+            console.log("Åbner modal for vare:", item, this.selectedProduct);
+            console.log('HER', this.entries);
+        }
     
   },
 };
