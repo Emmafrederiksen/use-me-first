@@ -24,18 +24,19 @@
     </div>
 
     <div class="mx-4 mt-5">
-        <h3>Ingredienser</h3>
-        <div class="ingredient-row">
-            <p class="ingredient-amount mt-2">200 gram</p>
-            <p class="ingredient-name mt-2">Rugbrød</p>
-        </div>
-        <div class="ingredient-row">
-            <p class="ingredient-amount">3 spsk.</p>
-            <p class="ingredient-name">Rasp- eller solsikkeolie</p>
-        </div>
-        <div class="ingredient-row">
-            <p class="ingredient-amount">2 tsk.</p>
-            <p class="ingredient-name">Salt</p>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h3>Ingredienser</h3>
+          
+          <div class="portion-control d-flex align-items-center gap-2">
+            <i class="bi bi-dash-square fs-1 mx-1" @click="decreasePortion"></i>
+            <p class="mb-0 mx-1"> {{ portion }}</p>
+            <i class="bi bi-plus-square fs-1 mx-1" @click="increasePortion"></i>
+          </div>
+        </div>  
+    
+        <div class="ingredient-row" v-for="(ingredients, index) in ingredients" :key="index">
+            <p class="ingredient-amount mt-2"> {{ ingredients.baseAmount * portion }} {{ ingredients.unit }} </p>
+            <p class="ingredient-name mt-2"> {{ ingredients.name }} </p>
         </div>
     </div>
 
@@ -101,9 +102,23 @@
     name: 'RecipeDetail',
     data() {
       return { 
-        Rugbroedschips 
+        Rugbroedschips,
+        portion: 1, // startværdi for antal portioner
+        ingredients: [
+            { name: 'Rugbrød', baseAmount: 200, unit: 'gram' },
+            { name: 'Rasp- eller solsikkeolie', baseAmount: 3, unit: 'spsk.' },
+            { name: 'Salt', baseAmount: 2, unit: 'tsk.' },
+        ],
         }
-    }
+    },
+    methods: {
+        increasePortion() {
+            this.portion++;
+        },
+        decreasePortion() {
+            if (this.portion > 1) this.portion --;
+        },
+    },
   }
   
   </script>
@@ -174,6 +189,7 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     color: #08300F;
   }
+
 
   .ingredient-row {
     display: flex;
