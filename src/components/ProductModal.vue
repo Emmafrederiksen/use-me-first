@@ -20,26 +20,31 @@
         </div>
         <div class="modal-body">
           <p>
-            <i class="bi bi-circle-fill red-circle"></i>
+            <span
+              class="dot"
+              v-bind:class="badgeClass(daysLeft(product.date))"
+            ></span>
             Udløber om <span class="date">{{ date }}</span>
           </p>
           <p class="info-row">
             <span class="label">Udløbsdato</span
-            ><span class="value">{{ product.date }}</span>
+            ><span class="value">{{ dateDisplay }}</span>
           </p>
           <p class="info-row">
             <span class="label">Mængde</span
-            ><span class="value">{{ product.quantity }}</span>
+            ><span class="value">{{ amountUnit }}</span>
           </p>
           <p class="info-row">
             <span class="label">Placering</span
             ><span class="value">{{ product.location }}</span>
           </p>
         </div>
-        <button type="button" class="btn btn-recipe mt-3 mb-2">
-          <i class="bi bi-fork-knife"></i>
-          Se opskrifer med mælk
-        </button>
+        <router-link to="/opskrifter">
+          <button type="button" class="btn btn-recipe mt-3 mb-2">
+            <i class="bi bi-fork-knife"></i>
+            Se opskrifer med mælk
+          </button>
+        </router-link>
         <div class="modal-footer justify-content-center">
           <button
             type="button"
@@ -48,7 +53,11 @@
           >
             <i class="bi bi-trash3"></i>
           </button>
-          <button type="button" class="btn btn-edit">
+          <button
+            type="button"
+            class="btn btn-edit"
+            v-on:click="openEditModal()"
+          >
             <i class="bi bi-pencil"></i>
           </button>
           <button
@@ -71,14 +80,25 @@
     v-on:close="showConfirmModal = false"
     v-on:confirm="handleConfirm"
   />
+
+  <EditModal
+    v-bind:visible="showEditModal"
+    v-bind:product="product"
+    v-on:update-product="updateProduct"
+    v-on:close="showEditModal = false"
+  />
 </template>
 
 <script>
 import ConfirmModal from "./ConfirmModal.vue";
+import EditModal from "./EditModal.vue";
+import { toast } from "vue3-toastify";
+
 export default {
   name: "ProductModal",
   components: {
     ConfirmModal,
+    EditModal,
   },
   props: {
     product: {
@@ -95,6 +115,7 @@ export default {
       showConfirmModal: false,
       description: "",
       currentAction: "",
+      showEditModal: false,
     };
   },
   methods: {
@@ -107,26 +128,65 @@ export default {
       }
       this.showConfirmModal = true;
     },
+    openEditModal() {
+      this.showEditModal = true;
+    },
     handleConfirm(action) {
       this.showConfirmModal = false;
       this.$emit("close");
       // Logik til at håndtere bekræftelsen
       if (action === "delete") {
-        console.log(`Produktet ${this.product.name} er blevet slettet.`);
+        toast.success("Din vare er blevet slettet!", {
+          autoClose: 4000,
+          position: toast.POSITION.TOP_CENTER,
+        });
       } else if (action === "markUsed") {
-        console.log(
-          `Produktet ${this.product.name} er blevet markeret som brugt.`
+        toast.success(
+          "Godt klaret! Du har brugt en vare og undgået at smide den ud!",
+          {
+            autoClose: 4000,
+            position: toast.POSITION.TOP_CENTER,
+          }
         );
       }
     },
+    daysLeft(dateString) {
+      // dateString = den dato, varen udløber
+      const today = new Date(); // today = den dato, det er i dag
+      const targetDate = new Date(dateString); // targetDate = den dato, varen udløber
+      const diffTime = targetDate - today; // diffTime = forskellen i tid mellem i dag og udløbsdatoen (i millisekunder)
+      return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Konverterer millisekunder til dage og runder op
+    },
+
+    badgeClass(days) {
+      // Vælger farve baseret på antal dage til udløbsdato
+      if (days < 3) return "danger";
+      if (days <= 4) return "warning";
+      return "success";
+    },
   },
+
   computed: {
     date() {
+      // Antal dage til udløbsdato
       const today = new Date();
       const expiryDate = new Date(this.product.date);
       const timeDiff = expiryDate - today;
       const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
       return daysDiff > 0 ? `${daysDiff} dage` : "Udløbet";
+    },
+    amountUnit() {
+      // Formateret mængde og enhed
+      return `${this.product.amount} ${this.product.unit}`;
+    },
+    dateDisplay() {
+      const dateObj = new Date(this.product.date); // Opretter et Date-objekt fra produktets dato
+
+      const day = String(dateObj.getDate()).padStart(2, "0"); // Henter dagen og sørger for to cifre
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Henter måneden (0-baseret, så +1) og sørger for to cifre
+      const year = dateObj.getFullYear(); // Henter året
+
+      return `${day}-${month}-${year}`;
     },
   },
 };
@@ -252,5 +312,30 @@ export default {
 
 .value {
   text-align: right;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+.dot.danger {
+  background: #e02424;
+}
+
+.dot.warning {
+  background: #f5b400;
+}
+
+.dot.success {
+  background: #1fbf62;
 }
 </style>

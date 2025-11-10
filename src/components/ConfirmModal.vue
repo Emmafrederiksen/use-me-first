@@ -68,7 +68,7 @@ export default {
   font-weight: bold;
 }
 .modal-body {
-  text-align: center;
+  text-align: left;
 }
 
 .btn-primary {
