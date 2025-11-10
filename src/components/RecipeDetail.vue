@@ -4,9 +4,9 @@
         <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
           <router-link to="/opskrifter" class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-left-circle fs-1"></i>
+            <i class="bi bi-arrow-left-circle fs-1 mx-2"></i>
           </router-link>
-          <h1 class="card-title text-white">Rugbrødschips</h1>
+          <h1 class="mx-2">Rugbrødschips</h1>
         </div>
       </div>
     </section>
@@ -19,12 +19,12 @@
     </div>
 
     <div class="mx-4 mt-4">
-        <h5 class="step-title">Beskrivelse</h5>
+        <h3>Beskrivelse</h3>
         <p>Nem opskrift på sprøde rugbrødschips. Brug rester af rugbrød til ristet rugbrød. De er gode til tapas, til dip og snack.</p>
     </div>
 
     <div class="mx-4 mt-5">
-        <h5 class="step-title">Ingredienser</h5>
+        <h3>Ingredienser</h3>
         <div class="ingredient-row">
             <p class="ingredient-amount mt-2">200 gram</p>
             <p class="ingredient-name mt-2">Rugbrød</p>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="mx-4 mt-5">
-        <h5 class="step-title mb-4">Fremgangsmåde</h5>
+        <h3>Fremgangsmåde</h3>
         <div>
             <div class="col-12">
                 <div class="card step-card">
@@ -94,6 +94,7 @@
   </template>
   
   <script>
+
   import Rugbroedschips from '@/assets/rugbroedschips.jpg';
   
   export default {
@@ -104,10 +105,24 @@
         }
     }
   }
+  
   </script>
   
   <style scoped>
-  
+
+  h1 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+ }
+
+  h3 {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 1rem;
+}
+
   .recipe-header-card {
     width: 100%;
     border-bottom-left-radius: 25px;
@@ -115,13 +130,12 @@
     overflow: hidden;
     margin-bottom: 2rem;
   }
+
   .recipe-header-card .card {
     border: none;       /* fjerner Bootstrap-card border */
     border-radius: 0;   /* selve card’et behøver ikke radius, parent styrer det */
-}
+  }
 
-  
-  
   .recipe-header-card .recipe-card {
     position: relative;
   }
@@ -141,14 +155,10 @@
   
   .recipe-header-card .icon-top {
     position: absolute;
-    top: 10px;
-    left: 15px;
+    top: 40px;;
   }
   
-  .recipe-header-card .card-title {
-    font-size: 2rem;
-    font-weight: 600;
-  }
+
   .icon-top i {
     color: white;
   }
@@ -163,12 +173,6 @@
     gap: 0.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     color: #08300F;
-  }
-
-  .step-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
   }
 
   .ingredient-row {
@@ -188,13 +192,13 @@
   }
 
   .step-card {
-    background: linear-gradient(90deg,#A6C48A  0%,#7CA982 100%);
+    background: linear-gradient(140deg,#1f3121  0%,#446847 100%);
     border: none;
     border-radius: 15px;
     color: white;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
-}
+  }
 
 .step-number {
     font-size: 2.8rem;

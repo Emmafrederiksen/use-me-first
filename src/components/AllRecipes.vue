@@ -11,7 +11,7 @@
                 <div class="icon-top d-flex justify-content-end">
                     <i class="bi bi-arrow-right-circle fs-1"></i>
                 </div>
-                <h5 class="card-title text-white">Rugbrødschips</h5>
+                <h3>Rugbrødschips</h3>
             </div>
         </router-link>
     </div>
@@ -24,7 +24,7 @@
           <div class="icon-top d-flex justify-content-end">
             <i class="bi bi-arrow-right-circle fs-1"></i>
           </div>
-          <h5 class="card-title text-white">Pandekager</h5>
+          <h3>Pandekager</h3>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
           <div class="icon-top d-flex justify-content-end">
             <i class="bi bi-arrow-right-circle fs-1"></i>
           </div>
-          <h5 class="card-title text-white">Kylling i kokosmælk</h5>
+          <h3>Kylling i kokosmælk</h3>
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
           <div class="icon-top d-flex justify-content-end">
             <i class="bi bi-arrow-right-circle fs-1"></i>
           </div>
-          <h5 class="card-title text-white">Oksekødgryde</h5>
+          <h3>Oksekødgryde</h3>
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
           <div class="icon-top d-flex justify-content-end">
             <i class="bi bi-arrow-right-circle fs-1"></i>
           </div>
-          <h5 class="card-title text-white">Pastasalat</h5>
+          <h3>Pastasalat</h3>
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@
           <div class="icon-top d-flex justify-content-end">
             <i class="bi bi-arrow-right-circle fs-1"></i>
           </div>
-          <h5 class="card-title text-white">Wraps</h5>
+          <h3>Wraps</h3>
         </div>
       </div>
     </div>
@@ -84,12 +84,11 @@
           <div class="icon-top d-flex justify-content-end">
             <i class="bi bi-arrow-right-circle fs-1"></i>
           </div>
-          <h5 class="card-title text-white">Stegte ris</h5>
+          <h3>Stegte ris</h3>
         </div>
       </div>
     </div>
 
-  
 
   </div>
 </div>
@@ -146,9 +145,10 @@ export default {
 }
 
 .recipe-card .card-img-overlay {
-  background: rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
   color: white;
 }
+
 
 .icon-top {
   position: absolute;
@@ -156,20 +156,17 @@ export default {
   right: 15px;
 }
 
-.card-title {
-  font-weight: 500;
-  font-size: 1.1rem;
-  margin-bottom: 0px;
-}
-
-.recipes-text {
-  font-weight: 600;
-}
-
 .see-all-text {
   font-size: 0.9rem;
   font-weight: 600;
   color: #F27405;
   text-decoration: underline;
+}
+
+
+h3 {
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 0px;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <div class="card mb-3 mx-4 shadow rounded-4 mt-5">
   <div class="card-body">
-    <h5 class="card-title py-4">Indtast nye varer <br> til dit køleskab</h5>
+    <h3 class="py-4">Tilføj nye varer til <br> dit køleskab</h3>
     
     <!-- Router-knap -->
        <router-link to="/indtast" class="add-btn d-inline-flex align-items-center">
-            Tilføj ny vare
-        <i class="bi bi-plus-circle ms-2"></i>
+        <i class="bi bi-plus-circle me-2"></i>
+        Tilføj varer
         </router-link>
 
 
@@ -38,7 +38,7 @@ export default {
 <style scoped>
 
 .card {
-  background: linear-gradient(90deg,#A6C48A  0%,#7CA982 100%);
+  background: linear-gradient(140deg,#1f3121  0%,#446847 100%);
   border: none;
   color: white;
 }
@@ -61,6 +61,12 @@ export default {
     position: absolute;
     bottom: 25px;
     right: 10px;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
 }
 
 </style>

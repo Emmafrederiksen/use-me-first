@@ -108,7 +108,7 @@ export default {
 .item-card { 
     border:0; 
     border-radius:16px; 
-    background:linear-gradient(135deg,#7CA982 0%, #A6C48A 100%); 
+    background: linear-gradient(140deg,#1f3121  0%,#446847 100%);
     }
 
 .dot { 

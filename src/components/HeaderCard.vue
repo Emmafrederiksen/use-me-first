@@ -65,7 +65,7 @@ export default {
 <style scoped>
 
     .header-card {
-        background: linear-gradient(90deg,#A6C48A  0%,#7CA982 100%);
+        background: linear-gradient(140deg,#1f3121  0%,#446847 100%);
         width: 100%;
         color: white;
         text-align: start;   
@@ -77,14 +77,14 @@ export default {
 
     .header-card h1 {
         margin: 0;
-        font-size: 2rem;
+        font-size: 26px;
         font-weight: 700;
     }
 
     .header-card p {
         margin: 0.5rem 0 0 0;
-        font-size: 1rem;
-        font-weight: 300;
+        font-size: 16px;
+        font-weight: 400;
     }
 
     .title { 
@@ -99,7 +99,7 @@ export default {
         font-weight:300; 
     }
 
-    .btn {
+  .btn {
   background: white;
   color: #4b4b4b;
   border: none;
