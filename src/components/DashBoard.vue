@@ -11,8 +11,8 @@
 
     <div class="mx-4 mt-5">
       <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5 class="recipes-text">Opskriftsforlag</h5>
-        <a href="#" class="see-all-text">Se alle</a>
+        <h2>Opskriftsforlag</h2>
+        <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
       </div>
 
       <div class="card recipe-card mb-3">
@@ -21,7 +21,7 @@
           <div class="icon-top d-flex justify-content-end">
             <i class="bi bi-arrow-right-circle fs-1"></i>
           </div>
-          <h5 class="card-title text-white">Rugbrødschips</h5>
+          <h3 class="card-title text-white">Rugbrødschips</h3>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
             <div class="icon-top d-flex justify-content-end">
               <i class="bi bi-arrow-right-circle fs-1"></i>
             </div>
-            <h5 class="card-title text-white">Pandekager</h5>
+            <h3 class="card-title text-white">Pandekager</h3>
         </div>
       </div>
     </div>
@@ -44,15 +44,14 @@
           <div class="icon-top d-flex justify-content-end">
             <i class="bi bi-arrow-right-circle fs-1"></i>
           </div>
-          <h5 class="card-title text-white">Kylling i kokosmælk</h5>
+          <h3 class="card-title text-white">Kylling i kokosmælk</h3>
         </div>
       </div>
     </div>
   </div>
   </div>
 
-  <br><br>
-  <br><br>
+
 
 </template>
 
@@ -93,7 +92,7 @@ export default {
     }
   },
 
-
+  
 
 }
 
@@ -130,14 +129,16 @@ export default {
   right: 15px;
 }
 
-.card-title {
-  font-weight: 500;
-  font-size: 1.1rem;
-  margin-bottom: 0px;
+h2 {
+  font-weight: 600;
+  font-size: 22px;
+  color: #2c2c2c;
 }
 
-.recipes-text {
-  font-weight: 600;
+h3 {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 0px;
 }
 
 .see-all-text {
@@ -146,5 +147,6 @@ export default {
   color: #F27405;
   text-decoration: underline;
 }
+
 
 </style>
