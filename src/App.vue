@@ -31,6 +31,6 @@ export default {
   margin: 0 auto;
   background-color: #FEFBF6;
   min-height: 100vh;
-  padding-bottom: 2rem;
+  padding-bottom: 8rem;
 }
 </style>
