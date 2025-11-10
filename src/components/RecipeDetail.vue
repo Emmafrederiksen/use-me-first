@@ -3,9 +3,9 @@
       <div class="card recipe-card">
         <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <router-link to="/opskrifter" class="icon-top d-flex justify-content-end">
+          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="$router.back()">
             <i class="bi bi-arrow-left-circle fs-1 mx-2"></i>
-          </router-link>
+          </button>
           <h1 class="mx-2">Rugbrødschips</h1>
         </div>
       </div>
