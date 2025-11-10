@@ -133,12 +133,15 @@ export default {
   align-items: center;
 }
 .add-btn i {
-  font-size: 1.2rem; 
+  font-size: 16px; 
   line-height: 1;
 }
 
 .bold-label {
     font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 10px;
+    
 }
 
 
