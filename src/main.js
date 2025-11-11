@@ -87,6 +87,19 @@ const router = createRouter({
 });
 
 
+// SEED-DATA: Vi gemmer nogle startvarer, hvis der ikke allerede findes nogen. Dem der findes mountes først i MyFridge.vue, derfor skal vi bruge data allerede her i vores eksempel.
+if (!localStorage.getItem('fridgeItems')) {
+  const seed = [
+    { id: 1, name: 'Mælk', expiresAt: '2025-11-08', amount: 1, unit: 'Liter', location: 'Køleskab' },
+    { id: 2, name: 'Mælk', expiresAt: '2025-11-17', amount: 2, unit: 'Liter', location: 'Køleskab' },
+    { id: 3, name: 'Mælk', expiresAt: '2025-11-19', amount: 2, unit: 'Liter', location: 'Køleskab' },
+    { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11', amount: 1, unit: 'Stk.', location: 'Køleskab' },
+    { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13', amount: 1, unit: 'Bakke(r)', location: 'Køleskab' },
+  ];
+  localStorage.setItem('fridgeItems', JSON.stringify(seed));
+}
+
+
 const app = createApp(App);
 
 app.use(router);

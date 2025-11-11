@@ -27,7 +27,19 @@
             <div class="text-white">
             <div class="fw-bold">{{ group.name }}</div>
             <small class="d-block">Du har <strong>{{ group.count }}</strong> stk.</small>
-            <small class="d-block">Udløber om: <strong>{{ daysLabel(group.earliest) }}</strong></small>
+
+            <small class="d-block">
+            <template v-if="daysLeft(group.earliest) < 0">
+                Udløbet for <strong> {{ Math.abs(daysLeft(group.earliest)) }} dage </strong> siden       <!-- Math.abs = tager det positive tal af et negativt tal -->
+            </template>
+            <template v-else-if="daysLeft(group.earliest) === 0">
+                <strong> Udløber i dag </strong>
+            </template>
+            <template v-else>
+                Udløber om <strong> {{ daysLeft(group.earliest) }} dage </strong>
+            </template>
+            </small>
+
             </div>
             <span class="dot" :class="badgeClass(daysLeft(group.earliest))"></span>
         </div>
@@ -62,16 +74,31 @@ export default {
             { id: 1, name: 'Mælk', expiresAt: '2025-11-08', amount: 1, unit: 'Liter', location: 'Køleskab' },
             { id: 2, name: 'Mælk', expiresAt: '2025-11-17', amount: 2, unit: 'Liter', location: 'Køleskab' },
             { id: 3, name: 'Mælk', expiresAt: '2025-11-19', amount: 2, unit: 'Liter', location: 'Køleskab' },
-            { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11'},
-            { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13'},
+            { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11', amount: 1, unit: 'Stk.', location: 'Køleskab'},
+            { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13', amount: 1, unit: 'Bakke(r)', location: 'Køleskab'},
         ],
-
-           
         }
     },
     mounted(){
         sessionStorage.setItem('allItems', JSON.stringify(this.items)); // Gemmer items i sessionStorage ved komponentens montering
     },
+
+    // Henter varer fra localStorage når komponenten mountes (loader) og tilpasser data formatet
+    mounted() {
+        localStorage.setItem('fridgeItems', JSON.stringify(this.items));      // Gem initial liste første gang siden vises
+        const savedItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
+        for (const item of savedItems) {
+            const formattedItem = {
+                id: this.items.length + 1, // ny id baseret på hvor mange varer der allerede er
+                name: item.name, 
+                expiresAt: item.date, 
+                amount: item.amount,
+                unit: this.mapUnit(item.unit), // konvetere tallene 1-5 til Liter, Kilo osv.
+                location: this.mapLocation(item.location), // konvetere tallene 1-3 til Køleskab, Fryser og Depot.
+    };
+        this.items.push(formattedItem);
+    }
+},
 
     computed: {
         
@@ -146,14 +173,6 @@ export default {
             return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Konverterer millisekunder til dage og runder op
         }, 
 
-        daysLabel(dateString) { // Returnerer en tekst baseret på antal dage til udløbsdato
-            const days = this.daysLeft(dateString);
-            if (days < 0) return `${Math.abs(days)} dage siden`; // Math.abs = tager det positive tal af et negativt tal
-            if (days === 0) return 'i dag';
-            if (days === 1) return '1 dag';
-            return `${days} dage`; 
-        },
-
         badgeClass(days) { // Vælger farve baseret på antal dage til udløbsdato
             if (days < 3) return 'danger'; 
             if (days <= 4) return 'warning';
@@ -176,7 +195,36 @@ export default {
             });
         }
 
+        mapUnit(unitId) {
+            const units = {
+                '1': 'Gram',
+                '2': 'Bakke(r)',
+                '3': 'Stk.',
+                '4': 'Kilo',
+                '5': 'Liter',
+            };
+            return units[unitId] || 'Stk';
+        },
+        mapLocation(locationId) {
+            const locations = {
+                '1': 'Køleskab',
+                '2': 'Fryser',
+                '3': 'Depot',
+            };
+            return locations[locationId] || 'Køleskab';
+        },
     },
+
+
+     watch: {
+         items: {
+         deep: true,                                                               // se ændringer inde i array/objekter
+         handler(newVal) {                                                         // kør når items ændre sig
+                                                                                   // Hver gang varer ændrer sig -> skriv til localStorage
+             localStorage.setItem('fridgeItems', JSON.stringify(newVal));          // gem altid den nyeste liste
+         }
+        }
+    }
 
 }
 </script>

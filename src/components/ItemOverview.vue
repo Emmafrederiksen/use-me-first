@@ -19,12 +19,28 @@
       <div class="card-body d-flex justify-content-between align-items-start" v-on:click="openProductModal(item)">
         <div class="text-white">
           <div class="fw-bold">{{ item.name }}</div>
-          <small class="d-block">Udløber om <strong>{{ daysLabel(item.expiresAt) }}</strong></small>
+
+          <small class="d-block">
+              <template v-if="daysLeft(item.expiresAt) < 0">
+                Udløbet for <strong>{{ Math.abs(daysLeft(item.expiresAt)) }} dage</strong> siden          <!-- Math.abs = tager det positive tal af et negativt tal -->
+              </template>
+              <template v-else-if="daysLeft(item.expiresAt) === 0">
+                <strong>Udløber i dag</strong>
+              </template>
+              <template v-else-if="daysLeft(item.expiresAt) === 1">
+                Udløber <strong>i morgen</strong>
+              </template>
+              <template v-else>
+                Udløber om <strong>{{ daysLeft(item.expiresAt) }} dage</strong>
+              </template>
+          </small>
+           
         </div>
         <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))"></span>
       </div>
     </div>
   </div>
+  
   <ProductModal 
         v-if="selectedProduct && showModal" 
         v-bind:visible="showModal" 
@@ -94,14 +110,6 @@ export default {
             const diffTime = targetDate - today; // diffTime = forskellen i tid mellem i dag og udløbsdatoen (i millisekunder)
             return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Konverterer millisekunder til dage og runder op
         }, 
-
-        daysLabel(dateString) { // Returnerer en tekst baseret på antal dage til udløbsdato
-            const days = this.daysLeft(dateString);
-            if (days < 0) return `${Math.abs(days)} dage siden`; // Math.abs = tager det positive tal af et negativt tal
-            if (days === 0) return 'i dag';
-            if (days === 1) return '1 dag';
-            return `${days} dage`; 
-        },
 
         badgeClass(days) { // Vælger farve baseret på antal dage til udløbsdato
             if (days < 3) return 'danger'; 
