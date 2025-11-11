@@ -7,6 +7,8 @@
       <button type="button" class="btn-close" aria-label="Luk" @click="dismissAlert"></button>
     </div>
 
+    <UseMeFirstCarouselVue :daysUntilExpiry="4" :maxVisibleItems="10" />
+
     <AddNewCard />
 
     <div class="mx-4 mt-5">
@@ -62,6 +64,7 @@ import AddNewCard from './AddNewCard.vue';
 import Rugbroedschips from '@/assets/rugbroedschips.jpg';
 import Pandekager from '@/assets/pandekager.jpg';
 import Kylling from '@/assets/kylling-ret.jpg';
+import UseMeFirstCarouselVue from './UseMeFirstCarousel.vue';
 
 export default {
 
@@ -70,7 +73,9 @@ export default {
   components: {
     HeaderCard,
     AddNewCard,
+    UseMeFirstCarouselVue,
   },
+
 
   data() {
     // Her tjekker vi om brugeren allerede har lukket den
@@ -85,15 +90,13 @@ export default {
     }
   },
 
+
   methods: {
     dismissAlert() {
       this.showAlert = false
       localStorage.setItem('dashAlertDismissed', '1')
-    }
+    },
   },
-
-  
-
 }
 
 </script>
