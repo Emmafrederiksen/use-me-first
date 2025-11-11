@@ -70,31 +70,23 @@ export default {
     },
     methods: {
         submitForm() {
-            //Log data for testing - replace with actual save logic
-            console.log('Name:' + this.Name);
-            
-            console.log('Location:' + this.Location);
-            
-            console.log('Date:' + this.Date);
-            
-            console.log('Amount:' + this.Amount);
-            
-            console.log('Unit:' + this.Unit);
-            
-
-            //actual save logic here
+            // Samler data i et objekt: newItem
             const newItem = {
                 name: this.Name,
-                location: this.Location,
+                location: this.Location, 
                 date: this.Date,
                 amount: this.Amount,
                 unit: this.Unit,
             };
 
-            // Emit event to parent component
-            this.$emit('item-added', newItem);
 
-            // Reset form fields
+            // Gemmes midlertidigt i localStorage så varer bevares ved opdatering af siden
+            const existingItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
+            existingItems.push(newItem);
+            localStorage.setItem('myFridgeItems', JSON.stringify(existingItems));
+
+
+            // Nulstil felter efter indsendelse
             this.Name = '';
             this.Location = '1';
             this.Date = '';
@@ -103,16 +95,13 @@ export default {
 
             // Toast message when succes
             toast.success('Din vare er blevet gemt!', {
-                autoClose: 4000,
+                autoClose: 3000,
                 position: toast.POSITION.TOP_CENTER
             });
 
         },
         
     }
-
-   
-
 }
 </script>
 

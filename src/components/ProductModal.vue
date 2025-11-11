@@ -194,7 +194,10 @@ export default {
     },
     amountUnit() {
       // Formateret mængde og enhed
-      return `${this.product.amount} ${this.product.unit}`;
+      if(this.product.amount && this.product.unit) {
+        return `${this.product.amount} ${this.product.unit}`
+      }
+      return 'Ikke angivet';
     },
     dateDisplay() {
       const dateObj = new Date(this.product.expiresAt); // Opretter et Date-objekt fra produktets dato
