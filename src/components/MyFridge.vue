@@ -66,18 +66,21 @@ export default {
     },
 
     data() {
+        const storedItems = sessionStorage.getItem('allItems'); // Hent varer fra sessionStorage
         return {
 
             query: '',
-
-            items: [
-                { id: 1, name: 'Mælk', expiresAt: '2025-11-08', amount: 1, unit: 'Liter', location: 'Køleskab' },
-                { id: 2, name: 'Mælk', expiresAt: '2025-11-17', amount: 2, unit: 'Liter', location: 'Køleskab' },
-                { id: 3, name: 'Mælk', expiresAt: '2025-11-19', amount: 2, unit: 'Liter', location: 'Køleskab' },
-                { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11', amount: 1, unit: 'Stk.', location: 'Køleskab' },
-                { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13', amount: 1, unit: 'Bakke(r)', location: 'Køleskab'},
-            ],
+            items: storedItems ? JSON.parse(storedItems) : [ // Eksempeldata hvis sessionStorage er tom
+            { id: 1, name: 'Mælk', expiresAt: '2025-11-08', amount: 1, unit: 'Liter', location: 'Køleskab' },
+            { id: 2, name: 'Mælk', expiresAt: '2025-11-17', amount: 2, unit: 'Liter', location: 'Køleskab' },
+            { id: 3, name: 'Mælk', expiresAt: '2025-11-19', amount: 2, unit: 'Liter', location: 'Køleskab' },
+            { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11', amount: 1, unit: 'Stk.', location: 'Køleskab'},
+            { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13', amount: 1, unit: 'Bakke(r)', location: 'Køleskab'},
+        ],
         }
+    },
+    mounted(){
+        sessionStorage.setItem('allItems', JSON.stringify(this.items)); // Gemmer items i sessionStorage ved komponentens montering
     },
 
     // Henter varer fra localStorage når komponenten mountes (loader) og tilpasser data formatet
@@ -177,18 +180,20 @@ export default {
         },
 
         goToGroup(group) {
-            
-            // gem gruppens varer (f.eks. alle mælk) i sessionStorage
+            // Gemmer alle varer (entries) i denne gruppe i sessionStorage.
+            // group.entries indeholder ALLE varer der har samme navn (f.eks. alle "Mælk").
+            // Disse data læses senere i ItemOverview.vue når brugeren navigerer videre.
             sessionStorage.setItem('groupEntries', JSON.stringify(group.entries));
 
-            // naviger til ItemOverview og send gruppens navn som parameter
+            // Navigerer til ItemOverview-ruten.
+            // Vi sender gruppens navn som URL-parameter, så ItemOverview kan vise korrekt overskrift.
             this.$router.push({
-                name: 'ItemOverview',
-                params: {
-                    name: group.name, // navn vises i URL, f.eks. /mitkoeleskab/Mælk
+                name: 'ItemOverview',    // Navnet på ruten vi vil navigere til
+                params: { 
+                    name: group.name     // F.eks. "Mælk" — bruges i UI og URL
                 }
             });
-        },
+        }
 
         mapUnit(unitId) {
             const units = {

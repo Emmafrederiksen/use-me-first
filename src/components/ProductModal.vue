@@ -88,7 +88,7 @@
 
   <EditModal
     v-bind:visible="showEditModal"
-    v-bind:product="product"
+    v-bind:product="localProduct"
     v-on:update-product="updateProduct"
     v-on:close="showEditModal = false"
   />
@@ -117,6 +117,8 @@ export default {
   },
   data() {
     return {
+      products: [],
+      localProduct: { ...this.product },
       showConfirmModal: false,
       description: "",
       currentAction: "",
@@ -134,18 +136,27 @@ export default {
       this.showConfirmModal = true;
     },
     openEditModal() {
+      this.selectedProduct = { ...this.product }; // clone for sikkerhed
       this.showEditModal = true;
     },
-    handleConfirm(action) {
+    updateProduct(updatedProduct) {
+      // Opdater lokal kopi
+      this.localProduct = { ...updatedProduct };
+      // Emit op til parent
+      this.$emit("update-product", updatedProduct);
+  },
+    handleConfirm(action) { //metode til at håndtere bekræftelse i confirm modal
       this.showConfirmModal = false;
       this.$emit("close");
       // Logik til at håndtere bekræftelsen
       if (action === "delete") {
+        this.$emit('delete-product', this.product.id);
         toast.success("Din vare er blevet slettet!", {
           autoClose: 4000,
           position: toast.POSITION.TOP_CENTER,
         });
       } else if (action === "markUsed") {
+        this.$emit('delete-product', this.product.id);
         toast.success(
           "Godt klaret! Du har brugt en vare og undgået at smide den ud!",
           {
@@ -209,6 +220,14 @@ export default {
       return `${day}-${month}-${year}`;
     },
   },
+  watch: {
+    product: {
+    immediate: true,
+    handler(newVal) {
+      this.localProduct = { ...newVal };
+    }
+  }
+  }
 };
 </script>
 

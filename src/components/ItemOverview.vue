@@ -46,6 +46,8 @@
         v-bind:visible="showModal" 
         v-bind:product="selectedProduct" 
         v-on:close="showModal = false"
+        v-on:delete-product="deleteProduct"
+        v-on:update-product="updateProduct"
     />
 
 </template>
@@ -119,7 +121,43 @@ export default {
             this.showModal = true;
             console.log("Åbner modal for vare:", item, this.selectedProduct);
             console.log('HER', this.entries);
+        },
+        deleteProduct(id) {
+          // 1: Hent allItems fra sessionStorage
+          const allItems = JSON.parse(sessionStorage.getItem('allItems') || '[]');
+
+          // 2: Fjern produkt fra allItems og gem tilbage i sessionStorage
+          const updatedAll = allItems.filter(item => item.id !== id);
+          sessionStorage.setItem('allItems', JSON.stringify(updatedAll));
+
+          // 3: Opdater lokal entries
+          this.entries = this.entries.filter(item => item.id !== id);
+
+          // 4: Gem ny groupEntries
+          sessionStorage.setItem('groupEntries', JSON.stringify(this.entries));
+        },
+        updateProduct(updatedProduct) {
+          // Find index i entries
+          const index = this.entries.findIndex(item => item.id === updatedProduct.id);
+          if (index !== -1) {
+            // Opdater entries
+            this.entries.splice(index, 1, updatedProduct);
+
+            // Opdater selectedProduct så ProductModal viser nye data med det samme
+            this.selectedProduct = updatedProduct;
+          }
+
+          // Gem i sessionStorage
+          sessionStorage.setItem('groupEntries', JSON.stringify(this.entries));
+
+          const allItems = JSON.parse(sessionStorage.getItem('allItems') || '[]');
+          const allIndex = allItems.findIndex(item => item.id === updatedProduct.id);
+          if (allIndex !== -1) {
+            allItems.splice(allIndex, 1, updatedProduct);
+            sessionStorage.setItem('allItems', JSON.stringify(allItems));
+          }
         }
+
     
   },
 };
