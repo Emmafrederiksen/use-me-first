@@ -27,7 +27,19 @@
             <div class="text-white">
             <div class="fw-bold">{{ group.name }}</div>
             <small class="d-block">Du har <strong>{{ group.count }}</strong> stk.</small>
-            <small class="d-block">Udløber om: <strong>{{ daysLabel(group.earliest) }}</strong></small>
+
+            <small class="d-block">
+            <template v-if="daysLeft(group.earliest) < 0">
+                Udløbet for <strong> {{ Math.abs(daysLeft(group.earliest)) }} dage </strong> siden       <!-- Math.abs = tager det positive tal af et negativt tal -->
+            </template>
+            <template v-else-if="daysLeft(group.earliest) === 0">
+                <strong> Udløber i dag </strong>
+            </template>
+            <template v-else>
+                Udløber om <strong> {{ daysLeft(group.earliest) }} dage </strong>
+            </template>
+            </small>
+
             </div>
             <span class="dot" :class="badgeClass(daysLeft(group.earliest))"></span>
         </div>
@@ -62,8 +74,8 @@ export default {
                 { id: 1, name: 'Mælk', expiresAt: '2025-11-08', amount: 1, unit: 'Liter', location: 'Køleskab' },
                 { id: 2, name: 'Mælk', expiresAt: '2025-11-17', amount: 2, unit: 'Liter', location: 'Køleskab' },
                 { id: 3, name: 'Mælk', expiresAt: '2025-11-19', amount: 2, unit: 'Liter', location: 'Køleskab' },
-                { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11'},
-                { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13'},
+                { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11', amount: 1, unit: 'Stk.', location: 'Køleskab' },
+                { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13', amount: 1, unit: 'Bakke(r)', location: 'Køleskab'},
             ],
         }
     },
@@ -140,14 +152,6 @@ export default {
             const diffTime = targetDate - today; // diffTime = forskellen i tid mellem i dag og udløbsdatoen (i millisekunder)
             return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Konverterer millisekunder til dage og runder op
         }, 
-
-        daysLabel(dateString) { // Returnerer en tekst baseret på antal dage til udløbsdato
-            const days = this.daysLeft(dateString);
-            if (days < 0) return `${Math.abs(days)} dage siden`; // Math.abs = tager det positive tal af et negativt tal
-            if (days === 0) return 'i dag';
-            if (days === 1) return '1 dag';
-            return `${days} dage`; 
-        },
 
         badgeClass(days) { // Vælger farve baseret på antal dage til udløbsdato
             if (days < 3) return 'danger'; 
