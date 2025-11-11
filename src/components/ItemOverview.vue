@@ -81,6 +81,9 @@ export default {
     };
   },
 
+  updated() {    
+  },
+
 
   computed: {
 

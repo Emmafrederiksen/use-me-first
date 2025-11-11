@@ -152,7 +152,7 @@ export default {
       if (action === "delete") {
         this.$emit('delete-product', this.product.id);
         toast.success("Din vare er blevet slettet!", {
-          autoClose: 4000,
+          autoClose: 3000,
           position: toast.POSITION.TOP_CENTER,
         });
       } else if (action === "markUsed") {
@@ -160,7 +160,7 @@ export default {
         toast.success(
           "Godt klaret! Du har brugt en vare og undgået at smide den ud!",
           {
-            autoClose: 4000,
+            autoClose: 3000,
             position: toast.POSITION.TOP_CENTER,
           }
         );

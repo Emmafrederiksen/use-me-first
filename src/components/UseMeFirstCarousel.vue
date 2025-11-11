@@ -87,6 +87,7 @@ export default {
       const saved = localStorage.getItem('fridgeItems');
       this.localItems = saved ? JSON.parse(saved) : [];
     }
+    
 
   },
 
@@ -114,11 +115,11 @@ export default {
       return Math.ceil((target - today) / (1000 * 60 * 60 * 24));
     },
 
-    badgeClass(days) {
-      if (days <= 0) return 'danger';  // udløbet / i dag
-      if (days <= this.daysUntilExpiry) return 'warning';
-      return 'success';
-    },
+    badgeClass(days) { // Vælger farve baseret på antal dage til udløbsdato
+            if (days < 3) return 'danger'; 
+            if (days <= 4) return 'warning';
+            return 'success';
+        },
 
     scrollLeft() {
       const el = this.$refs.track;

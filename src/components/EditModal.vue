@@ -169,7 +169,7 @@ export default {
       };
 
       toast.success("Din vare er blevet gemt!", {
-        autoClose: 4000,
+        autoClose: 3000,
         position: toast.POSITION.TOP_CENTER,
       });
 

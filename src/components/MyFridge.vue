@@ -35,6 +35,9 @@
             <template v-else-if="daysLeft(group.earliest) === 0">
                 <strong> Udløber i dag </strong>
             </template>
+            <template v-else-if="daysLeft(group.earliest) === 1">
+                Udløber <strong>i morgen</strong>
+              </template>
             <template v-else>
                 Udløber om <strong> {{ daysLeft(group.earliest) }} dage </strong>
             </template>
@@ -79,12 +82,10 @@ export default {
         ],
         }
     },
-    mounted(){
-        sessionStorage.setItem('allItems', JSON.stringify(this.items)); // Gemmer items i sessionStorage ved komponentens montering
-    },
 
     // Henter varer fra localStorage når komponenten mountes (loader) og tilpasser data formatet
     mounted() {
+        sessionStorage.setItem('allItems', JSON.stringify(this.items)); // Gemmer items i sessionStorage ved komponentens montering
         localStorage.setItem('fridgeItems', JSON.stringify(this.items));      // Gem initial liste første gang siden vises
         const savedItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
         for (const item of savedItems) {
@@ -193,7 +194,7 @@ export default {
                     name: group.name     // F.eks. "Mælk" — bruges i UI og URL
                 }
             });
-        }
+        },
 
         mapUnit(unitId) {
             const units = {
