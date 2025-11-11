@@ -161,10 +161,6 @@ export default {
         },
 
         goToGroup(group) {
-            // Gemmer navnet på den gruppe brugeren har klikket på.
-            // Dette kan bruges senere, f.eks. til at vide hvilken gruppe vi skal vise igen.
-            sessionStorage.setItem('selectedGroupName', group.name); 
-
             // Gemmer alle varer (entries) i denne gruppe i sessionStorage.
             // group.entries indeholder ALLE varer der har samme navn (f.eks. alle "Mælk").
             // Disse data læses senere i ItemOverview.vue når brugeren navigerer videre.

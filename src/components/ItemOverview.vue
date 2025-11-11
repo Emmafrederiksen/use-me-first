@@ -31,6 +31,7 @@
         v-bind:product="selectedProduct" 
         v-on:close="showModal = false"
         v-on:delete-product="deleteProduct"
+        v-on:update-product="updateProduct"
     />
 
 </template>
@@ -126,6 +127,27 @@ export default {
 
           // 4: Gem ny groupEntries
           sessionStorage.setItem('groupEntries', JSON.stringify(this.entries));
+        },
+        updateProduct(updatedProduct) {
+          // Find index i entries
+          const index = this.entries.findIndex(item => item.id === updatedProduct.id);
+          if (index !== -1) {
+            // Opdater entries
+            this.entries.splice(index, 1, updatedProduct);
+
+            // Opdater selectedProduct så ProductModal viser nye data med det samme
+            this.selectedProduct = updatedProduct;
+          }
+
+          // Gem i sessionStorage
+          sessionStorage.setItem('groupEntries', JSON.stringify(this.entries));
+
+          const allItems = JSON.parse(sessionStorage.getItem('allItems') || '[]');
+          const allIndex = allItems.findIndex(item => item.id === updatedProduct.id);
+          if (allIndex !== -1) {
+            allItems.splice(allIndex, 1, updatedProduct);
+            sessionStorage.setItem('allItems', JSON.stringify(allItems));
+          }
         }
 
     

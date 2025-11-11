@@ -163,7 +163,7 @@ export default {
         ...this.product,
         name: this.Name,
         location: locationText,
-        date: this.Date,
+        expiresAt: this.Date ? new Date(this.Date).toISOString() : null,
         amount: this.Amount ? Number(this.Amount) : "",
         unit: unitText,
       };
