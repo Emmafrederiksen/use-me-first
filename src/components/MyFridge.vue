@@ -82,6 +82,7 @@ export default {
 
     // Henter varer fra localStorage når komponenten mountes (loader) og tilpasser data formatet
     mounted() {
+        localStorage.setItem('fridgeItems', JSON.stringify(this.items));      // Gem initial liste første gang siden vises
         const savedItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
         for (const item of savedItems) {
             const formattedItem = {
@@ -207,11 +208,6 @@ export default {
             };
             return locations[locationId] || 'Køleskab';
         },
-    },
-
-
-    mounted() {
-       localStorage.setItem('fridgeItems', JSON.stringify(this.items));      // Gem initial liste første gang siden vises
     },
 
 
