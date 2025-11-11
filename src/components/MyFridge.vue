@@ -175,6 +175,22 @@ export default {
 
     },
 
+
+    mounted() {
+       localStorage.setItem('fridgeItems', JSON.stringify(this.items));      // Gem initial liste første gang siden vises
+    },
+
+
+     watch: {
+         items: {
+         deep: true,                                                               // se ændringer inde i array/objekter
+         handler(newVal) {                                                         // kør når items ændre sig
+                                                                                   // Hver gang varer ændrer sig -> skriv til localStorage
+             localStorage.setItem('fridgeItems', JSON.stringify(newVal));          // gem altid den nyeste liste
+         }
+        }
+    }
+
 }
 </script>
 
