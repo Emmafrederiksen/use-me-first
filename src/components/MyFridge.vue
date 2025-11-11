@@ -80,6 +80,22 @@ export default {
         }
     },
 
+    // Henter varer fra localStorage når komponenten mountes (loader) og tilpasser data formatet
+    mounted() {
+        const savedItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
+        for (const item of savedItems) {
+            const formattedItem = {
+                id: this.items.length + 1, // ny id baseret på hvor mange varer der allerede er
+                name: item.name, 
+                expiresAt: item.date, 
+                amount: item.amount,
+                unit: this.mapUnit(item.unit), // konvetere tallene 1-5 til Liter, Kilo osv.
+                location: this.mapLocation(item.location), // konvetere tallene 1-3 til Køleskab, Fryser og Depot.
+    };
+        this.items.push(formattedItem);
+    }
+},
+
     computed: {
         
         heading() {
@@ -173,6 +189,24 @@ export default {
             });
         },
 
+        mapUnit(unitId) {
+            const units = {
+                '1': 'Gram',
+                '2': 'Bakke(r)',
+                '3': 'Stk.',
+                '4': 'Kilo',
+                '5': 'Liter',
+            };
+            return units[unitId] || 'Stk';
+        },
+        mapLocation(locationId) {
+            const locations = {
+                '1': 'Køleskab',
+                '2': 'Fryser',
+                '3': 'Depot',
+            };
+            return locations[locationId] || 'Køleskab';
+        },
     },
 
 
