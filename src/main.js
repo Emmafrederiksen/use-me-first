@@ -29,7 +29,7 @@ const router = createRouter({
             component: AllRecipes,
             meta: {
                 title: 'Opskrifter',
-                subtitle: 'Find opskrifter baseret på dine varer.',
+                subtitle: 'Find inspiration til lækre opskrifter og nye måltider. Se forslag baseret på de varer, du allerede har i dit køleskab.',
             }
         },
 
