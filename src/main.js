@@ -20,7 +20,7 @@ const router = createRouter({
             component: DashBoard,
             meta: {
                 title: 'Godmorgen, Laura! 👋',
-                subtitle: 'Her er et overblik over dit køleskab i dag.',
+                subtitle: 'Her er dit daglige overblik. Du gør en forskel hver dag ved at bruge dine varer i tide.',
             }
         },
 
