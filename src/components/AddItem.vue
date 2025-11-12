@@ -29,6 +29,7 @@
 
             <div class="mb-4" style="width: 60%;">
                 <select id="value" class="form-select" aria-label="Vælg enhed" style="margin-top: 32px;" v-model="Unit">
+                    <option disabled value="">Vælg enhed</option>
                     <option value="1">Gram</option>
                     <option value="2">Bakke(r)</option>
                     <option value="3">Stk.</option>
@@ -62,7 +63,7 @@ export default {
             Location: '1',
             Date: '',
             Amount: null,
-            Unit: '5',
+            Unit: '',
         }
     },
     
@@ -92,7 +93,7 @@ export default {
             this.Location = '1';
             this.Date = '';
             this.Amount = null;
-            this.Unit = '5';
+            this.Unit = '';
 
             // Toast message when succes
             toast.success('Din vare er blevet gemt!', {

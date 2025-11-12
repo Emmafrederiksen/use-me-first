@@ -210,7 +210,7 @@ export default {
                 '5': 'Liter',
                 '6': 'Pakke(r)',
             };
-            return units[unitId] || 'Stk';
+            return units[unitId] || '(enhed ikke angivet)';
         },
         mapLocation(locationId) {
             const locations = {
