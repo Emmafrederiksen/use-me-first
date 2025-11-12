@@ -128,16 +128,20 @@ export default {
         deleteProduct(id) {
           // 1: Hent allItems fra sessionStorage
           const allItems = JSON.parse(sessionStorage.getItem('allItems') || '[]');
+          const myFridgeItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
 
           // 2: Fjern produkt fra allItems og gem tilbage i sessionStorage
           const updatedAll = allItems.filter(item => item.id !== id);
+          const updatedMyFridge = myFridgeItems.filter(item => item.id !== id);
           sessionStorage.setItem('allItems', JSON.stringify(updatedAll));
+          localStorage.setItem('myFridgeItems', JSON.stringify(updatedMyFridge));
 
           // 3: Opdater lokal entries
           this.entries = this.entries.filter(item => item.id !== id);
 
           // 4: Gem ny groupEntries
           sessionStorage.setItem('groupEntries', JSON.stringify(this.entries));
+          localStorage.setItem('myFridgeItems', JSON.stringify(this.entries));
         },
         updateProduct(updatedProduct) {
           // Find index i entries
