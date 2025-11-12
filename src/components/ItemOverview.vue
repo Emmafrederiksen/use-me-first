@@ -22,7 +22,12 @@
 
           <small class="d-block">
               <template v-if="daysLeft(item.expiresAt) < 0">
-                Udløbet for <strong>{{ Math.abs(daysLeft(item.expiresAt)) }} dage</strong> siden          <!-- Math.abs = tager det positive tal af et negativt tal -->
+                Udløbet for 
+                    <strong>
+                      {{ Math.abs(daysLeft(item.expiresAt)) }}          <!-- Math.abs = tager det positive tal af et negativt tal -->
+                      {{ Math.abs(daysLeft(item.expiresAt)) === 1 ? 'dag' : 'dage' }}
+                    </strong> 
+                    siden          
               </template>
               <template v-else-if="daysLeft(item.expiresAt) === 0">
                 <strong>Udløber i dag</strong>
