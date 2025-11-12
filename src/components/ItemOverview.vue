@@ -30,7 +30,7 @@
                     siden          
               </template>
               <template v-else-if="daysLeft(item.expiresAt) === 0">
-                <strong>Udløber i dag</strong>
+                Udløber<strong> i dag</strong>
               </template>
               <template v-else-if="daysLeft(item.expiresAt) === 1">
                 Udløber <strong>i morgen</strong>

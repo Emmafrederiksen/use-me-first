@@ -25,11 +25,22 @@
               v-bind:class="badgeClass(daysLeft(product.expiresAt))"
             ></span>
             <span v-if="daysLeft(product.expiresAt) < 0">
-              Udløbet for <strong>{{ daysLabel() }} </strong>
+              Udløbet for 
+              <strong>
+                {{ Math.abs(daysLeft(product.expiresAt)) }}          <!-- Math.abs = tager det positive tal af et negativt tal -->
+                {{ Math.abs(daysLeft(product.expiresAt)) === 1 ? 'dag' : 'dage' }} 
+              </strong>
+              siden
             </span>
-            <span v-else>
-              Udløber om <strong>{{ daysLabel() }} </strong>
+            <span v-else-if="daysLeft(product.expiresAt) === 0">
+                Udløber<strong> i dag</strong>
             </span>
+              <span v-else-if="daysLeft(product.expiresAt) === 1">
+                Udløber <strong>i morgen</strong>
+              </span>
+              <span v-else>
+                Udløber om <strong>{{ daysLeft(product.expiresAt) }} dage</strong>
+              </span>
           </p>
           <p class="info-row">
             <span class="label">Udløbsdato</span>
@@ -172,15 +183,6 @@ export default {
       const targetDate = new Date(dateString); // targetDate = den dato, varen udløber
       const diffTime = targetDate - today; // diffTime = forskellen i tid mellem i dag og udløbsdatoen (i millisekunder)
       return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Konverterer millisekunder til dage og runder op
-    },
-
-    daysLabel() {
-      // Returnerer en tekst baseret på antal dage til udløbsdato
-      const days = this.daysLeft(this.product.expiresAt);
-      if (days < 0) return ` ${Math.abs(days)} dage siden`; // Math.abs = tager det positive tal af et negativt tal
-      if (days === 0) return "i dag";
-      if (days === 1) return "1 dag";
-      return `${days} dage`;
     },
 
     badgeClass(days) {
