@@ -128,13 +128,6 @@ export default {
   color: white;
 }
 
-
-.icon-top {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-}
-
 .see-all-text {
   font-size: 0.9rem;
   font-weight: 600;
