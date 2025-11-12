@@ -4,7 +4,7 @@
     <form @submit.prevent="submitForm" class="mx-4">
         <div class="mb-4 mt-5">
             <label for="name" class="form-label bold-label">Varenavn *</label>
-            <input type="text" class="form-control" id="name" placeholder="Indtast navn..." v-model="Name" required>
+            <input type="text" class="form-control" id="name" placeholder="Indtast navn" v-model="Name" required>
         </div>
 
         <div class="mb-4">
