@@ -38,7 +38,7 @@ const router = createRouter({
             component: AddItem,
             meta: {
                 title: 'Tilføj varer',
-                subtitle: 'Udfyld oplysningerne nedenfor for at tilføje en ny madvare.',
+                subtitle: 'Udfyld oplysningerne for din vare. Så hjælper vi dig med at holde styr på dit køleskab.',
             }
         },
 
