@@ -29,7 +29,7 @@ const router = createRouter({
             component: AllRecipes,
             meta: {
                 title: 'Opskrifter',
-                subtitle: 'Find opskrifter baseret på dine varer.',
+                subtitle: 'Find inspiration til lækre opskrifter og nye måltider. Se forslag baseret på de varer, du allerede har i dit køleskab.',
             }
         },
 
@@ -38,7 +38,7 @@ const router = createRouter({
             component: AddItem,
             meta: {
                 title: 'Tilføj varer',
-                subtitle: 'Udfyld oplysningerne nedenfor for at tilføje en ny madvare.',
+                subtitle: 'Udfyld oplysningerne for din vare. Så hjælper vi dig med at holde styr på dit køleskab.',
             }
         },
 

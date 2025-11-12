@@ -4,7 +4,7 @@
     <form @submit.prevent="submitForm" class="mx-4">
         <div class="mb-4 mt-5">
             <label for="name" class="form-label bold-label">Varenavn *</label>
-            <input type="text" class="form-control" id="name" placeholder="Indtast navn..." v-model="Name" required>
+            <input type="text" class="form-control" id="name" placeholder="Indtast navn" v-model="Name" required>
         </div>
 
         <div class="mb-4">
@@ -22,18 +22,19 @@
         </div>
 
         <div class="d-flex align-items-center gap-3">
-            <div class="mb-4" style="width: 30%;">
+            <div class="mb-4" style="width: 40%;">
                 <label for="amount" class="form-label bold-label">Mængde</label>
-                <input type="number" class="form-control" id="amount" placeholder="1" v-model="Amount">
+                <input type="number" class="form-control" id="amount" placeholder="Indtast antal" v-model="Amount">
             </div>
 
-            <div class="mb-4" style="width: 70%;">
+            <div class="mb-4" style="width: 60%;">
                 <select id="value" class="form-select" aria-label="Vælg enhed" style="margin-top: 32px;" v-model="Unit">
                     <option value="1">Gram</option>
                     <option value="2">Bakke(r)</option>
                     <option value="3">Stk.</option>
                     <option value="4">Kilo</option>
                     <option value="5">Liter</option>
+                    <option value="6">Pakke(r)</option>
                 </select>
             </div>
         </div>
