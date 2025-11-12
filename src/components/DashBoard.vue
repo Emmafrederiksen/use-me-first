@@ -6,10 +6,11 @@
     />
 
     <!-- Bootstrap alert -->
-    <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4" role="alert">
-      Du har <strong> {{ itemCount }} </strong> varer, som snart udløber.
-      <button type="button" class="btn-close" aria-label="Luk" @click="dismissAlert"></button>
-    </div>
+    <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4 d-flex justify-content-between align-items-center" role="alert">
+      <span>Du har <strong>{{ alertCount }}</strong> varer, som snart udløber.</span>
+      <button type="button" class="btn-close ms-2" aria-label="Luk" @click="dismissAlert"></button>
+  </div>
+
 
     <UseMeFirstCarouselVue :daysUntilExpiry="4" :maxVisibleItems="10" />
 
@@ -86,7 +87,6 @@ export default {
     
     return {
       showAlert: !dismissed, // hvis dismissed er true → skjul
-      itemCount: 3,
       Rugbroedschips,
       Pandekager,
       Kylling,
@@ -106,7 +106,29 @@ export default {
       if (hours >= 11 && hours <= 13) return 'God formiddag';
       if (hours >= 14 && hours <= 17) return 'God eftermiddag';
       return 'Godaften';
-    }
+    },
+
+
+    alertCount() {
+    // Læs det I allerede har gemt (vælg den første liste der findes)
+    const items = JSON.parse(
+      sessionStorage.getItem('allItems') ||
+      localStorage.getItem('fridgeItems') ||
+      localStorage.getItem('myFridgeItems') ||
+      '[]'
+    );
+
+    // Tæl kun varer der udløber snart = 0–3 dage (ikke udløbet)
+    const today = new Date(); today.setHours(0,0,0,0);
+    return items.filter(i => {
+      const d = new Date(i.expiresAt); d.setHours(0,0,0,0);
+      const days = Math.round((d - today) / 86400000); // 86.400.000 ms = 1 dag
+      return days >= 0 && days < 4; // 0,1,2,3
+    }).length;
+  },
+
+
+
   },
 
 
