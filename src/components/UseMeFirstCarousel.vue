@@ -85,7 +85,9 @@ export default {
 
     if (!this.items) {
       const saved = localStorage.getItem('fridgeItems');
-      this.localItems = saved ? JSON.parse(saved) : [];
+      const allItems = sessionStorage.getItem('allItems');
+
+      this.localItems = allItems ? JSON.parse(allItems) : (saved ? JSON.parse(saved) : []);
     }
     
 
