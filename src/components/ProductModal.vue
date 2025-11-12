@@ -58,7 +58,7 @@
         <router-link to="/opskrifter">
           <button type="button" class="btn btn-recipe mt-3 mb-2">
             <i class="bi bi-fork-knife"></i>
-            Se opskrifer med mælk
+            Se opskrifer med {{ product.name }}
           </button>
         </router-link>
         <div class="modal-footer justify-content-center">
