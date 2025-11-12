@@ -6,7 +6,7 @@
     <div class="d-flex align-items-center gap-2 mt-5 mx-4 mb-3">
       <div class="input-group search-wrap shadow rounded-5">
         <span class="input-group-text bg-white border-0"><i class="bi bi-search"></i></span>
-        <input v-model.trim="query" type="search" class="form-control border-0" placeholder="Søg efter varer…" />
+        <input v-model.trim="query" type="search" class="form-control border-0" placeholder="Søg efter varer" />
       </div>
       <button class="btn btn-white shadow rounded-3 px-3 border"><i class="bi bi-sliders2"></i></button>
     </div>
@@ -30,7 +30,12 @@
 
             <small class="d-block">
             <template v-if="daysLeft(group.earliest) < 0">
-                Udløbet for <strong> {{ Math.abs(daysLeft(group.earliest)) }} dage </strong> siden       <!-- Math.abs = tager det positive tal af et negativt tal -->
+                Udløbet for 
+                <strong> 
+                    {{ Math.abs(daysLeft(group.earliest)) }}     <!-- Math.abs = tager det positive tal af et negativt tal -->
+                    {{ Math.abs(daysLeft(group.earliest)) === 1 ? 'dag' : 'dage' }}     
+                </strong> 
+                siden       
             </template>
             <template v-else-if="daysLeft(group.earliest) === 0">
                 <strong> Udløber i dag </strong>
@@ -203,6 +208,7 @@ export default {
                 '3': 'Stk.',
                 '4': 'Kilo',
                 '5': 'Liter',
+                '6': 'Pakke(r)',
             };
             return units[unitId] || 'Stk';
         },
