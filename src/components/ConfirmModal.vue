@@ -23,11 +23,11 @@
         </div>
         <div class="modal-footer justify-content-right">
           <button type="button" class="btn btn-cancel" v-on:click="$emit('close')">
-            <i class="bi bi-x"></i>
+            <i class="bi bi-x-lg me-2"></i>
             Annullér
           </button>
-          <button type="button" class="btn btn-primary"  v-on:click="$emit('confirm', actionType)">
-            <i class="bi bi-check2-circle"></i>
+          <button type="button" class="btn btn-primary" v-on:click="$emit('confirm', actionType)">
+            <i class="bi bi-check2-circle fs-5 me-2"></i>
             Bekræft
           </button>
         </div>
@@ -81,7 +81,11 @@ export default {
   margin-bottom: 10px;
   text-decoration: none;
   box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
@@ -89,7 +93,11 @@ export default {
   color: #ffffff !important;
   box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
   outline: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .btn-cancel {
   background: #ffffff;
   color: #08300f;
@@ -100,7 +108,11 @@ export default {
   margin-bottom: 10px;
   text-decoration: none;
   box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .btn-cancel:hover,
 .btn-cancel:focus,
 .btn-cancel:active {

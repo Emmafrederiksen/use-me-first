@@ -47,7 +47,7 @@ const router = createRouter({
             component: MyFridge,
             meta: {
                 title: 'Mit køleskab',
-                subtitle: 'Her er en oversigt over alle dine nuværende madvarer.',
+                subtitle: 'Her kan du se alle dine madvarer samlet ét sted. Få hurtigt overblik over, hvad du har og hvad der snart skal bruges.',
             }
         },
 
