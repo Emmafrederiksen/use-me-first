@@ -17,24 +17,20 @@
         <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
       </div>
 
+      <router-link to="/opskrifter/rugbroedschips" class="text-decoration-none"> 
       <div class="card recipe-card mb-3">
         <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <router-link to="/rugbroedschips" class="icon-top d-flex justify-content-end text-decoration-none">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </router-link>
           <h3 class="card-title text-white">Rugbrødschips</h3>
         </div>
       </div>
+      </router-link>
 
       <div class="row g-3">
         <div class="col-6">
           <div class="card recipe-card">
             <img v-bind:src="Pandekager" class="card-img" alt="Pandekager">
             <div class="card-img-overlay d-flex flex-column justify-content-end">
-            <div class="icon-top d-flex justify-content-end">
-              <i class="bi bi-arrow-right-circle fs-1"></i>
-            </div>
             <h3 class="card-title text-white">Pandekager</h3>
         </div>
       </div>
@@ -43,9 +39,6 @@
       <div class="card recipe-card">
         <img v-bind:src="Kylling" class="card-img" alt="Kylling i kokosmælk">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
           <h3 class="card-title text-white">Kylling i kokosmælk</h3>
         </div>
       </div>
@@ -124,13 +117,6 @@ export default {
 
 .recipe-card .card-img-overlay {
   background: rgba(0,0,0,0.1);
-  color: white;
-}
-
-.icon-top {
-  position: absolute;
-  top: 10px;
-  right: 15px;
   color: white;
 }
 
