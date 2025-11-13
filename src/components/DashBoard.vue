@@ -1,5 +1,9 @@
 <template> 
-    <HeaderCard />
+    <HeaderCard 
+    
+    :title-override="`${greeting}, ${userName}! 👋`"
+    
+    />
 
     <!-- Bootstrap alert -->
     <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4" role="alert">
@@ -53,8 +57,6 @@
   </div>
   </div>
 
-
-
 </template>
 
 <script>
@@ -78,6 +80,7 @@ export default {
 
 
   data() {
+
     // Her tjekker vi om brugeren allerede har lukket den
     const dismissed = localStorage.getItem('dashAlertDismissed') === '1'
     
@@ -87,7 +90,36 @@ export default {
       Rugbroedschips,
       Pandekager,
       Kylling,
+      userName: 'Laura',
+      now: new Date(),
+      timerId: null,
     }
+
+  },
+
+
+  computed: {
+
+    greeting() {
+      const hours = this.now.getHours();
+      if (hours >= 5 && hours <= 10) return 'Godmorgen';
+      if (hours >= 11 && hours <= 13) return 'God formiddag';
+      if (hours >= 14 && hours <= 17) return 'God eftermiddag';
+      return 'Godaften';
+    }
+  },
+
+
+  mounted() {
+    // Dette kaldes automatisk når komponenten vises
+    this.timerId = setInterval(() => {
+      this.now = new Date();
+    }, 60 * 1000);
+  },
+
+  beforeUnmount() {
+    // Dette kaldes automatisk når man forlader siden
+    clearInterval(this.timerId);
   },
 
 
