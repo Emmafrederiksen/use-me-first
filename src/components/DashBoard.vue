@@ -7,7 +7,7 @@
 
     <!-- Bootstrap alert -->
     <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4 d-flex justify-content-between align-items-center" role="alert">
-      <span>Du har <strong>{{ alertCount }}</strong> varer, som snart udløber.</span>
+      <span>Du har <strong>{{ alertCount }}</strong> varer, som snart udløber <br> og du har <strong>{{ expiredItemsCount }}</strong> varer, som <strong> er udløbet</strong></span>
       <button type="button" class="btn-close ms-2" aria-label="Luk" @click="dismissAlert"></button>
   </div>
 
@@ -53,10 +53,12 @@
 
 
 <ProductModal 
-v-if="showModal && selectedProduct" 
-:visible="showModal"
-:product="selectedProduct"
-@close="showModal = false"
+  v-if="showModal && selectedProduct" 
+  :visible="showModal"
+  :product="selectedProduct"
+  @close="showModal = false"
+  v-on:delete-product="deleteProduct"
+  v-on:update-product="updateProduct"
 >
 
 </ProductModal>
@@ -90,6 +92,14 @@ export default {
 
     // Her tjekker vi om brugeren allerede har lukket den
     const dismissed = localStorage.getItem('dashAlertDismissed') === '1'
+    const storedItems = JSON.parse(
+      sessionStorage.getItem('allItems') ||
+      localStorage.getItem('myFridgeItems') ||
+      localStorage.getItem('fridgeItems') ||
+      '[]'
+    );
+    
+
     
     return {
       showAlert: !dismissed, // hvis dismissed er true → skjul
@@ -99,6 +109,7 @@ export default {
       timerId: null,
       selectedProduct: null,
       showModal: true,
+      entries: storedItems,
     }
 
   },
@@ -129,9 +140,26 @@ export default {
     return items.filter(i => {
       const d = new Date(i.expiresAt); d.setHours(0,0,0,0);
       const days = Math.round((d - today) / 86400000); // 86.400.000 ms = 1 dag
-      return days >= 0 && days < 4; // 0,1,2,3
+      return days >= 0 && days <= 4; // 0,1,2,3,4
     }).length;
   },
+
+   expiredItemsCount() {
+    // Læs det I allerede har gemt (vælg den første liste der findes)
+    const items = JSON.parse(
+      sessionStorage.getItem('allItems') ||
+      localStorage.getItem('fridgeItems') ||
+      localStorage.getItem('myFridgeItems') ||
+      '[]'
+    );
+
+    // Tæl kun varer der er udløbet
+    const today = new Date(); today.setHours(0,0,0,0);
+    return items.filter(i => {
+      const d = new Date(i.expiresAt); d.setHours(0,0,0,0);
+      return d < today; // udløbet
+    }).length;
+   },
 
 
 
@@ -160,8 +188,77 @@ export default {
     openFromCarousel(item) {
       this.selectedProduct = {...item};
       this.showModal = true;
+    },
+    deleteProduct(id) {
+          // 1: Hent allItems fra sessionStorage
+          const allItems = JSON.parse(sessionStorage.getItem('allItems') || '[]');
+          const myFridgeItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
+          
+
+          // 2: Fjern produkt fra allItems og gem tilbage i sessionStorage
+          const updatedAll = allItems.filter(item => item.id !== id);
+          const updatedMyFridge = myFridgeItems.filter(item => item.id !== id);
+          sessionStorage.setItem('allItems', JSON.stringify(updatedAll));
+          localStorage.setItem('myFridgeItems', JSON.stringify(updatedMyFridge));
+
+          // 3: Opdater lokal entries
+          this.entries = this.entries.filter(item => item.id !== id);
+
+          // 4: Gem ny groupEntries
+          sessionStorage.setItem('groupEntries', JSON.stringify(this.entries));
+          localStorage.setItem('myFridgeItems', JSON.stringify(this.entries));
+        },
+        formatProductForStorage(product) {
+            return {
+              ...product,
+              unitName: product.unitId,
+              locationName: product.locationId,
+          };
+      },  
+      updateProduct(updatedProduct) {
+    // 1: Opdater entries lokalt
+    const index = this.entries.findIndex(item => item.id === updatedProduct.id);
+    if (index !== -1) {
+      this.entries.splice(index, 1, updatedProduct);
+      this.selectedProduct = updatedProduct;
     }
 
+    // 2: Formatér produkt til gemning
+    const formattedProduct = this.formatProductForStorage(updatedProduct);
+
+    // 3: Gem entries i sessionStorage og localStorage
+    const updatedEntries = this.entries.map(item => this.formatProductForStorage(item));
+    sessionStorage.setItem('groupEntries', JSON.stringify(updatedEntries));
+    localStorage.setItem('myFridgeItems', JSON.stringify(updatedEntries));
+
+    // 4: Opdater allItems
+    const allItems = JSON.parse(sessionStorage.getItem('allItems') || '[]');
+    const allIndex = allItems.findIndex(item => item.id === updatedProduct.id);
+    if (allIndex !== -1) {
+      allItems.splice(allIndex, 1, formattedProduct);
+      sessionStorage.setItem('allItems', JSON.stringify(allItems));
+    }
+  },
+
+   mapUnit(unitId) {
+            const units = {
+                '1': 'Gram',
+                '2': 'Bakke(r)',
+                '3': 'Stk.',
+                '4': 'Kilo',
+                '5': 'Liter',
+                '6': 'Pakke(r)',
+            };
+            return units[unitId] || '(enhed ikke angivet)';
+        },
+        mapLocation(locationId) {
+            const locations = {
+                '1': 'Køleskab',
+                '2': 'Fryser',
+                '3': 'Depot',
+            };
+            return locations[locationId] || 'Køleskab';
+        },
   },
 
 

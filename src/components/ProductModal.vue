@@ -155,6 +155,7 @@ export default {
       this.localProduct = { ...updatedProduct };
       // Emit op til parent
       this.$emit("update-product", updatedProduct);
+      window.dispatchEvent(new CustomEvent('items-updated'));
   },
     handleConfirm(action) { //metode til at håndtere bekræftelse i confirm modal
       this.showConfirmModal = false;
@@ -162,12 +163,14 @@ export default {
       // Logik til at håndtere bekræftelsen
       if (action === "delete") {
         this.$emit('delete-product', this.product.id);
+        window.dispatchEvent(new CustomEvent('items-updated'));
         toast.success("Din vare er blevet slettet!", {
           autoClose: 3000,
           position: toast.POSITION.TOP_CENTER,
         });
       } else if (action === "markUsed") {
         this.$emit('delete-product', this.product.id);
+        window.dispatchEvent(new CustomEvent('items-updated'));
         toast.success(
           "Godt klaret! Du har brugt en vare og undgået at smide den ud!",
           {
@@ -187,6 +190,7 @@ export default {
 
     badgeClass(days) {
       // Vælger farve baseret på antal dage til udløbsdato
+      if(days < 0 ) return 'expired';
       if (days < 3) return "danger";
       if (days <= 4) return "warning";
       return "success";
@@ -378,5 +382,8 @@ a {
 
 .dot.success {
   background: #1fbf62;
+}
+.dot.expired {
+    background: #000000;
 }
 </style>

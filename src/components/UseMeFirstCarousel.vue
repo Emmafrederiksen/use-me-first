@@ -88,9 +88,15 @@ export default {
   if (!this.items) {
     const allItems = sessionStorage.getItem('allItems');
     const myFridgeItems = localStorage.getItem('myFridgeItems');
+    const fridgeItems = localStorage.getItem('fridgeItems');
 
     const parsedAll = allItems ? JSON.parse(allItems) : [];
     const parsedMyFridge = myFridgeItems ? JSON.parse(myFridgeItems) : [];
+
+    if(parsedAll.length === 0 && parsedMyFridge.length === 0) {
+      this.localItems = fridgeItems ? JSON.parse(fridgeItems) : [];
+      return;
+    }
 
     // Kun normaliser items, hvis de ikke allerede er normaliserede
     const normalizedFridge = parsedMyFridge.map((it, idx) => ({
@@ -135,6 +141,7 @@ export default {
     },
 
     badgeClass(days) { // Vælger farve baseret på antal dage til udløbsdato
+            if( days < 0 ) return 'expired';
             if (days < 3) return 'danger'; 
             if (days <= 4) return 'warning';
             return 'success';
@@ -216,5 +223,8 @@ export default {
 
 .dot.success { 
     background:#1FBF62; 
+}
+.dot.expired {
+    background: #000000;
 }
 </style>
