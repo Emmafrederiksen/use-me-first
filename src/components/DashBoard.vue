@@ -1,13 +1,18 @@
 <template> 
-    <HeaderCard />
+    <HeaderCard 
+    
+    :title-override="`${greeting}, ${userName}! 👋`"
+    
+    />
 
     <!-- Bootstrap alert -->
-    <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4" role="alert">
-      Du har <strong> {{ itemCount }} </strong> varer, som snart udløber.
-      <button type="button" class="btn-close" aria-label="Luk" @click="dismissAlert"></button>
-    </div>
+    <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4 d-flex justify-content-between align-items-center" role="alert">
+      <span>Du har <strong>{{ alertCount }}</strong> varer, som snart udløber.</span>
+      <button type="button" class="btn-close ms-2" aria-label="Luk" @click="dismissAlert"></button>
+  </div>
 
-    <UseMeFirstCarouselVue :daysUntilExpiry="4" :maxVisibleItems="10" />
+
+    <UseMeFirstCarouselVue :daysUntilExpiry="4" :maxVisibleItems="10" @open-product="openFromCarousel"/>
 
     <AddNewCard />
 
@@ -17,24 +22,20 @@
         <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
       </div>
 
+      <router-link to="/opskrifter/rugbroedschips" class="text-decoration-none"> 
       <div class="card recipe-card mb-3">
         <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <router-link to="/rugbroedschips" class="icon-top d-flex justify-content-end text-decoration-none">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </router-link>
           <h3 class="card-title text-white">Rugbrødschips</h3>
         </div>
       </div>
+      </router-link>
 
       <div class="row g-3">
         <div class="col-6">
           <div class="card recipe-card">
             <img v-bind:src="Pandekager" class="card-img" alt="Pandekager">
             <div class="card-img-overlay d-flex flex-column justify-content-end">
-            <div class="icon-top d-flex justify-content-end">
-              <i class="bi bi-arrow-right-circle fs-1"></i>
-            </div>
             <h3 class="card-title text-white">Pandekager</h3>
         </div>
       </div>
@@ -43,9 +44,6 @@
       <div class="card recipe-card">
         <img v-bind:src="Kylling" class="card-img" alt="Kylling i kokosmælk">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
           <h3 class="card-title text-white">Kylling i kokosmælk</h3>
         </div>
       </div>
@@ -53,6 +51,15 @@
   </div>
   </div>
 
+
+<ProductModal 
+v-if="showModal && selectedProduct" 
+:visible="showModal"
+:product="selectedProduct"
+@close="showModal = false"
+>
+
+</ProductModal>
 
 
 </template>
@@ -65,6 +72,7 @@ import Rugbroedschips from '@/assets/rugbroedschips.jpg';
 import Pandekager from '@/assets/pandekager.jpg';
 import Kylling from '@/assets/kylling-ret.jpg';
 import UseMeFirstCarouselVue from './UseMeFirstCarousel.vue';
+import ProductModal from './ProductModal.vue';
 
 export default {
 
@@ -74,20 +82,72 @@ export default {
     HeaderCard,
     AddNewCard,
     UseMeFirstCarouselVue,
+    ProductModal,
   },
 
 
   data() {
+
     // Her tjekker vi om brugeren allerede har lukket den
     const dismissed = localStorage.getItem('dashAlertDismissed') === '1'
     
     return {
       showAlert: !dismissed, // hvis dismissed er true → skjul
-      itemCount: 3,
-      Rugbroedschips,
-      Pandekager,
-      Kylling,
+      Rugbroedschips, Pandekager, Kylling,
+      userName: 'Laura',
+      now: new Date(),
+      timerId: null,
+      selectedProduct: null,
+      showModal: true,
     }
+
+  },
+
+
+  computed: {
+
+    greeting() {
+      const hours = this.now.getHours();
+      if (hours >= 5 && hours <= 10) return 'Godmorgen';
+      if (hours >= 11 && hours <= 13) return 'God formiddag';
+      if (hours >= 14 && hours <= 17) return 'God eftermiddag';
+      return 'Godaften';
+    },
+
+
+    alertCount() {
+    // Læs det I allerede har gemt (vælg den første liste der findes)
+    const items = JSON.parse(
+      sessionStorage.getItem('allItems') ||
+      localStorage.getItem('fridgeItems') ||
+      localStorage.getItem('myFridgeItems') ||
+      '[]'
+    );
+
+    // Tæl kun varer der udløber snart = 0–3 dage (ikke udløbet)
+    const today = new Date(); today.setHours(0,0,0,0);
+    return items.filter(i => {
+      const d = new Date(i.expiresAt); d.setHours(0,0,0,0);
+      const days = Math.round((d - today) / 86400000); // 86.400.000 ms = 1 dag
+      return days >= 0 && days < 4; // 0,1,2,3
+    }).length;
+  },
+
+
+
+  },
+
+
+  mounted() {
+    // Dette kaldes automatisk når komponenten vises
+    this.timerId = setInterval(() => {
+      this.now = new Date();
+    }, 60 * 1000);
+  },
+
+  beforeUnmount() {
+    // Dette kaldes automatisk når man forlader siden
+    clearInterval(this.timerId);
   },
 
 
@@ -96,7 +156,15 @@ export default {
       this.showAlert = false
       localStorage.setItem('dashAlertDismissed', '1')
     },
+
+    openFromCarousel(item) {
+      this.selectedProduct = {...item};
+      this.showModal = true;
+    }
+
   },
+
+
 }
 
 
@@ -124,13 +192,6 @@ export default {
 
 .recipe-card .card-img-overlay {
   background: rgba(0,0,0,0.1);
-  color: white;
-}
-
-.icon-top {
-  position: absolute;
-  top: 10px;
-  right: 15px;
   color: white;
 }
 

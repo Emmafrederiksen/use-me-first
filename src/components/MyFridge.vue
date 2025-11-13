@@ -240,8 +240,7 @@ export default {
              if (Object.values(units).includes(unitId)) {
                 return unitId;
             }
-
-            return units[unitId] || 'Stk';
+            return units[unitId] || '(enhed ikke angivet)';
         },
         mapLocation(locationId) {
             const locations = {
