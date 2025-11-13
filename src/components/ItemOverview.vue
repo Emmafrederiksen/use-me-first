@@ -148,27 +148,57 @@ export default {
           sessionStorage.setItem('groupEntries', JSON.stringify(this.entries));
           localStorage.setItem('myFridgeItems', JSON.stringify(this.entries));
         },
+          formatProductForStorage(product) {
+            return {
+              ...product,
+              unitName: product.unitId,
+              locationName: product.locationId,
+          };
+      },  
         updateProduct(updatedProduct) {
-          // Find index i entries
-          const index = this.entries.findIndex(item => item.id === updatedProduct.id);
-          if (index !== -1) {
-            // Opdater entries
-            this.entries.splice(index, 1, updatedProduct);
+    // 1: Opdater entries lokalt
+    const index = this.entries.findIndex(item => item.id === updatedProduct.id);
+    if (index !== -1) {
+      this.entries.splice(index, 1, updatedProduct);
+      this.selectedProduct = updatedProduct;
+    }
 
-            // Opdater selectedProduct så ProductModal viser nye data med det samme
-            this.selectedProduct = updatedProduct;
-          }
+    // 2: Formatér produkt til gemning
+    const formattedProduct = this.formatProductForStorage(updatedProduct);
 
-          // Gem i sessionStorage
-          sessionStorage.setItem('groupEntries', JSON.stringify(this.entries));
+    // 3: Gem entries i sessionStorage og localStorage
+    const updatedEntries = this.entries.map(item => this.formatProductForStorage(item));
+    sessionStorage.setItem('groupEntries', JSON.stringify(updatedEntries));
+    localStorage.setItem('myFridgeItems', JSON.stringify(updatedEntries));
 
-          const allItems = JSON.parse(sessionStorage.getItem('allItems') || '[]');
-          const allIndex = allItems.findIndex(item => item.id === updatedProduct.id);
-          if (allIndex !== -1) {
-            allItems.splice(allIndex, 1, updatedProduct);
-            sessionStorage.setItem('allItems', JSON.stringify(allItems));
-          }
-        }
+    // 4: Opdater allItems
+    const allItems = JSON.parse(sessionStorage.getItem('allItems') || '[]');
+    const allIndex = allItems.findIndex(item => item.id === updatedProduct.id);
+    if (allIndex !== -1) {
+      allItems.splice(allIndex, 1, formattedProduct);
+      sessionStorage.setItem('allItems', JSON.stringify(allItems));
+    }
+  },
+
+        mapUnit(unitId) {
+            const units = {
+                '1': 'Gram',
+                '2': 'Bakke(r)',
+                '3': 'Stk.',
+                '4': 'Kilo',
+                '5': 'Liter',
+                '6': 'Pakke(r)',
+            };
+            return units[unitId] || 'Stk';
+        },
+        mapLocation(locationId) {
+            const locations = {
+                '1': 'Køleskab',
+                '2': 'Fryser',
+                '3': 'Depot',
+            };
+            return locations[locationId] || 'Køleskab';
+        },
 
     
   },

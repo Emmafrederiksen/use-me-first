@@ -74,36 +74,63 @@ export default {
     },
 
     data() {
-        const storedItems = sessionStorage.getItem('allItems'); // Hent varer fra sessionStorage
         return {
 
             query: '',
-            items: storedItems ? JSON.parse(storedItems) : [ // Eksempeldata hvis sessionStorage er tom
-            { id: 1, name: 'Mælk', expiresAt: '2025-11-08', amount: 1, unit: 'Liter', location: 'Køleskab' },
-            { id: 2, name: 'Mælk', expiresAt: '2025-11-17', amount: 2, unit: 'Liter', location: 'Køleskab' },
-            { id: 3, name: 'Mælk', expiresAt: '2025-11-19', amount: 2, unit: 'Liter', location: 'Køleskab' },
-            { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11', amount: 1, unit: 'Stk.', location: 'Køleskab'},
-            { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13', amount: 1, unit: 'Bakke(r)', location: 'Køleskab'},
-        ],
+            items: [],
         }
     },
 
     // Henter varer fra localStorage når komponenten mountes (loader) og tilpasser data formatet
     mounted() {
-        sessionStorage.setItem('allItems', JSON.stringify(this.items)); // Gemmer items i sessionStorage ved komponentens montering
-        localStorage.setItem('fridgeItems', JSON.stringify(this.items));      // Gem initial liste første gang siden vises
-        const savedItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
-        for (const item of savedItems) {
-            const formattedItem = {
-                id: this.items.length + 1, // ny id baseret på hvor mange varer der allerede er
-                name: item.name, 
-                expiresAt: item.date, 
-                amount: item.amount,
-                unit: this.mapUnit(item.unit), // konvetere tallene 1-5 til Liter, Kilo osv.
-                location: this.mapLocation(item.location), // konvetere tallene 1-3 til Køleskab, Fryser og Depot.
-    };
-        this.items.push(formattedItem);
-    }
+  const storedItems = sessionStorage.getItem('allItems');
+  const myFridgeItems = localStorage.getItem('myFridgeItems');
+
+  let parsedAll = [];
+  let parsedMyFridge = [];
+
+  try {
+    parsedAll = storedItems ? JSON.parse(storedItems) : [];
+  } catch (e) {
+    console.warn('Fejl ved parsing af allItems:', e);
+  }
+
+  try {
+    parsedMyFridge = myFridgeItems ? JSON.parse(myFridgeItems) : [];
+  } catch (e) {
+    console.warn('Fejl ved parsing af myFridgeItems:', e);
+  }
+
+  // ✅ Nu kan du trygt kalde this.mapUnit / this.mapLocation
+  const normalizedFridge = parsedMyFridge.map((it, idx) => ({
+    id: it.id ?? `local-${idx}`,
+    name: it.name || 'Ukendt vare',
+    expiresAt: it.expiresAt ? new Date(it.expiresAt) : null,
+    amount: it.amount ?? 1,
+    unit: this.mapUnit(it.unit),
+    location: this.mapLocation(it.location),
+  }));
+
+  // Kombiner
+  this.items = [...parsedAll, ...normalizedFridge];
+  this.items = Array.from(new Map(this.items.map(i => [i.id, i])).values());
+
+  // Fallback testdata hvis alt er tomt
+  if (this.items.length === 0) {
+    this.items = [
+      { id: 1, name: 'Mælk', expiresAt: '2025-11-08', amount: 1, unit: 'Liter', location: 'Køleskab' },
+      { id: 2, name: 'Mælk', expiresAt: '2025-11-17', amount: 2, unit: 'Liter', location: 'Køleskab' },
+      { id: 3, name: 'Mælk', expiresAt: '2025-11-20', amount: 1, unit: 'Liter', location: 'Køleskab' },
+      { id: 4, name: 'Rugbrød', expiresAt: '2025-11-11', amount: 1, unit: 'Stk.', location: 'Køleskab' },
+      { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-13', amount: 1, unit: 'Bakke(r)', location: 'Køleskab'},
+      
+
+    ];
+  }
+
+  // Gem så alt er synkroniseret
+  sessionStorage.setItem('allItems', JSON.stringify(this.items));
+  localStorage.setItem('fridgeItems', JSON.stringify(this.items));
 },
 
     computed: {
@@ -210,6 +237,10 @@ export default {
                 '5': 'Liter',
                 '6': 'Pakke(r)',
             };
+             if (Object.values(units).includes(unitId)) {
+                return unitId;
+            }
+
             return units[unitId] || 'Stk';
         },
         mapLocation(locationId) {

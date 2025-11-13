@@ -86,6 +86,7 @@
                   <option value="3">Stk.</option>
                   <option value="4">Kilo</option>
                   <option value="5">Liter</option>
+                  <option value="6">Pakke(r)</option>
                 </select>
               </div>
             </div>
@@ -156,6 +157,9 @@ export default {
           break;
         case "5":
           unitText = "Liter";
+          break;
+        case "6":
+          unitText = "Pakke(r)";
           break;
       }
 
@@ -236,6 +240,9 @@ export default {
               break;
             case "Liter":
               this.Unit = "5";
+              break;
+            case "Pakke(r)":
+              this.Unit = "6";
               break;
             default:
               this.Unit = "";

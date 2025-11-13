@@ -75,7 +75,7 @@ export default {
             const newItem = {
                 name: this.Name,
                 location: this.Location, 
-                date: this.Date,
+                expiresAt: this.Date,
                 amount: this.Amount,
                 unit: this.Unit,
             };

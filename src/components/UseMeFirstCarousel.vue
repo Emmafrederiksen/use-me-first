@@ -82,16 +82,30 @@ export default {
   },
 
   mounted() {
+  if (!this.items) {
+    const allItems = sessionStorage.getItem('allItems');
+    const myFridgeItems = localStorage.getItem('myFridgeItems');
 
-    if (!this.items) {
-      const saved = localStorage.getItem('fridgeItems');
-      const allItems = sessionStorage.getItem('allItems');
+    const parsedAll = allItems ? JSON.parse(allItems) : [];
+    const parsedMyFridge = myFridgeItems ? JSON.parse(myFridgeItems) : [];
 
-      this.localItems = allItems ? JSON.parse(allItems) : (saved ? JSON.parse(saved) : []);
-    }
-    
+    // Kun normaliser items, hvis de ikke allerede er normaliserede
+    const normalizedFridge = parsedMyFridge.map((it, idx) => ({
+      id: it.id ?? `local-${idx}`,
+      name: it.name || 'Ukendt vare',
+      expiresAt: it.date || it.expiresAt || null, // tjek både 'date' og 'expiresAt'
+      amount: it.amount ?? 1,
+      unit: this.mapUnit(it.unit),
+      location: this.mapLocation(it.location),
+    }));
 
-  },
+    // Undgå dubletter: brug Set eller uniqBy id
+    const combined = [...parsedAll, ...normalizedFridge];
+    const uniqueItems = Array.from(new Map(combined.map(i => [i.id, i])).values());
+
+    this.localItems = uniqueItems;
+  }
+},
 
   computed: {
 
@@ -122,6 +136,27 @@ export default {
             if (days <= 4) return 'warning';
             return 'success';
         },
+
+    mapUnit(unitCode) {
+      switch (unitCode) {
+        case "1": return "Gram";
+        case "2": return "Bakke(r)";
+        case "3": return "Stk.";
+        case "4": return "Kilo";
+        case "5": return "Liter";
+        case "6": return "Pakke(r)";
+        default: return "Ukendt enhed";
+      }
+    },
+
+    mapLocation(locationCode) {
+      switch (locationCode) {
+        case "1": return "Køleskab";
+        case "2": return "Fryser";
+        case "3": return "Depot";
+        default: return "Ukendt placering";
+      }
+    },
 
     scrollLeft() {
       const el = this.$refs.track;
