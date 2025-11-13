@@ -12,7 +12,12 @@
   </div>
 
 
-    <UseMeFirstCarouselVue :daysUntilExpiry="4" :maxVisibleItems="10" @open-product="openFromCarousel"/>
+    <UseMeFirstCarouselVue 
+      :daysUntilExpiry="4" 
+      :maxVisibleItems="10" 
+      :items="entries"
+      @open-product="openFromCarousel"      
+      />
 
     <AddNewCard />
 
@@ -127,39 +132,30 @@ export default {
 
 
     alertCount() {
-    // Læs det I allerede har gemt (vælg den første liste der findes)
-    const items = JSON.parse(
-      sessionStorage.getItem('allItems') ||
-      localStorage.getItem('fridgeItems') ||
-      localStorage.getItem('myFridgeItems') ||
-      '[]'
-    );
+  const items = this.entries || [];
+  const today = new Date(); 
+  today.setHours(0,0,0,0);
 
-    // Tæl kun varer der udløber snart = 0–3 dage (ikke udløbet)
-    const today = new Date(); today.setHours(0,0,0,0);
-    return items.filter(i => {
-      const d = new Date(i.expiresAt); d.setHours(0,0,0,0);
-      const days = Math.round((d - today) / 86400000); // 86.400.000 ms = 1 dag
-      return days >= 0 && days <= 4; // 0,1,2,3,4
-    }).length;
-  },
+  return items.filter(i => {
+    const d = new Date(i.expiresAt); 
+    d.setHours(0,0,0,0);
+    const days = Math.round((d - today) / 86400000);
+    return days >= 0 && days <= 4;   // 0–4 dage
+  }).length;
+},
 
-   expiredItemsCount() {
-    // Læs det I allerede har gemt (vælg den første liste der findes)
-    const items = JSON.parse(
-      sessionStorage.getItem('allItems') ||
-      localStorage.getItem('fridgeItems') ||
-      localStorage.getItem('myFridgeItems') ||
-      '[]'
-    );
+expiredItemsCount() {
+  const items = this.entries || [];
+  const today = new Date(); 
+  today.setHours(0,0,0,0);
 
-    // Tæl kun varer der er udløbet
-    const today = new Date(); today.setHours(0,0,0,0);
-    return items.filter(i => {
-      const d = new Date(i.expiresAt); d.setHours(0,0,0,0);
-      return d < today; // udløbet
-    }).length;
-   },
+  return items.filter(i => {
+    const d = new Date(i.expiresAt);
+    d.setHours(0,0,0,0);
+    return d < today;               // udløbet
+  }).length;
+},
+
 
 
 
