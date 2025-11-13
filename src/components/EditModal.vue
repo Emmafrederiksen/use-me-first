@@ -81,6 +81,7 @@
                   style="margin-top: 32px"
                   v-model="Unit"
                 >
+                  <option disabled value="">Vælg enhed</option>  
                   <option value="1">Gram</option>
                   <option value="2">Bakke(r)</option>
                   <option value="3">Stk.</option>

@@ -8,9 +8,6 @@
         <router-link to="/opskrifter/rugbroedschips" class="card recipe-card mb-2 text-decoration-none">
             <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
             <div class="card-img-overlay d-flex flex-column justify-content-end">
-                <div class="icon-top d-flex justify-content-end">
-                    <i class="bi bi-arrow-right-circle fs-1"></i>
-                </div>
                 <h3>Rugbrødschips</h3>
             </div>
         </router-link>
@@ -21,9 +18,6 @@
       <div class="card recipe-card mb-2">
         <img v-bind:src="Pandekager" class="card-img" alt="Pandekager">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
           <h3>Pandekager</h3>
         </div>
       </div>
@@ -33,9 +27,6 @@
       <div class="card recipe-card mb-2">
         <img v-bind:src="Kylling" class="card-img" alt="Kylling i kokosmælk">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
           <h3>Kylling i kokosmælk</h3>
         </div>
       </div>
@@ -45,9 +36,6 @@
       <div class="card recipe-card mb-2">
         <img v-bind:src="Oksegryde" class="card-img" alt="Kylling i kokosmælk">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
           <h3>Oksekødgryde</h3>
         </div>
       </div>
@@ -57,9 +45,6 @@
       <div class="card recipe-card mb-2">
         <img v-bind:src="Pasta" class="card-img" alt="Kylling i kokosmælk">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
           <h3>Pastasalat</h3>
         </div>
       </div>
@@ -69,9 +54,6 @@
       <div class="card recipe-card mb-2">
         <img v-bind:src="Wraps" class="card-img" alt="Kylling i kokosmælk">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
           <h3>Wraps</h3>
         </div>
       </div>
@@ -81,9 +63,6 @@
       <div class="card recipe-card mb-2">
         <img v-bind:src="StegteRis" class="card-img" alt="Kylling i kokosmælk">
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <div class="icon-top d-flex justify-content-end">
-            <i class="bi bi-arrow-right-circle fs-1"></i>
-          </div>
           <h3>Stegte ris</h3>
         </div>
       </div>
@@ -147,13 +126,6 @@ export default {
 .recipe-card .card-img-overlay {
   background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
   color: white;
-}
-
-
-.icon-top {
-  position: absolute;
-  top: 10px;
-  right: 15px;
 }
 
 .see-all-text {
