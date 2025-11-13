@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       localItems: [],
-      selectedProdut: null,
+      selectedProduct: null,
       showModal: false,
     };
   },
