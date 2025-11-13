@@ -17,29 +17,30 @@
       <div class="usefirst-wrap">
         <div class="usefirst-track" ref="track">
           <div
-            v-for="it in expiringSoon"
-            :key="it.id"
+            v-for="item in expiringSoon"
+            :key="item.id"
             class="usefirst-card card shadow-sm"
+            @click="$emit('open-product', item)"
           >
             <div class="card-body d-flex justify-content-between align-items-start">
               <div class="text-white">
-                <div class="fw-bold">{{ it.name }}</div>
+                <div class="fw-bold">{{ item.name }}</div>
 
-                <small class="d-block" v-if="daysLeft(it.expiresAt) < 0">
-                  Udløbet for <strong>{{ Math.abs(daysLeft(it.expiresAt)) }} dage</strong> siden
+                <small class="d-block" v-if="daysLeft(item.expiresAt) < 0">
+                  Udløbet for <strong>{{ Math.abs(daysLeft(item.expiresAt)) }} dage</strong> siden
                 </small>
-                <small class="d-block" v-else-if="daysLeft(it.expiresAt) === 0">
+                <small class="d-block" v-else-if="daysLeft(item.expiresAt) === 0">
                   <strong>Udløber i dag</strong>
                 </small>
-                <small class="d-block" v-else-if="daysLeft(it.expiresAt) === 1">
+                <small class="d-block" v-else-if="daysLeft(item.expiresAt) === 1">
                   Udløber <strong>i morgen</strong>
                 </small>
                 <small class="d-block" v-else>
-                  Udløber om <strong>{{ daysLeft(it.expiresAt) }} dage</strong>
+                  Udløber om <strong>{{ daysLeft(item.expiresAt) }} dage</strong>
                 </small>
               </div>
 
-              <span class="dot" :class="badgeClass(daysLeft(it.expiresAt))"></span>
+              <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))"></span>
             </div>
           </div>
         </div>
@@ -78,6 +79,8 @@ export default {
   data() {
     return {
       localItems: [],
+      selectedProdut: null,
+      showModal: false,
     };
   },
 

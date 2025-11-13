@@ -12,7 +12,7 @@
   </div>
 
 
-    <UseMeFirstCarouselVue :daysUntilExpiry="4" :maxVisibleItems="10" />
+    <UseMeFirstCarouselVue :daysUntilExpiry="4" :maxVisibleItems="10" @open-product="openFromCarousel"/>
 
     <AddNewCard />
 
@@ -58,6 +58,17 @@
   </div>
   </div>
 
+
+<ProductModal 
+v-if="showModal && selectedProduct" 
+:visible="showModal"
+:product="selectedProduct"
+@close="showModal = false"
+>
+
+</ProductModal>
+
+
 </template>
 
 <script>
@@ -68,6 +79,7 @@ import Rugbroedschips from '@/assets/rugbroedschips.jpg';
 import Pandekager from '@/assets/pandekager.jpg';
 import Kylling from '@/assets/kylling-ret.jpg';
 import UseMeFirstCarouselVue from './UseMeFirstCarousel.vue';
+import ProductModal from './ProductModal.vue';
 
 export default {
 
@@ -77,6 +89,7 @@ export default {
     HeaderCard,
     AddNewCard,
     UseMeFirstCarouselVue,
+    ProductModal,
   },
 
 
@@ -87,12 +100,12 @@ export default {
     
     return {
       showAlert: !dismissed, // hvis dismissed er true → skjul
-      Rugbroedschips,
-      Pandekager,
-      Kylling,
+      Rugbroedschips, Pandekager, Kylling,
       userName: 'Laura',
       now: new Date(),
       timerId: null,
+      selectedProduct: null,
+      showModal: true,
     }
 
   },
@@ -150,7 +163,15 @@ export default {
       this.showAlert = false
       localStorage.setItem('dashAlertDismissed', '1')
     },
+
+    openFromCarousel(item) {
+      this.selectedProduct = {...item};
+      this.showModal = true;
+    }
+
   },
+
+
 }
 
 
