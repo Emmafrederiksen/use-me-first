@@ -12,11 +12,12 @@
     </section>
 
     <div class="time mt-4 mx-4 d-flex justify-content-end">
-        <button>
-            <i class="bi bi-clock"></i>
-            40 minutter
-        </button>
+      <div class="time-pill d-flex align-items-center py-1 rounded-4">
+        <i class="bi bi-clock me-2"></i>
+        <span>40 minutter</span>
+      </div>
     </div>
+
 
     <div class="mx-4 mt-4">
         <h3>Beskrivelse</h3>
@@ -198,5 +199,6 @@
     font-weight: 400;
     margin-top: 0.5rem;
 }
+
   </style>
   
