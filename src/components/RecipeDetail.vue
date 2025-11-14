@@ -29,11 +29,18 @@
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h3>Ingredienser</h3>
           
+          <div class="portion-wrapper d-flex flex-column align-items-center">
+  
+          <p class="mb-1 fw-semibold">Antal</p> <!-- Labelen -->
+
           <div class="portion-control d-flex align-items-center gap-2">
             <i class="bi bi-dash-square fs-1 mx-1" @click="decreasePortion"></i>
-            <p class="mb-0 mx-1"> {{ portion }}</p>
+            <p class="mb-0 mx-1">{{ portion }}</p>
             <i class="bi bi-plus-square fs-1 mx-1" @click="increasePortion"></i>
           </div>
+
+    </div>
+
         </div>  
     
         <div class="ingredient-row" v-for="(ingredients, index) in ingredients" :key="index">
@@ -43,7 +50,7 @@
     </div>
 
     <div class="mx-4 mt-5">
-        <h3>Fremgangsmåde</h3>
+        <h3 class="mb-4">Fremgangsmåde</h3>
         <div>
             <div class="col-12" v-for="(step, index) in steps" :key="index">
                 <div class="card step-card">
