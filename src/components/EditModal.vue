@@ -94,7 +94,7 @@
 
             <button to="/indtast" class="add-btn mt-3" type="submit">
               <i class="bi bi-check2-circle me-2"></i>
-              Gem vare
+              Gem ændringer
             </button>
           </form>
         </div>
@@ -173,7 +173,7 @@ export default {
         unit: unitText,
       };
 
-      toast.success("Din vare er blevet gemt!", {
+      toast.success("Dine ændringer er blevet gemt! Varen er nu opdateret", {
         autoClose: 3000,
         position: toast.POSITION.TOP_CENTER,
       });

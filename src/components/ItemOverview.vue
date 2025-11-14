@@ -129,8 +129,6 @@ export default {
         openProductModal(item) {
             this.selectedProduct = item;
             this.showModal = true;
-            console.log("Åbner modal for vare:", item, this.selectedProduct);
-            console.log('HER', this.entries);
         },
         deleteProduct(id) {
           // 1: Hent allItems fra sessionStorage
