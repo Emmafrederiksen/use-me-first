@@ -26,7 +26,7 @@
         <div class="card-body d-flex justify-content-between align-items-start">
             <div class="text-white">
             <div class="fw-bold">{{ group.name }}</div>
-            <small class="d-block">Du har <strong>{{ group.count }}</strong> stk.</small>
+            <small class="d-block">Antal: <strong>{{ group.count }}</strong></small>
 
             <small class="d-block">
             <template v-if="daysLeft(group.earliest) < 0">
