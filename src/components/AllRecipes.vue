@@ -7,6 +7,15 @@
   @logout-admin="logoutAdmin"
 />
 
+<!-- Kun for admin -->
+<div v-if="isAdmin" class="text-end mx-4 mt-5">
+  <router-link to="/opret-opskrift" class="add-btn mt-3 text-decoration-none">
+  <i class="bi bi-plus-circle me-2"></i>
+    Tilføj ny opskrift
+</router-link>
+
+</div>
+
 
   <div class="mx-4 mt-5">
     <div class="row g-3">
@@ -152,4 +161,26 @@ h3 {
   font-size: 18px;
   margin-bottom: 0px;
 }
+
+.add-btn {
+  background: #F27405;
+  color: #ffffff;
+  font-weight: 500;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  box-shadow: 0 10px 14px rgba(0,0,0,0.14);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-btn i {
+  font-size: 16px; 
+  line-height: 1;
+}
+
 </style>

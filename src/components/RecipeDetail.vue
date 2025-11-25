@@ -10,6 +10,21 @@
           <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="$router.back()">
             <i class="bi bi-arrow-left-circle fs-1 mx-2"></i>
           </button>
+
+          <div 
+            v-if="isAdmin" 
+            class="admin-action-buttons d-flex gap-3 position-absolute"
+          >
+            <button class="admin-btn-edit" @click="editRecipe">
+              <i class="bi bi-pencil"></i>
+            </button>
+
+            <button class="admin-btn-delete" @click="deleteRecipe">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+          
+
           <h1 class="mx-2"> {{ recipe.title }}</h1>
         </div>
       </div>
@@ -92,6 +107,7 @@
     data() {
       return { 
 
+        isAdmin: localStorage.getItem('isAdmin') === "1",
         recipeID: 0,
         recipe: {},             // én opskrift fra backend
         recipeIngredient: [],   // liste over ingredienser i en opskrift 
@@ -266,6 +282,46 @@
     font-size: 1rem;
     font-weight: 400;
     margin-top: 0.5rem;
+}
+
+.admin-action-buttons {
+  top: 40px;
+  right: 20px;
+  z-index: 10;
+}
+
+.admin-btn-edit {
+  background: #ffffff;
+  color: #08300f;        
+  border: 2px solid #08300f;
+  border-radius: 35%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.admin-btn-edit i {
+  font-size: 18px;
+}
+
+.admin-btn-delete {
+  background: #ffffff;
+  color: #ed1919;       
+  border: 2px solid #ed1919;
+  border-radius: 35%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.admin-btn-delete i {
+  font-size: 18px;
 }
 
   </style>
