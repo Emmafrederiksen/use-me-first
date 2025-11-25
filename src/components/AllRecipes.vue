@@ -1,8 +1,12 @@
 <template>
-  <HeaderCard 
-    :showAdminIcon="true"
-    @open-admin-login="showAdminIcon = true"
-  />
+  <HeaderCard
+  :showAdminIcon="true"
+  :isAdmin="isAdmin"
+  :subtitle-override="adminSubtitle"
+  @open-admin-login="showAdminLogin = true"
+  @logout-admin="logoutAdmin"
+/>
+
 
   <div class="mx-4 mt-5">
     <div class="row g-3">
@@ -32,12 +36,23 @@
     </div>
     </div>
  </div>
+
+
+<!-- Admin login modal -->
+  <AdminLoginModal
+    v-if="showAdminLogin"
+    :visible="showAdminLogin"
+    @close="showAdminLogin = false"
+    @login-success="handleAdminLoginSuccess"
+  />
+
 </template>
 
 
 <script>
 import HeaderCard from "./HeaderCard.vue";
 import RecipeDataService from "@/services/RecipeDataService.js";
+import AdminLoginModal from './AdminLoginModal.vue'; 
 
 
 export default {
@@ -46,6 +61,8 @@ export default {
   data() {
     return {
       recipes: [],
+      showAdminLogin: false,
+      isAdmin: localStorage.getItem('isAdmin') === "1",
     };
   },
 
@@ -60,6 +77,31 @@ export default {
           console.log(e);
         });
     },
+
+    handleAdminLoginSuccess() {
+      this.isAdmin = true;
+      localStorage.setItem("isAdmin", "1");
+      this.showAdminLogin = false;
+    },
+    
+    logoutAdmin() {
+      localStorage.removeItem("isAdmin");
+      this.isAdmin = false;
+    }
+
+  },
+
+  computed: {
+    adminSubtitle() {
+    // Når man er admin → specialtekst
+    if (this.isAdmin) {
+      return "Du er logget ind som admin og kan nu oprette, redigere og slette opskrifter.";
+    }
+
+    // Når man IKKE er admin → tom streng
+    // så falder HeaderCard tilbage til meta.subtitle
+    return "";
+  }
   },
 
   mounted() {
@@ -68,8 +110,11 @@ export default {
 
   components: {
     HeaderCard,
+    AdminLoginModal,
   },
+
 };
+
 </script>
 
 <style scoped>
