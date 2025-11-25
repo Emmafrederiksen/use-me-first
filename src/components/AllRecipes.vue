@@ -1,5 +1,8 @@
 <template>
-  <HeaderCard />
+  <HeaderCard 
+    :showAdminIcon="true"
+    @open-admin-login="showAdminIcon = true"
+  />
 
   <div class="mx-4 mt-5">
     <div class="row g-3">

@@ -1,21 +1,29 @@
 <template>
   <section class="header-card pt-5 pb-5 px-4">
-    <div class="d-flex align-items-center">
-      <!-- Tilbagepil ud for overskriften -->
-      <button
-        v-if="showBack"
-        @click="$router.back()"
-        class="back-btn me-3"
-      >
-        <i class="bi bi-arrow-left-circle fs-1 text-white"></i>
-      </button>
+    <div class="d-flex align-items-center justify-content-between">
+  <!-- VENSTRE SIDE: tilbagepil + titel -->
+  <div class="d-flex align-items-center">
+    <button
+      v-if="showBack"
+      @click="$router.back()"
+      class="back-btn me-3"
+    >
+      <i class="bi bi-arrow-left-circle fs-1 text-white"></i>
+    </button>
 
+    <h1 class="title mb-1">{{ heading }}</h1>
+  </div>
 
-      <div>
-        <h1 class="title mb-1">{{ heading }}</h1>
-        
-      </div>
-    </div>
+  <!-- HØJRE SIDE: admin ikon -->
+  <button
+    v-if="showAdminIcon"
+    @click="$emit('open-admin-login')"
+    class="admin-icon-btn"
+  >
+    <i class="bi bi-person-lock"></i>
+  </button>
+</div>
+
 
     <p class="subtitle mb-0">{{ subheading }}</p>
     
@@ -43,6 +51,11 @@ export default {
         showBack: {
             type: Boolean, 
             default: false,
+        },
+
+        showAdminIcon: {      
+          type: Boolean,
+          default: false,
         },
     },
 
@@ -100,11 +113,32 @@ export default {
     }
 
 
-  .back-btn {
-  background: transparent;
-  border: none; 
-  transition: all 0.2s ease;
-}
+    .back-btn {
+    background: transparent;
+    border: none; 
+    transition: all 0.2s ease;
+    }
+
+
+    .admin-icon-btn {
+    background: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.30);
+  }
+
+  .admin-icon-btn i {
+    color: #F27405;
+    font-size: 1.4rem;
+  }
+
+
+
  
 
 </style>
