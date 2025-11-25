@@ -1,12 +1,16 @@
 <template>
     <section class="recipe-header-card">
       <div class="card recipe-card">
-        <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
+       <img
+      class="card-img"
+      :src="recipe.image ? require(`@/assets/${recipe.image}`) : ''"
+      :alt="recipe.title"
+    />
         <div class="card-img-overlay d-flex flex-column justify-content-end">
           <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="$router.back()">
             <i class="bi bi-arrow-left-circle fs-1 mx-2"></i>
           </button>
-          <h1 class="mx-2">Rugbrødschips</h1>
+          <h1 class="mx-2"> {{ recipe.title }}</h1>
         </div>
       </div>
     </section>
@@ -14,15 +18,14 @@
     <div class="time mt-4 mx-4 d-flex justify-content-end">
       <div class="time-pill d-flex align-items-center py-1 rounded-4">
         <i class="bi bi-clock me-2"></i>
-        <span>40 minutter</span>
+        <span>{{ recipe.totalTime }}</span>
       </div>
     </div>
 
 
     <div class="mx-4 mt-4">
         <h3>Beskrivelse</h3>
-        <p>Nem opskrift på sprøde rugbrødschips. Brug rester af rugbrød til ristet rugbrød.
-           De er gode til tapas, til dip og snack.</p>
+        <p>{{ recipe.description }}</p>
     </div>
 
     <div class="mx-4 mt-5">
@@ -38,14 +41,21 @@
             <p class="mb-0 mx-1">{{ portion }}</p>
             <i class="bi bi-plus-square fs-1 mx-1" @click="increasePortion"></i>
           </div>
-
     </div>
 
         </div>  
     
-        <div class="ingredient-row" v-for="(ingredients, index) in ingredients" :key="index">
-            <p class="ingredient-amount mt-2"> {{ ingredients.baseAmount * portion }} {{ ingredients.unit }} </p>
-            <p class="ingredient-name mt-2"> {{ ingredients.name }} </p>
+        <div class="ingredient-row" 
+          v-for="(ing, index) in displayIngredients" 
+          :key="index">
+
+            <p class="ingredient-amount mt-2"> 
+              {{ ing.amount == null ? '' : ing.amount * portion }} {{ ing.unitName }} </p>
+
+            <p class="ingredient-name mt-2"> 
+              {{ ing.ingredientName }} 
+            </p>
+
         </div>
     </div>
 
@@ -55,8 +65,8 @@
             <div class="col-12" v-for="(step, index) in steps" :key="index">
                 <div class="card step-card">
                     <div class="card-body d-flex align-items-start gap-4">
-                        <p class="step-number"> {{ step.number }}</p>
-                        <p class="step-text"> {{ step.text }}</p>
+                        <p class="step-number"> {{ step.step < 10 ? '0' + step.step : step.step }}</p>
+                        <p class="step-text"> {{ step.stepDescription }}</p>
                     </div>
                 </div>
             </div>
@@ -68,29 +78,54 @@
   
   <script>
 
-  import Rugbroedschips from '@/assets/rugbroedschips.jpg';
+  import RecipeDataService from '@/services/RecipeDataService';
+  import RecipeStepsDataService from '@/services/RecipeStepsDataService';
+  import IngredientDataService from '@/services/IngredientDataService';
+  import UnitDataService from '@/services/UnitDataService';
+  import Recipe_IngredientDataService from '@/services/Recipe_IngredientDataService';
+
   
   export default {
+
     name: 'RecipeDetail',
+
     data() {
       return { 
-        Rugbroedschips,
+
+        recipeID: 0,
+        recipe: {},             // én opskrift fra backend
+        recipeIngredient: [],   // liste over ingredienser i en opskrift 
+        ingredients: [],        // ingredienser fra backend
+        steps: [],              // steps fra backend
+        units: [],              // units fra backend
         portion: 1, // startværdi for antal portioner
-        ingredients: [
-            { name: 'Rugbrød', baseAmount: 200, unit: 'gram' },
-            { name: 'Rasp- eller solsikkeolie', baseAmount: 3, unit: 'spsk.' },
-            { name: 'Salt', baseAmount: 2, unit: 'tsk.' },
-        ],
-        steps: [
-            {number: '01', text: 'Tænd ovnen på 155 grader varmluft.'},
-            {number: '02', text: 'Skær rugbrød ud i tynde skiver og del herefter i trekanter.'},
-            {number: '03', text: 'Vend de tynde trekanter i olie og salt. Fordel ud på en bageplade med bagepapir.'},
-            {number: '04', text: 'Bag dem først i 20 minutter. Tag dem herefter ud og vend godt rundt. Giv dem yderligere 20 minutter.'},
-            {number: '05', text: 'Lad dem køle helt af og opbevar så i en lufttæt beholder.'},
-        ]
       }
     },
+
+    computed: {
+
+      displayIngredients() {
+       
+        return this.recipeIngredient.map(ri => {                                                      // map over den liste der kommer fra recipe_ingredient-tabellen
+
+          const ingredient = this.ingredients.find(i => i.ingredientID === ri.ingredientID);          // find den rigtige ingredient
+          
+          const unit = this.units.find(u => u.unitID === ri.unitID);                                  // find den rigtige unit
+
+          return {
+            amount: ri.amount,                                                                        // mængden kommer direkte fra recipe_ingredient-rækken
+            unitName: unit ? unit.name : '',                                                          // tilpas feltnavne til jeres backend (unitName / name / unit etc.)
+            ingredientName: ingredient ? ingredient.name : ''
+          };
+
+        });
+      }
+
+    },
+
+
     methods: {
+
         increasePortion() {
             this.portion++;
         },
@@ -98,6 +133,32 @@
             if (this.portion > 1) this.portion --;
         },
     },
+
+    mounted() {
+      
+      this.recipeID = this.$route.params.id;      // Henter id fra url og lægger i recipeID
+
+      // Recipe tabel
+      RecipeDataService.getOne(this.recipeID).then(res => this.recipe = res.data);
+
+      // Ingredient tabel 
+      IngredientDataService.getAll()
+      .then(res => this.ingredients = res.data);
+
+      // RecipeSteps tabel
+      RecipeStepsDataService.getAll(this.recipeID)
+      .then(res => this.steps = res.data);
+
+      // Unit tabel
+      UnitDataService.getAll()
+      .then(res => this.units = res.data);
+
+      // Junction tabel mellem recipe og ingredients
+      Recipe_IngredientDataService.getByRecipeId(this.recipeID)
+      .then(res => this.recipeIngredient = res.data);
+      
+    }
+
   }
   
   </script>

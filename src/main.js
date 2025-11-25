@@ -71,18 +71,13 @@ const router = createRouter({
             },
         },
 
-        {
-            path: '/rugbroedschips',
-            name: 'RugbroedschipsOpskrift',
-            component: RecipeDetail
-        },
 
         {
-            path: '/opskrifter/rugbroedschips',
-            name: 'Rugbroedschips',
-            component: RecipeDetail
-          }
-          
+            path: '/opskrift/:id',
+            name: 'RecipeDetail',
+            component: RecipeDetail,            
+        },
+        
     ]
 });
 

@@ -9,21 +9,26 @@
       </div>
 
       <div
-        v-else
         v-for="recipe in recipes"
         :key="recipe.recipeID"
         class="col-6"
       >
+      <router-link :to="`/opskrift/${recipe.recipeID}`" class="text-decoration-none">
         <div class="card recipe-card mb-2">
-          <img :src="require(`@/assets/${recipe.image}`)" class="card-img" />
+          <img
+            class="card-img"
+            :src="recipe.image ? require(`@/assets/${recipe.image}`) : ''"
+            :alt="recipe.title"
+          />
           <div class="card-img-overlay d-flex flex-column justify-content-end">
             <h3>{{ recipe.title }}</h3>
           </div>
         </div>
-      </div>
+      </router-link>
 
     </div>
-  </div>
+    </div>
+ </div>
 </template>
 
 
@@ -40,6 +45,7 @@ export default {
       recipes: [],
     };
   },
+
   methods: {
     retrieveRecipes() {
       RecipeDataService.getAll()
@@ -52,6 +58,7 @@ export default {
         });
     },
   },
+
   mounted() {
     this.retrieveRecipes();
   },
