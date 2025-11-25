@@ -27,34 +27,44 @@
         <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
       </div>
 
-      <router-link to="/opskrifter/rugbroedschips" class="text-decoration-none"> 
-      <div class="card recipe-card mb-3">
-        <img v-bind:src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
-        <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <h3 class="card-title text-white">Rugbrødschips</h3>
+      <router-link
+        :to="{ name: 'RecipeDetail', params: { id: 1 } }"
+        class="text-decoration-none"
+      > 
+        <div class="card recipe-card mb-3">
+          <img :src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
+          <div class="card-img-overlay d-flex flex-column justify-content-end">
+            <h3 class="card-title text-white">Rugbrødschips</h3>
+          </div>
         </div>
-      </div>
       </router-link>
+
 
       <div class="row g-3">
         <div class="col-6">
-          <div class="card recipe-card">
-            <img v-bind:src="Pandekager" class="card-img" alt="Pandekager">
-            <div class="card-img-overlay d-flex flex-column justify-content-end">
-            <h3 class="card-title text-white">Pandekager</h3>
+          <router-link :to="{ name: 'RecipeDetail', params: { id: 2 } }" class="text-decoration-none">
+            <div class="card recipe-card">
+              <img :src="Pandekager" class="card-img" alt="Pandekager">
+              <div class="card-img-overlay d-flex flex-column justify-content-end">
+                <h3 class="card-title text-white">Pandekager</h3>
+              </div>
+            </div>
+          </router-link>
+        </div>
+
+        <div class="col-6">
+          <router-link :to="{ name: 'RecipeDetail', params: { id: 3 } }" class="text-decoration-none">
+            <div class="card recipe-card">
+              <img :src="Kylling" class="card-img" alt="Kylling i kokosmælk">
+              <div class="card-img-overlay d-flex flex-column justify-content-end">
+                <h3 class="card-title text-white">Kylling i kokosmælk</h3>
+              </div>
+            </div>
+          </router-link>
         </div>
       </div>
     </div>
-     <div class="col-6">
-      <div class="card recipe-card">
-        <img v-bind:src="Kylling" class="card-img" alt="Kylling i kokosmælk">
-        <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <h3 class="card-title text-white">Kylling i kokosmælk</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
+
 
 
 <ProductModal 
