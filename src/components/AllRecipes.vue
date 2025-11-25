@@ -3,27 +3,29 @@
 
   <div class="mx-4 mt-5">
     <div class="row g-3">
-      <div class="col-6">
-        <div v-if="recipes.length === 0">
-          <p>Ingen opskrifter fundet.</p>
-        </div>
-        <div v-else>
-          <div
-            v-for="recipe in recipes"
-            :key="recipe.recipeID"
-            class="card recipe-card"
-          >
-            <div class="card-img-overlay d-flex flex-column justify-content-end">
-              <h3>HER</h3>
-              <h3>{{ recipe.title }}</h3>
-              <img :src="require(`@/assets/${recipe.image}`)" />
-            </div>
+
+      <div v-if="recipes.length === 0">
+        <p>Ingen opskrifter fundet.</p>
+      </div>
+
+      <div
+        v-else
+        v-for="recipe in recipes"
+        :key="recipe.recipeID"
+        class="col-6"
+      >
+        <div class="card recipe-card mb-2">
+          <img :src="require(`@/assets/${recipe.image}`)" class="card-img" />
+          <div class="card-img-overlay d-flex flex-column justify-content-end">
+            <h3>{{ recipe.title }}</h3>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
+
 
 <script>
 import HeaderCard from "./HeaderCard.vue";
