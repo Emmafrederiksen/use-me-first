@@ -166,26 +166,32 @@
             if (this.portion > 1) this.portion --;
         },
 
-         async handleDeleteRecipeConfirmed() {
-            try {
-              await RecipeDataService.delete(this.recipeID);
-              this.showDeleteRecipeModal = false;
-
+        async handleDeleteRecipeConfirmed() {
+          try {
+            await RecipeDataService.delete(this.recipeID);
+            this.showDeleteRecipeModal = false;
               // Gem toast besked
               sessionStorage.setItem("recipeToast", "Opskriften er slettet!");
 
               this.$router.push("/opskrifter");
 
             } catch (err) {
-                console.error(err);
+              console.error(err);
 
-                toast.error("Noget gik galt ved sletning!", {
-                  autoClose: 3000,
-                  position: toast.POSITION.TOP_CENTER,
-                });
-              }
-
+              toast.error("Noget gik galt ved sletning!", {
+                autoClose: 3000,
+                position: toast.POSITION.TOP_CENTER,
+              });
           }
+
+        },
+
+        editRecipe() {
+          this.$router.push({
+            name: 'EditRecipe',
+            params: { id: this.recipeID },
+          });
+        },
 
     },
 

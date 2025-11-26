@@ -83,6 +83,13 @@ const router = createRouter({
             path: '/opskrifter/tilføj',
             name: 'CreateRecipe',
             component: RecipeForm,
+        }, 
+
+        {
+            path: '/opskrifter/rediger/:id',
+            name: 'EditRecipe',
+            component: RecipeForm,
+            props: true,
         },
         
     ]

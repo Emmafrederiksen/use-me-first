@@ -104,6 +104,7 @@ export default {
   },
 
   computed: {
+
     adminSubtitle() {
     // Når man er admin → specialtekst
     if (this.isAdmin) {
@@ -113,7 +114,8 @@ export default {
     // Når man IKKE er admin → tom streng
     // så falder HeaderCard tilbage til meta.subtitle
     return "";
-  }
+    }
+
   },
 
   mounted() {

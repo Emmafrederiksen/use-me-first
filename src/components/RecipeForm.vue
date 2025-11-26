@@ -109,7 +109,7 @@
         <div class="d-flex justify-content-center mt-5">
             <button type="submit" class="btn add-btn">
                 <i class="bi bi-check2-circle me-2"></i>
-                Tilføj opskrift
+                {{ submitButtonText }}
             </button>
         </div>
     </form>
@@ -117,30 +117,51 @@
 </template>
 
 <script>
+
 import UnitDataService from '@/services/UnitDataService';
 import HeaderCard from "./HeaderCard.vue";
 import RecipeDataService from '@/services/RecipeDataService';
 import IngredientDataService from '@/services/IngredientDataService';
 import RecipeStepsDataService from '@/services/RecipeStepsDataService';
 import Recipe_IngredientDataService from '@/services/Recipe_IngredientDataService';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
 
 export default {
+
   name: "RecipeForm",
+
   components: {
     HeaderCard,
   },
+
   data() {
     return {
-       ingredients: [
-        { name: "", amount: null, unit: "" } // start med 1 ingrediens
+
+      recipeID: null,
+
+      isEdit: false,
+
+      ingredients: [
+        { name: "", amount: null, unit: "" } 
       ],
+
       steps: [
-        { description: "" } // start med 1 trin
+        { description: "" } 
       ],
+
       units: [],
+
+      existingRecipeIngredients: [], // de gamle rækker fra recipe_ingredient
+
+      existingSteps: [],             // de gamle steps fra backend
+
     };
   },
+
   methods: {
+
     addIngredient() {
         this.ingredients.push({ name: "", amount: null, unit: "" });
     },
@@ -158,31 +179,48 @@ export default {
         textarea.style.height = "auto";        // nulstil højde
         textarea.style.height = textarea.scrollHeight + "px"; // sæt ny højde
     },
+
+
     async submitRecipe() {
-    try {
-      // 1️⃣ Opret opskrift først
+      try {
+        if (this.isEdit) {
+          await this.updateRecipe();
+        } else {
+          await this.createRecipe();
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Noget gik galt ved gem af opskrift.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    },
+
+    async createRecipe() {
+      
+      // Opret opskrift først
       const newRecipeData = {
         title: this.$refs.title.value,
         description: this.$refs.description.value,
         totalTime: this.$refs.totalTime.value,
-        image: null,// evt. billede osv.
+        image: null, // evt. billede senere
       };
+
       const recipeResponse = await RecipeDataService.create(newRecipeData);
       const recipeID = recipeResponse.data.recipeID;
 
-      // 2️⃣ Opret ingredienser (kun name) og tilføj til junction table
+      // Opret ingredienser og recipe_ingredient
       for (const ing of this.ingredients) {
+        const unitID = ing.unit && ing.unit.trim() !== "" 
+          ? (this.units.find(u => u.name.trim().toLowerCase() === ing.unit.trim().toLowerCase())?.unitID ?? null) 
+          : null;
 
-        const unitID = ing.unit && ing.unit.trim() !== "" ? (this.units.find(u => u.name.trim().toLowerCase() === ing.unit.trim().toLowerCase())?.unitID ?? null) : null;
-        console.log("Unit ID for", ing.unit, "er", unitID);
-
-        // Opret ingrediens først
         const ingredientResponse = await IngredientDataService.create({
           name: ing.name,
         });
         const ingredientID = ingredientResponse.data.ingredientID;
 
-        // Opret recipe_ingredient med amount og unit
         await Recipe_IngredientDataService.create({
           recipeID: recipeID,
           ingredientID: ingredientID,
@@ -191,7 +229,7 @@ export default {
         });
       }
 
-      // 3️⃣ Opret steps
+      // Opret steps
       for (const [index, step] of this.steps.entries()) {
         await RecipeStepsDataService.create({
           recipeID: recipeID,
@@ -200,23 +238,138 @@ export default {
         });
       }
 
-      alert("Opskrift oprettet!");
-        this.$router.push('/opskrifter');   
-    } catch (error) {
-      console.error(error);
-      alert("Noget gik galt ved oprettelsen af opskriften.");
-    }
-  
-    }
-  },
-  computed: {
-    recipeTitle() {
-      return this.$route?.params?.id ? "Rediger opskrift" : "Tilføj opskrift";
+      // Gem besked til AllRecipes
+      sessionStorage.setItem("recipeToast", "Opskriften er oprettet!");
+
+      this.$router.push("/opskrifter");
     },
+
+
+    async updateRecipe() {
+
+    // Opdater selve opskriften
+    const updateData = {
+      title: this.$refs.title.value,
+      description: this.$refs.description.value,
+      totalTime: this.$refs.totalTime.value,
+      image: null,
+    };
+
+    await RecipeDataService.update(this.recipeID, updateData);
+
+    // Slet ALLE gamle recipe_ingredient-rækker for denne opskrift
+    for (const ri of this.existingRecipeIngredients) {
+      await Recipe_IngredientDataService.delete(this.recipeID, ri.ingredientID);
+    }
+
+    // Slet ALLE gamle steps
+    for (const s of this.existingSteps) {
+      await RecipeStepsDataService.delete(this.recipeID, s.step);
+    }
+
+    // Opret ingredienser og recipe_ingredient igen ud fra formen
+    for (const ing of this.ingredients) {
+      const unitID = ing.unit && ing.unit.trim() !== "" 
+        ? (this.units.find(u => u.name.trim().toLowerCase() === ing.unit.trim().toLowerCase())?.unitID ?? null)
+        : null;
+
+      const ingredientResponse = await IngredientDataService.create({
+        name: ing.name,
+      });
+      const ingredientID = ingredientResponse.data.ingredientID;
+
+      await Recipe_IngredientDataService.create({
+        recipeID: this.recipeID,
+        ingredientID: ingredientID,
+        amount: ing.amount,
+        unitID: unitID,
+      });
+    }
+
+    // Opret steps igen ud fra formen
+    for (const [index, step] of this.steps.entries()) {
+      await RecipeStepsDataService.create({
+        recipeID: this.recipeID,
+        step: index + 1,
+        stepDescription: step.description,
+      });
+    }
+
+    // Toast + redirect
+    sessionStorage.setItem("recipeToast", "Opskriften er opdateret!");
+    this.$router.push(`/opskrift/${this.recipeID}`);
+  }
+
+
   },
+
+  computed: {
+
+    recipeTitle() {
+      return this.isEdit ? "Rediger opskrift" : "Tilføj opskrift";
+    },
+
+    submitButtonText() {
+      return this.isEdit ? "Gem ændringer" : "Tilføj opskrift";
+    },
+
+  },
+
+
   mounted() {
-    UnitDataService.getAll().then(response => {this.units = response.data;})
-  },
+
+  // Hent enheder (units) først
+  UnitDataService.getAll().then(response => {
+    this.units = response.data;
+
+    // Tjek om vi er i REDIGER-tilstand (har id i URL)
+    this.recipeID = this.$route.params.id || null;
+    this.isEdit = !!this.recipeID;
+
+    if (this.isEdit) {
+      // Hent selve opskriften
+      RecipeDataService.getOne(this.recipeID).then(res => {
+        const r = res.data;
+        if (this.$refs.title) this.$refs.title.value = r.title || "";
+        if (this.$refs.totalTime) this.$refs.totalTime.value = r.totalTime || "";
+        if (this.$refs.description) this.$refs.description.value = r.description || "";
+      });
+
+      // Steps
+      RecipeStepsDataService.getAll(this.recipeID).then(res => {
+        this.existingSteps = res.data; // gem de originale steps (med step-nummer)
+        this.steps = res.data.map(s => ({
+          description: s.stepDescription || "",
+        }));
+      });
+
+      // Ingredienser + junction
+      Promise.all([
+        IngredientDataService.getAll(),
+        Recipe_IngredientDataService.getByRecipeId(this.recipeID),
+      ]).then(([ingRes, riRes]) => {
+        const allIngredients = ingRes.data;
+        const recipeIngredients = riRes.data;
+
+        this.existingRecipeIngredients = recipeIngredients; // gem junction-rækkerne
+
+        this.ingredients = recipeIngredients.map(ri => {
+          const ingredient = allIngredients.find(i => i.ingredientID === ri.ingredientID);
+          const unit = this.units.find(u => u.unitID === ri.unitID);
+
+          return {
+            name: ingredient ? ingredient.name : "",
+            amount: ri.amount,
+            unit: unit ? unit.name : "",
+          };
+        });
+      });
+
+    }
+  });
+},
+
+
 };
 </script>
 
