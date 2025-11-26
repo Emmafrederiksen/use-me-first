@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import ItemOverview from './components/ItemOverview.vue'
+import RecipeForm from './components/RecipeForm.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -76,6 +77,12 @@ const router = createRouter({
             path: '/opskrift/:id',
             name: 'RecipeDetail',
             component: RecipeDetail,            
+        },
+
+        {
+            path: '/opskrifter/tilføj',
+            name: 'CreateRecipe',
+            component: RecipeForm,
         },
         
     ]

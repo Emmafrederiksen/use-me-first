@@ -9,7 +9,7 @@
 
 <!-- Kun for admin -->
 <div v-if="isAdmin" class="text-end mx-4 mt-5">
-  <router-link to="/opret-opskrift" class="add-btn mt-3 text-decoration-none">
+  <router-link to="/opskrifter/tilføj" class="add-btn mt-3 text-decoration-none">
   <i class="bi bi-plus-circle me-2"></i>
     Tilføj ny opskrift
 </router-link>

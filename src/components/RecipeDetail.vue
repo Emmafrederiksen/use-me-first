@@ -20,7 +20,7 @@
             </button>
 
             <button class="admin-btn-delete" @click="deleteRecipe">
-              <i class="bi bi-trash"></i>
+              <i class="bi bi-trash3"></i>
             </button>
           </div>
           
