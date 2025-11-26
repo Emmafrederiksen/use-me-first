@@ -19,7 +19,7 @@
               <i class="bi bi-pencil"></i>
             </button>
 
-            <button class="admin-btn-delete" @click="deleteRecipe">
+            <button class="admin-btn-delete" @click="showDeleteRecipeModal = true">
               <i class="bi bi-trash3"></i>
             </button>
           </div>
@@ -89,6 +89,14 @@
     </div>
 
 
+  <ConfirmDeleteRecipeModal
+  :visible="showDeleteRecipeModal"
+  :recipeTitle="recipe.title"
+  @close="showDeleteRecipeModal = false"
+  @confirm="handleDeleteRecipeConfirmed"
+  />
+
+
   </template>
   
   <script>
@@ -98,11 +106,19 @@
   import IngredientDataService from '@/services/IngredientDataService';
   import UnitDataService from '@/services/UnitDataService';
   import Recipe_IngredientDataService from '@/services/Recipe_IngredientDataService';
+  import ConfirmDeleteRecipeModal from "./ConfirmDeleteRecipeModal.vue";
+  import { toast } from 'vue3-toastify';
+  import 'vue3-toastify/dist/index.css';
+
 
   
   export default {
 
     name: 'RecipeDetail',
+
+    components: {
+        ConfirmDeleteRecipeModal
+    },
 
     data() {
       return { 
@@ -115,6 +131,7 @@
         steps: [],              // steps fra backend
         units: [],              // units fra backend
         portion: 1, // startværdi for antal portioner
+        showDeleteRecipeModal: false,
       }
     },
 
@@ -148,6 +165,28 @@
         decreasePortion() {
             if (this.portion > 1) this.portion --;
         },
+
+         async handleDeleteRecipeConfirmed() {
+            try {
+              await RecipeDataService.delete(this.recipeID);
+              this.showDeleteRecipeModal = false;
+
+              // Gem toast besked
+              sessionStorage.setItem("recipeToast", "Opskriften er slettet!");
+
+              this.$router.push("/opskrifter");
+
+            } catch (err) {
+                console.error(err);
+
+                toast.error("Noget gik galt ved sletning!", {
+                  autoClose: 3000,
+                  position: toast.POSITION.TOP_CENTER,
+                });
+              }
+
+          }
+
     },
 
     mounted() {

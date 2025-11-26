@@ -62,6 +62,9 @@
 import HeaderCard from "./HeaderCard.vue";
 import RecipeDataService from "@/services/RecipeDataService.js";
 import AdminLoginModal from './AdminLoginModal.vue'; 
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 
 
 export default {
@@ -115,6 +118,15 @@ export default {
 
   mounted() {
     this.retrieveRecipes();
+
+    const msg = sessionStorage.getItem("recipeToast");
+      if (msg) {
+        toast.success(msg, {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_CENTER,
+        });
+        sessionStorage.removeItem("recipeToast");
+      }
   },
 
   components: {
