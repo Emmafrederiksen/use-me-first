@@ -128,7 +128,7 @@ export default {
           position: toast.POSITION.TOP_CENTER,
         });
         sessionStorage.removeItem("recipeToast");
-      }
+    }
   },
 
   components: {

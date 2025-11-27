@@ -7,7 +7,7 @@
       :alt="recipe.title"
     />
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="$router.back()">
+          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="goBack">
             <i class="bi bi-arrow-left-circle fs-1 mx-2"></i>
           </button>
 
@@ -183,7 +183,6 @@
                 position: toast.POSITION.TOP_CENTER,
               });
           }
-
         },
 
         editRecipe() {
@@ -192,6 +191,18 @@
             params: { id: this.recipeID },
           });
         },
+
+        goBack() {
+        const cameFromEdit = sessionStorage.getItem("fromEdit");
+
+        if (cameFromEdit === "1") {
+          sessionStorage.removeItem("fromEdit");
+          this.$router.push("/opskrifter");
+        } else {
+          this.$router.back();
+        }
+      },
+
 
     },
 
@@ -217,7 +228,16 @@
       // Junction tabel mellem recipe og ingredients
       Recipe_IngredientDataService.getByRecipeId(this.recipeID)
       .then(res => this.recipeIngredient = res.data);
-      
+
+      const msg = sessionStorage.getItem("recipeToast");
+      if (msg) {
+        toast.success(msg, {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_CENTER,
+        });
+        sessionStorage.removeItem("recipeToast");
+      }
+
     }
 
   }

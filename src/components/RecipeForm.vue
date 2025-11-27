@@ -295,9 +295,12 @@ export default {
       });
     }
 
-    // Toast + redirect
-    sessionStorage.setItem("recipeToast", "Opskriften er opdateret!");
-    this.$router.push(`/opskrift/${this.recipeID}`);
+     sessionStorage.setItem("recipeToast", "Opskriften er opdateret!");
+     sessionStorage.setItem("fromEdit", "1");
+
+     // Navigér tilbage til opskriften og vis toast
+      this.$router.push(`/opskrift/${this.recipeID}`);
+
   }
 
 
