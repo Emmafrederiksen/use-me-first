@@ -204,7 +204,7 @@ export default {
         title: this.$refs.title.value,
         description: this.$refs.description.value,
         totalTime: this.$refs.totalTime.value,
-        image: null, // evt. billede senere
+        image: 'default-recipe.jpg',
       };
 
       const recipeResponse = await RecipeDataService.create(newRecipeData);

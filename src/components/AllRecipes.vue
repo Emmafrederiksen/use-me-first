@@ -31,9 +31,9 @@
       >
       <router-link :to="`/opskrift/${recipe.recipeID}`" class="text-decoration-none">
         <div class="card recipe-card mb-2">
-          <img
+          <img 
             class="card-img"
-            :src="recipe.image ? require(`@/assets/${recipe.image}`) : ''"
+            :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)"
             :alt="recipe.title"
           />
           <div class="card-img-overlay d-flex flex-column justify-content-end">
