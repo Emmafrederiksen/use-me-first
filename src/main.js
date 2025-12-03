@@ -13,7 +13,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import ItemOverview from './components/ItemOverview.vue'
 import RecipeForm from './components/RecipeForm.vue'
 
-const router = createRouter({
+const router = createRouter({ 
     history: createWebHistory(),
     routes: [
         {
