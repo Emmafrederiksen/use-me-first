@@ -206,6 +206,7 @@ export default {
   border: 0;
   border-radius: 16px;
   background: linear-gradient(140deg,#1f3121 0%,#446847 100%);
+  cursor: pointer;
 }
 
 
