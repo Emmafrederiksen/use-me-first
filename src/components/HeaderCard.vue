@@ -150,16 +150,18 @@ export default {
 .header-inner {
   width: 100%;
   padding-left: 1.5rem; /* Mobil spacing */
-  padding-right: 1.5rem; /* Mobil spacing */
+  padding-right: 1.5rem; 
   padding-top: 2rem;
 }
 
-/* TABLET (≥ 600px) */
+/* -------------------------------------- */
+/* TABLET (≥ 600px)                       */
+/* -------------------------------------- */
 @media (min-width: 600px) {
   .header-inner {
-  padding-left: 3rem; /* Tablet spacing */
-  padding-right: 3rem; /* Tablet spacing */
-  padding-top: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 3rem;
   }
 
   .title {
@@ -167,15 +169,20 @@ export default {
   }
 
   .subtitle {
-    font-size: 18px;
+    font-size: 22px;
   }
 }
 
-/* LAPTOP (≥ 992px) */
-@media (min-width: 992px) {
+/* -------------------------------------- */
+/* LAPTOP (992px → 1399px)                */
+/* -------------------------------------- */
+@media (min-width: 992px) and (max-width: 1399px) {
   .header-inner {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 800px;
+    padding-left: 0%;
+    padding-right: 0%;
+    margin-left: auto;
+    margin-right: auto;
     padding-top: 3rem;
   }
 
@@ -184,14 +191,19 @@ export default {
   }
 
   .subtitle {
-    font-size: 20px;
+    font-size: 22px;
   }
 }
 
-/* DESKTOP XL (≥ 1400px) */
-@media (min-width: 1400px) {
+/* -------------------------------------- */
+/* DESKTOP XL (≥ 1400px → 1799px)         */
+/* -------------------------------------- */
+@media (min-width: 1400px) and (max-width: 1799px) {
   .header-inner {
-    max-width: 1100px;
+    max-width: 85%;
+    padding-left: 0%;
+    padding-right: 0%;
+    margin: 0 auto;
     padding-top: 3rem;
   }
 
@@ -204,6 +216,28 @@ export default {
   }
 }
 
+/* -------------------------------------- */
+/* ULTRA-WIDE (≥ 1800px)                  */
+/* -------------------------------------- */
+@media (min-width: 1800px) {
+  .header-inner {
+    max-width: 80%;
+    padding-left: 0%;
+    padding-right: 0%;
+    margin: 0 auto;
+    padding-top: 3rem;
+  }
+
+  .title {
+    font-size: 46px;
+  }
+
+  .subtitle {
+    font-size: 24px;
+  }
+}
+
+/* CONTROLS */
 .right-controls {
   display: flex;
   align-items: center;
@@ -228,6 +262,22 @@ export default {
     display: none !important;
   }
 }
+
+/* Desktop XL (≥ 1400px) — større burgerikon */
+@media (min-width: 1400px) {
+  .burger-btn {
+    font-size: 2.6rem; 
+  }
+}
+
+/* Ultra-wide (≥ 1800px) — endnu større */
+@media (min-width: 1800px) {
+  .burger-btn {
+    font-size: 3rem; 
+  }
+}
+
+
 
 
 </style>

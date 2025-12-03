@@ -7,10 +7,16 @@
     />
 
     <!-- Bootstrap alert -->
-    <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4 d-flex justify-content-between align-items-center" role="alert">
-      <span>Du har <strong>{{ alertCount }}</strong> varer, som snart udløber <br> og du har <strong>{{ expiredItemsCount }}</strong> varer, som <strong> er udløbet</strong></span>
-      <button type="button" class="btn-close ms-2" aria-label="Luk" @click="dismissAlert"></button>
-  </div>
+    <div v-if="showAlert" class="alert-wrapper" role="alert">
+      <span class="alert-text">
+        Du har <strong>{{ alertCount }}</strong> varer, som snart udløber 
+        og du har <strong>{{ expiredItemsCount }}</strong> varer, som <strong>er udløbet</strong>
+      </span>
+  
+      <button 
+        type="button" class="btn-close alert-close" aria-label="Luk" @click="dismissAlert">
+      </button>
+    </div>
 
 
     <UseMeFirstCarouselVue 
@@ -280,15 +286,128 @@ expiredItemsCount() {
 
 }
 
-
 </script>
 
 <style scoped>
 
-.alert {
-  background: #ffffff;
+/* ----------------------------- */
+/*  BASE ALERT LAYOUT (MOBILE)   */
+/* ----------------------------- */
+
+.alert-wrapper {
+  background: white;
   color: #2c2c2c;
+  border-radius: 16px;
+  padding: 1.5rem 1.2rem;
+  margin: 3rem 1.5rem 0 1.5rem; /* mobil margin */
+  box-shadow: 0 10px 14px rgba(0,0,0,0.12);
+
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  animation: fadeInAlert 0.35s ease;
 }
+
+.alert-text {
+  font-size: 1rem;
+  line-height: 1.45;
+  padding-right: 2rem;
+}
+
+.alert-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+@keyframes fadeInAlert {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/* ----------------------- */
+/* TABLET (600px → 991px) */
+/* ----------------------- */
+@media (min-width: 600px) {
+  .alert-wrapper {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    padding: 2rem 1.8rem;
+  }
+
+  .alert-text {
+    font-size: 20px;
+  }
+  
+}
+
+/* ----------------------- */
+/* LAPTOP (992px → 1399px) */
+/* ----------------------- */
+@media (min-width: 992px) and (max-width: 1399px) {
+  .alert-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+
+  .alert-text {
+    font-size: 20px;
+  }
+
+  .alert-close {
+  font-size: 1.1rem;
+  }
+}
+
+/* --------------------------- */
+/* LARGE DESKTOP (≥ 1400px)    */
+/* --------------------------- */
+@media (min-width: 1400px) {
+  .alert-wrapper {
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .alert-text {
+    font-size: 20px;
+  }
+
+  .alert-close {
+  font-size: 1.2rem;
+  }
+
+}
+  
+
+/* --------------------------- */
+/* ULTRA-WIDE (≥ 1800px)       */
+/* --------------------------- */
+@media (min-width: 1800px) {
+  .alert-wrapper {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5rem;
+  }
+
+  .alert-close {
+  font-size: 1.3rem;
+  }
+}
+
+
+/* ----------------------------- */
+
 
 .recipe-card {
   position: relative;
