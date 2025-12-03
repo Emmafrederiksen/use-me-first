@@ -21,7 +21,7 @@ const router = createRouter({
             component: DashBoard,
             meta: {
                 title: 'Godmorgen, Laura! 👋',
-                subtitle: 'Her er dit daglige overblik. Du gør en forskel hver dag ved at bruge dine varer i tide.',
+                subtitle: 'Her er dit daglige overblik. <br>Du gør en forskel hver dag ved at bruge dine varer i tide.',
             }
         },
 
@@ -30,7 +30,7 @@ const router = createRouter({
             component: AllRecipes,
             meta: {
                 title: 'Opskrifter',
-                subtitle: 'Find inspiration til lækre opskrifter og nye måltider. Se forslag baseret på de varer, du allerede har i dit køleskab.',
+                subtitle: 'Find inspiration til lækre opskrifter og nye måltider. <br>Se forslag baseret på de varer, du allerede har i dit køleskab.',
             }
         },
 
@@ -39,7 +39,7 @@ const router = createRouter({
             component: AddItem,
             meta: {
                 title: 'Tilføj varer',
-                subtitle: 'Udfyld oplysningerne for din vare. Så hjælper vi dig med at holde styr på dit køleskab.',
+                subtitle: 'Udfyld oplysningerne for din vare. <br>Så hjælper vi dig med at holde styr på dit køleskab.',
             }
         },
 
@@ -48,7 +48,7 @@ const router = createRouter({
             component: MyFridge,
             meta: {
                 title: 'Mit køleskab',
-                subtitle: 'Her kan du se alle dine madvarer samlet ét sted. Få hurtigt overblik over, hvad du har og hvad der snart skal bruges.',
+                subtitle: 'Her kan du se alle dine madvarer samlet ét sted.<br> Få hurtigt overblik over, hvad du har og hvad der snart skal bruges.',
             }
         },
 

@@ -1,49 +1,41 @@
 <template>
-  <section class="header-card pt-5 pb-5 px-4">
-    <div class="d-flex align-items-center justify-content-between">
+  <section class="header-card">
+    <div class="header-inner">
 
-      <!-- VENSTRE SIDE: tilbagepil + titel -->
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
 
-        <button
-          v-if="showBack"
-          @click="$router.back()"
-          class="back-btn me-3"
-        >
-          <i class="bi bi-arrow-left-circle fs-1 text-white"></i>
-        </button>
+        <!-- Venstre side -->
+        <div class="d-flex align-items-center">
+          <button
+            v-if="showBack"
+            @click="$router.back()"
+            class="back-btn me-3"
+          >
+            <i class="bi bi-arrow-left-circle fs-1 text-white"></i>
+          </button>
 
-        <h1 class="title mb-1">{{ heading }}</h1>
-      </div>
+          <h1 class="title mb-1">{{ heading }}</h1>
+        </div>
 
-      <!-- HØJRE SIDE: login eller logout -->
-      <div v-if="showAdminIcon">
+        <!-- Højre side -->
+        <div v-if="showAdminIcon">
+          <button v-if="!isAdmin" @click="$emit('open-admin-login')" class="admin-icon-btn">
+            <i class="bi bi-person-lock"></i>
+          </button>
 
-        <!-- Login ikon -->
-        <button
-          v-if="!isAdmin"
-          @click="$emit('open-admin-login')"
-          class="admin-icon-btn"
-        >
-          <i class="bi bi-person-lock"></i>
-        </button>
-
-        <!-- Logout ikon -->
-        <button
-          v-else
-          @click="$emit('logout-admin')"
-          class="admin-logout-btn"
-        >
-          <i class="bi bi-box-arrow-right"></i>
-        </button>
+          <button v-else @click="$emit('logout-admin')" class="admin-logout-btn">
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
+        </div>
 
       </div>
+
+      <p class="subtitle mb-0" v-html="subheading"></p>
 
     </div>
-
-    <p class="subtitle mb-0">{{ subheading }}</p>
   </section>
 </template>
+
 
 <script>
 export default {
@@ -78,6 +70,11 @@ export default {
 </script>
 
 <style scoped>
+
+/* -------------------------------------- */
+/*             BASE HEADER STYLE          */
+/* -------------------------------------- */
+
 .header-card {
   background: linear-gradient(140deg, #1f3121 0%, #446847 100%);
   width: 100%;
@@ -85,7 +82,12 @@ export default {
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  padding: 2.5rem 0;
 }
+
+/* -------------------------------------- */
+/*                TYPOGRAFI               */
+/* -------------------------------------- */
 
 .title {
   font-size: 26px;
@@ -95,7 +97,12 @@ export default {
 .subtitle {
   font-size: 16px;
   margin-top: 0.5rem;
+  opacity: 0.95;
 }
+
+/* -------------------------------------- */
+/*                KNAPPER                 */
+/* -------------------------------------- */
 
 .back-btn {
   background: transparent;
@@ -124,4 +131,67 @@ export default {
   color: #b00000;
   font-size: 1.4rem;
 }
+
+/* -------------------------------------- */
+/*         RESPONSIVT LAYOUT WRAPPER      */
+/* -------------------------------------- */
+
+.header-inner {
+  width: 100%;
+  padding-left: 1.5rem; /* Mobil spacing */
+  padding-right: 1.5rem; /* Mobil spacing */
+  padding-top: 2rem;
+}
+
+/* TABLET (≥ 600px) */
+@media (min-width: 600px) {
+  .header-inner {
+  padding-left: 3rem; /* Tablet spacing */
+  padding-right: 3rem; /* Tablet spacing */
+  padding-top: 3rem;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+}
+
+/* LAPTOP (≥ 992px) */
+@media (min-width: 992px) {
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: 3rem;
+  }
+
+  .title {
+    font-size: 38px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+}
+
+/* DESKTOP XL (≥ 1400px) */
+@media (min-width: 1400px) {
+  .header-inner {
+    max-width: 1100px;
+    padding-top: 3rem;
+  }
+
+  .title {
+    font-size: 42px;
+  }
+
+  .subtitle {
+    font-size: 22px;
+  }
+}
+
+
 </style>
