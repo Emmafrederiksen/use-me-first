@@ -1,108 +1,85 @@
 <template> 
-  <HeaderCard 
+    <HeaderCard 
+    
     :title-override="`${greeting}, ${userName}! 👋`"
-  />
+    
+    />
 
-  <div class="container mt-4">
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-10">
-
-        <!-- ALERT -->
-        <div 
-          v-if="showAlert" 
-          class="alert rounded-4 fade show alert-wrapper d-flex align-items-start"
-          role="alert"
-        >
-          <span>
-            Du har <strong>{{ alertCount }}</strong> varer, som snart udløber <br>
-            og du har <strong>{{ expiredItemsCount }}</strong> varer, som <strong>er udløbet</strong>
-          </span>
-
-          <button 
-            type="button" 
-            class="btn-close" 
-            aria-label="Luk" 
-            @click="dismissAlert"
-          ></button>
-        </div>
+    <!-- Bootstrap alert -->
+    <div v-if="showAlert" class="alert shadow rounded-4 fade show mt-5 mx-4 py-4 d-flex justify-content-between align-items-center" role="alert">
+      <span>Du har <strong>{{ alertCount }}</strong> varer, som snart udløber <br> og du har <strong>{{ expiredItemsCount }}</strong> varer, som <strong> er udløbet</strong></span>
+      <button type="button" class="btn-close ms-2" aria-label="Luk" @click="dismissAlert"></button>
+  </div>
 
 
-        <!-- CAROUSEL -->
-        <div class="mt-4">
-          <UseMeFirstCarouselVue 
-            :daysUntilExpiry="4" 
-            :maxVisibleItems="10" 
-            :items="entries"
-            @open-product="openFromCarousel"
-          />
-        </div>
+    <UseMeFirstCarouselVue 
+      :daysUntilExpiry="4" 
+      :maxVisibleItems="10" 
+      :items="entries"
+      @open-product="openFromCarousel"      
+      />
 
-        <!-- ADD NEW CARD -->
-        <div class="my-4">
-          <AddNewCard />
-        </div>
+    <AddNewCard />
 
-        <!-- OPSKRIFTSFORSLAG -->
-        <div class="mt-5">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h2>Opskriftsforlag</h2>
-            <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
+    <div class="mx-4 mt-5">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2>Opskriftsforlag</h2>
+        <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
+      </div>
+
+      <router-link
+        :to="{ name: 'RecipeDetail', params: { id: 1 } }"
+        class="text-decoration-none"
+      > 
+        <div class="card recipe-card mb-3">
+          <img :src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
+          <div class="card-img-overlay d-flex flex-column justify-content-end">
+            <h3 class="card-title text-white">Rugbrødschips</h3>
           </div>
+        </div>
+      </router-link>
 
-          <router-link
-            :to="{ name: 'RecipeDetail', params: { id: 1 } }"
-            class="text-decoration-none"
-          > 
-            <div class="card recipe-card mb-3">
-              <img :src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
+
+      <div class="row g-3">
+        <div class="col-6">
+          <router-link :to="{ name: 'RecipeDetail', params: { id: 2 } }" class="text-decoration-none">
+            <div class="card recipe-card">
+              <img :src="Pandekager" class="card-img" alt="Pandekager">
               <div class="card-img-overlay d-flex flex-column justify-content-end">
-                <h3 class="card-title text-white">Rugbrødschips</h3>
+                <h3 class="card-title text-white">Pandekager</h3>
               </div>
             </div>
           </router-link>
+        </div>
 
-          <!-- RESPONSIVT GRID -->
-          <div class="row g-3">
-            <div class="col-6 col-sm-6 col-lg-6">
-              <router-link :to="{ name: 'RecipeDetail', params: { id: 2 } }" class="text-decoration-none">
-                <div class="card recipe-card">
-                  <img :src="Pandekager" class="card-img" alt="Pandekager">
-                  <div class="card-img-overlay d-flex flex-column justify-content-end">
-                    <h3 class="card-title text-white">Pandekager</h3>
-                  </div>
-                </div>
-              </router-link>
+        <div class="col-6">
+          <router-link :to="{ name: 'RecipeDetail', params: { id: 3 } }" class="text-decoration-none">
+            <div class="card recipe-card">
+              <img :src="Kylling" class="card-img" alt="Kylling i kokosmælk">
+              <div class="card-img-overlay d-flex flex-column justify-content-end">
+                <h3 class="card-title text-white">Kylling i kokosmælk</h3>
+              </div>
             </div>
-
-            <div class="col-6 col-sm-6 col-lg-6">
-              <router-link :to="{ name: 'RecipeDetail', params: { id: 3 } }" class="text-decoration-none">
-                <div class="card recipe-card">
-                  <img :src="Kylling" class="card-img" alt="Kylling i kokosmælk">
-                  <div class="card-img-overlay d-flex flex-column justify-content-end">
-                    <h3 class="card-title text-white">Kylling i kokosmælk</h3>
-                  </div>
-                </div>
-              </router-link>
-            </div>
-          </div>
-
-        </div> <!-- slut opskrifter -->
-
+          </router-link>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- MODAL -->
-  <ProductModal 
-    v-if="showModal && selectedProduct" 
-    :visible="showModal"
-    :product="selectedProduct"
-    @close="showModal = false"
-    @delete-product="deleteProduct"
-    @update-product="updateProduct"
-  />
+
+
+<ProductModal 
+  v-if="showModal && selectedProduct" 
+  :visible="showModal"
+  :product="selectedProduct"
+  @close="showModal = false"
+  v-on:delete-product="deleteProduct"
+  v-on:update-product="updateProduct"
+>
+
+</ProductModal>
+
+
 </template>
-
 
 <script>
 
@@ -298,43 +275,10 @@ expiredItemsCount() {
 
 <style scoped>
 
-
-.alert-wrapper {
-  position: relative;
-  padding-right: 45px !important; 
-  background: white;
+.alert {
+  background: #ffffff;
   color: #2c2c2c;
-  box-shadow: 0 10px 14px rgba(0,0,0,0.14);
-  padding: 1.5rem !important;
-  font-size: 1rem;
-  margin-top: 1.5rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
 }
-
-.alert-wrapper .btn-close {
-  position: absolute;
-  top: 12px;      
-  right: 12px;    
-  z-index: 10;    
-}
-
-/* Desktop improvements */
-@media (min-width: 768px) {
-  .alert-wrapper {
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 1.2rem;
-    padding: 2rem !important;
-  }
-
-  .alert-wrapper span {
-    font-size: 1.2rem;
-    line-height: 1.5;
-  }
-}
-
-
 
 .recipe-card {
   position: relative;
@@ -347,12 +291,6 @@ expiredItemsCount() {
   height: 140px;
   object-fit: cover;
   filter: brightness(70%);
-}
-
-@media (min-width: 992px) {
-  .recipe-card .card-img {
-    height: 200px;
-  }
 }
 
 .recipe-card .card-img-overlay {
@@ -378,5 +316,6 @@ h3 {
   color: #F27405;
   text-decoration: underline;
 }
+
 
 </style>
