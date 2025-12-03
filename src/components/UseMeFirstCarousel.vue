@@ -1,13 +1,13 @@
 <template>
-  <div class="mx-4 mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <h2 class="mb-1">Brug mig først</h2>
+  <div class="carousel-wrapper">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>Brug mig først</h2>
       <!-- desktop-pile -->
-      <div class="d-none d-sm-flex align-items-center gap-2">
-        <button class="btn btn-light btn-sm rounded-circle border" @click="scrollLeft" aria-label="Scroll venstre">
+      <div class="d-none d-sm-flex align-items-center arrow-buttons">
+        <button class="btn btn-light rounded-circle border" @click="scrollLeft" aria-label="Scroll venstre">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <button class="btn btn-light btn-sm rounded-circle border" @click="scrollRight" aria-label="Scroll højre">
+        <button class="btn btn-light rounded-circle border" @click="scrollRight" aria-label="Scroll højre">
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
@@ -227,4 +227,101 @@ export default {
 .dot.expired {
     background: #000000;
 }
+
+
+/* ------------------------------ */
+/*      BASE (mobile)             */
+/* ------------------------------ */
+.carousel-wrapper{
+  margin: 3rem 1.5rem 0 1.5rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+
+/* ------------------------------ */
+/* TABLET (≥ 600px)               */
+/* ------------------------------ */
+@media (min-width: 600px) {
+  .carousel-wrapper {
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+
+  .usefirst-card {
+  min-width: 300px;
+  font-size: 20px;
+  padding-top: 10px;
+  padding-bottom: 0.7rem;
+  padding-left: 0.7rem;
+  }
+
+  .usefirst-track {
+  gap: 18px;
+  }
+
+  h2 {
+  margin-bottom: 1.4rem;
+  }
+
+  .arrow-buttons {
+    margin-bottom: 1.4rem;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+  }
+}
+
+/* ------------------------------ */
+/* LAPTOP (992px → 1399px)        */
+/* MATCHER ALERT + HEADER (800px) */
+/* ------------------------------ */
+@media (min-width: 992px) and (max-width: 1399px) {
+  .carousel-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h2 {
+  margin-bottom: 1.8rem;
+  }
+
+  .arrow-buttons {
+    margin-bottom: 2.1rem;
+    gap: 0.9rem;
+    font-size: 1.5rem;
+  }
+  
+}
+
+/* ------------------------------ */
+/* DESKTOP XL (≥ 1400px → 1799px) */
+/* MATCHER HEADER (1100px)        */
+/* ------------------------------ */
+@media (min-width: 1400px) and (max-width: 1799px) {
+  .carousel-wrapper {
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+}
+
+/* ------------------------------ */
+/* ULTRAWIDE (≥ 1800px)           */
+/* MATCHER ALERT (1400px)         */
+/* ------------------------------ */
+@media (min-width: 1800px) {
+  .carousel-wrapper {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5rem;
+  }
+}
+
+
+
 </style>
