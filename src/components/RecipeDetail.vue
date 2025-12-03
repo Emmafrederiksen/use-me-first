@@ -5,6 +5,7 @@
         class="card-img" 
         :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)"
         :alt="recipe.title"
+        @open-menu="openMenu"
       />
         <div class="card-img-overlay d-flex flex-column justify-content-end">
           <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="goBack">
@@ -119,6 +120,13 @@
     components: {
         ConfirmDeleteRecipeModal
     },
+
+    props: {
+    ["openMenu"]: {
+      type: Function,
+      required: true,
+    },
+  },
 
     data() {
       return { 

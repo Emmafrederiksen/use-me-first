@@ -69,4 +69,11 @@
         transform: scale(1.3);
         color: #F27405;
     }
+
+    @media (min-width: 768px) {
+    header {
+        display: none;
+    }
+}
+
 </style>

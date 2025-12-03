@@ -1,8 +1,9 @@
 <template> 
+
     <HeaderCard 
     
     :title-override="`${greeting}, ${userName}! 👋`"
-    
+    @open-menu="openMenu"
     />
 
     <!-- Bootstrap alert -->
@@ -102,6 +103,13 @@ export default {
     ProductModal,
   },
 
+  props: {
+    openMenu: {
+      type: Function,
+      required: true,
+    },
+  },
+
 
   data() {
 
@@ -142,16 +150,17 @@ export default {
 
 
     alertCount() {
-  const items = this.entries || [];
-  const today = new Date(); 
-  today.setHours(0,0,0,0);
+    const items = this.entries || [];
+    const today = new Date(); 
+    today.setHours(0,0,0,0);
 
-  return items.filter(i => {
-    const d = new Date(i.expiresAt); 
-    d.setHours(0,0,0,0);
-    const days = Math.round((d - today) / 86400000);
-    return days >= 0 && days <= 4;   // 0–4 dage
-  }).length;
+    return items.filter(i => {
+      const d = new Date(i.expiresAt); 
+      d.setHours(0,0,0,0);
+      const days = Math.round((d - today) / 86400000);
+      return days >= 0 && days <= 4;   // 0–4 dage
+    }).length;
+
 },
 
 expiredItemsCount() {
@@ -165,9 +174,6 @@ expiredItemsCount() {
     return d < today;               // udløbet
   }).length;
 },
-
-
-
 
   },
 
@@ -267,6 +273,10 @@ expiredItemsCount() {
         },
   },
 
+  openMenu() {
+    console.log("MENU ÅBNES!!");
+    this.$root.showMenu = true;
+  }
 
 }
 

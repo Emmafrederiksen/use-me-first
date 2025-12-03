@@ -4,6 +4,7 @@
     :show-back="true"
     :title-override="itemName"
     :subtitle-override="subtitleText"
+    @open-menu="openMenu"
 
   />
 
@@ -72,8 +73,14 @@ export default {
     name: { 
         type: String, 
         default: '' 
-    } 
+    }, 
+    
+    openMenu: {
+      type: Function,
+      required: true,
+    },
  },
+ 
 
   data() {
     // læs gruppens entries (sat i MyFridge.goToGroup)

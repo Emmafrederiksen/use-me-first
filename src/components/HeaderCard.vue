@@ -18,15 +18,26 @@
         </div>
 
         <!-- Højre side -->
-        <div v-if="showAdminIcon">
-          <button v-if="!isAdmin" @click="$emit('open-admin-login')" class="admin-icon-btn">
-            <i class="bi bi-person-lock"></i>
+        <div class="right-controls">
+
+          <!-- Admin ikoner -->
+          <div v-if="showAdminIcon" class="me-3">
+            <button v-if="!isAdmin" @click="$emit('open-admin-login')" class="admin-icon-btn">
+              <i class="bi bi-person-lock"></i>
+            </button>
+
+            <button v-else @click="$emit('logout-admin')" class="admin-logout-btn">
+              <i class="bi bi-box-arrow-right"></i>
+            </button>
+          </div>
+
+          <!-- BURGERMENU (kun tablet/desktop) -->
+          <button class="burger-btn d-none d-md-flex" @click="$emit('open-menu')">
+            <i class="bi bi-list"></i>
           </button>
 
-          <button v-else @click="$emit('logout-admin')" class="admin-logout-btn">
-            <i class="bi bi-box-arrow-right"></i>
-          </button>
         </div>
+
 
       </div>
 
@@ -190,6 +201,31 @@ export default {
 
   .subtitle {
     font-size: 22px;
+  }
+}
+
+.right-controls {
+  display: flex;
+  align-items: center;
+}
+
+.burger-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.3rem;
+  transition: 0.25s ease;
+}
+
+.burger-btn:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 767px) {
+  .burger-btn {
+    display: none !important;
   }
 }
 

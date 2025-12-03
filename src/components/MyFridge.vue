@@ -1,6 +1,10 @@
 <template>
 
-    <HeaderCard />
+    <HeaderCard 
+    
+    @open-menu="openMenu"
+    
+    />
 
     <!-- Søge funktion -->
     <div class="d-flex align-items-center gap-2 mt-5 mx-4 mb-3">
@@ -69,8 +73,16 @@ import HeaderCard from './HeaderCard.vue';
 
 export default {
     name: 'MyFridge',
+
     components: {
         HeaderCard,
+    },
+
+    props: {
+        openMenu: {
+        type: Function,
+        required: true,
+        },
     },
 
     data() {

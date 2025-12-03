@@ -5,6 +5,7 @@
   :subtitle-override="adminSubtitle"
   @open-admin-login="showAdminLogin = true"
   @logout-admin="logoutAdmin"
+  @open-menu="openMenu"
 />
 
 <!-- Kun for admin -->
@@ -76,6 +77,13 @@ export default {
       showAdminLogin: false,
       isAdmin: localStorage.getItem('isAdmin') === "1",
     };
+  },
+
+  props: {
+    openMenu: {
+      type: Function,
+      required: true,
+    },
   },
 
   methods: {

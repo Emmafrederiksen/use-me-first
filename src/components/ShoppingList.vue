@@ -1,5 +1,9 @@
 <template>
-    <HeaderCard />
+    <HeaderCard 
+    
+    @open-menu="openMenu"
+    
+    />
 </template>
 
 <script>
@@ -14,5 +18,11 @@ export default {
         HeaderCard,
     },  
     
+    props: {
+        openMenu: {
+        type: Function,
+        required: true,
+        },
+    },
 }
 </script>

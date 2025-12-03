@@ -1,5 +1,9 @@
 <template>
-    <HeaderCard />
+    <HeaderCard 
+    
+    @open-menu="openMenu"
+
+    />
 
     <form @submit.prevent="submitForm" class="mx-4">
         <div class="mb-4 mt-5">
@@ -57,6 +61,13 @@ export default {
 
     name: 'AddItem',
 
+    props: {
+        openMenu: {
+        type: Function,
+        required: true,
+        },
+    },
+
     data() {
         return {
             Name: '',
@@ -70,6 +81,7 @@ export default {
     components: {
         HeaderCard,
     },
+
     methods: {
         submitForm() {
             // Samler data i et objekt: newItem
