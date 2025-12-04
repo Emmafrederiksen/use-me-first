@@ -157,6 +157,9 @@ export default {
   font-size: 2rem;
   cursor: pointer;
   color: #333;
+  top: 15px;      /* løfter krydset op */
+  right: 15px;    /* flytter det lidt mere ud i hjørnet */
+  position: absolute;
 }
 
 /* =============================== */
