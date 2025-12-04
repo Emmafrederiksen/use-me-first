@@ -290,9 +290,9 @@ export default {
   width: 42px;
   height: 42px;
   border-radius: 999px;
-  border: 2px solid #08300f20;
-  background: #ffffff;
-  color: #08300f;
+  border: none;
+  background: #08300f;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -304,7 +304,6 @@ export default {
 .arrow-btn:hover {
   background: #f27405;
   color: white;
-  border-color: #f27405;
   box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
   transform: translateY(-2px);
 }

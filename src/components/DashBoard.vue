@@ -30,10 +30,14 @@
 
       <div class="recipes-wrapper">
 
-        <div class="recipes-header d-flex justify-content-between align-items-center mb-3">
+        <div class="recipes-header">
           <h2>Opskriftsforslag</h2>
-          <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
+
+          <router-link to="/opskrifter" class="see-all-btn">
+            <i class="bi bi-arrow-right"></i>
+          </router-link>
         </div>
+
 
         <div class="recipes-grid">
 
@@ -413,12 +417,46 @@ expiredItemsCount() {
   margin: 3rem 1.5rem;
 }
 
-.see-all-text {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #F27405;
-  text-decoration: underline;
+.see-all-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: #08300f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.25s ease;
+  cursor: pointer;
+  margin-bottom: 12px;
 }
+
+/* hover = orange med skygge */
+.see-all-btn:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.see-all-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+/* Juster container for alignment */
+.recipes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+
 
 /* KORT GENEREL STYLING */
 .recipe-card {
