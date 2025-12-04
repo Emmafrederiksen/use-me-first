@@ -1,27 +1,31 @@
 <template>
-  <div v-if="visible" class="modal fade show d-block" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+  <div v-if="visible" class="productmodal-overlay" tabindex="-1" role="dialog">
+
+    <div class="productmodal-box" role="document">
+
+      <div class="productmodal-content">
+
         <div class="modal-header position-relative">
           <div class="modal-title-wrapper">
-            <h5 class="modal-title">{{ product.name }}</h5>
+            <h3 class="modal-title">{{ product.name }}</h3>
             <div class="modal-title-underline"></div>
           </div>
           <button
             type="button"
-            class="close-icon position-absolute end-0 me-3"
+            class="close-icon position-absolute end-0"
             v-on:click="$emit('close')"
             aria-label="Close"
           >
             <i class="bi bi-x"></i>
           </button>
         </div>
+
         <div class="modal-body">
           <p>
             <span
               class="dot"
-              v-bind:class="badgeClass(daysLeft(product.expiresAt))"
-            ></span>
+              v-bind:class="badgeClass(daysLeft(product.expiresAt))">
+              </span>
             <span v-if="daysLeft(product.expiresAt) < 0">
               Udløbet for 
               <strong>
@@ -54,35 +58,29 @@
           </p>
         </div>
         <router-link to="/opskrifter">
-          <button type="button" class="btn btn-recipe mt-3 mb-2">
+          <button type="button" class="pm-btn-recipe">
             <i class="bi bi-fork-knife"></i>
-            Se opskrifer med {{ product.name }}
+            Se opskrifter med {{ product.name }}
           </button>
         </router-link>
-        <div class="modal-footer justify-content-center">
-          <button
-            type="button"
-            class="btn btn-delete"
-            v-on:click="openConfirmModal('delete')"
-          >
+        
+        <div class="productmodal-actions">
+
+          <button type="button" class="pm-btn-delete" v-on:click="openConfirmModal('delete')">
             <i class="bi bi-trash3"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-edit"
-            v-on:click="openEditModal()"
-          >
+
+          <button type="button" class="pm-btn-edit" v-on:click="openEditModal()">
             <i class="bi bi-pencil"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            v-on:click="openConfirmModal('markUsed')"
-          >
+
+          <button type="button" class="pm-btn-used" v-on:click="openConfirmModal('markUsed')">
             <i class="bi bi-check2-circle"></i>
             Marker som brugt
           </button>
+
         </div>
+
       </div>
     </div>
   </div>
@@ -104,16 +102,19 @@
 </template>
 
 <script>
+
 import ConfirmModal from "./ConfirmModal.vue";
 import EditModal from "./EditModal.vue";
 import { toast } from "vue3-toastify";
 
 export default {
   name: "ProductModal",
+
   components: {
     ConfirmModal,
     EditModal,
   },
+
   props: {
     product: {
       type: Object,
@@ -124,6 +125,7 @@ export default {
       default: false,
     },
   },
+
   data() {
     return {
       products: [],
@@ -134,6 +136,7 @@ export default {
       showEditModal: false,
     };
   },
+
   methods: {
     openConfirmModal(action) {
       this.currentAction = action;
@@ -144,16 +147,19 @@ export default {
       }
       this.showConfirmModal = true;
     },
+
     openEditModal() {
       this.selectedProduct = { ...this.product }; // clone for sikkerhed
       this.showEditModal = true;
     },
+
     updateProduct(updatedProduct) {
       // Opdater lokal kopi
       this.localProduct = { ...updatedProduct };
       // Emit op til parent
       this.$emit("update-product", updatedProduct);
   },
+
     handleConfirm(action) { //metode til at håndtere bekræftelse i confirm modal
       this.showConfirmModal = false;
       this.$emit("close");
@@ -175,6 +181,7 @@ export default {
         );
       }
     },
+
     daysLeft(dateString) {
       // dateString = den dato, varen udløber
       const today = new Date(); // today = den dato, det er i dag
@@ -190,9 +197,11 @@ export default {
       if (days <= 4) return "warning";
       return "success";
     },
+
   },
 
   computed: {
+
     date() {
       // Antal dage til udløbsdato
       const today = new Date();
@@ -204,6 +213,7 @@ export default {
       if (daysDiff === 1) return "1 dag";
       return `${daysDiff} dage`;
     },
+
     amountUnit() {
       // Formateret mængde og enhed
       if(this.product.amount && this.product.unit) {
@@ -211,6 +221,7 @@ export default {
       }
       return 'Ikke angivet';
     },
+
     dateDisplay() {
       const dateObj = new Date(this.product.expiresAt); // Opretter et Date-objekt fra produktets dato
 
@@ -221,220 +232,101 @@ export default {
       return `${day}-${month}-${year}`;
     },
   },
+  
   watch: {
     product: {
     immediate: true,
     handler(newVal) {
       this.localProduct = { ...newVal };
     }
-  }
+    }
   }
 };
+
+
 </script>
 
 <style scoped>
 
-.modal {
-  background-color: rgba(0, 0, 0, 0.35) !important;
-  backdrop-filter: blur(3px);
+/* =========================================================
+   PRODUCT MODAL — OVERLAY & CONTAINER
+   ========================================================= */
+.productmodal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);   /* ← Blur tilbage */
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000 !important; /* ← vigtig ændring */
 }
 
 
-/* Gør modalboks identisk med admin modal */
-.modal-content {
+.productmodal-box {
   background: #ffffff;
-  border-radius: 24px !important;   /* Runde hjørner */
-  padding: 24px 20px 20px;          /* Indvendig padding */
+  border-radius: 24px;
+  padding: 24px 22px 26px;
+  width: 90%;
+  max-width: 420px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
-  border: none;                     /* Fjern Bootstrap standard edge */
+  position: relative;
 }
 
-/* Sikrer at modal ikke går helt ud til kanter */
-.modal-dialog {
-  max-width: 420px !important; /* samme bredde som admin login */
-  margin: 20px auto !important; /* luft over/under + centreret */
-  padding: 0 16px; /* luft til siderne på små skærme */
+.productmodal-content {
+  width: 100%;
 }
 
-
-
-.modal-title {
-  font-weight: bold;
-}
-.modal-body {
-  text-align: left !important;   /* ikke centreret */
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 0.95rem;
-  line-height: 1.45;
+/* =========================================================
+   TITLE + CLOSE BUTTON
+   ========================================================= */
+.productmodal-title {
+  font-weight: 700;
+  margin: 0;
+  color: #000;
 }
 
-.modal-body p:first-of-type {
-  margin-bottom: 1rem;
-  font-size: 1rem;
+.modal-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.date, .label {
-  font-weight: bold;
-}
-.red-circle {
-  color: red;
-}
-.btn-primary {
-  background: #f27405;
-  color: #ffffff;
-  font-weight: 500;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-}
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
-  background: #f27405 !important;
-  color: #ffffff !important;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-  outline: none !important;
-}
-
-.btn-delete {
-  background: #ffffff;
-  color: #ed1919;
-  font-weight: 500;
-  border: 2px solid #ed1919;
-  border-radius: 999px;
-  padding: 8px 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-}
-.btn-delete:hover,
-.btn-delete:focus,
-.btn-delete:active {
-  background: #ffffff !important;
-  color: #ed1919 !important;
-  border: 2px solid #ed1919 !important;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-  outline: none !important;
-}
-.btn-edit {
-  background: #ffffff;
-  color: #08300f;
-  font-weight: 500;
-  border: 2px solid #08300f;
-  border-radius: 999px;
-  padding: 8px 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-}
-
-.btn-edit:hover,
-.btn-edit:focus,
-.btn-edit:active,
-.btn-recipe:hover,
-.btn-recipe:focus,
-.btn-recipe:active {
-  background: #ffffff !important;
-  color: #08300f !important;
-  border: 2px solid #08300f !important;
-
-  transform: translateY(-2px);
-  box-shadow: 0 14px 18px rgba(0, 0, 0, 0.18);
-
-  outline: none !important;
-  transition: all 0.2s ease;
-}
-
-.btn-recipe {
-  background: #ffffff;
-  color: #08300f;
-  font-weight: 500;
-  border: 2px solid #08300f;
-  border-radius: 999px;
-  padding: 8px 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-  display: block;
-  width: fit-content;
-  margin: 0 auto 10px;
+.modal-title-underline {
+  height: 2px;
+  width: 90px;
+  background: #dddddd;
+  margin-top: 4px;
 }
 
 .close-icon {
   background: none;
   border: none;
-  font-size: 2rem; 
+  font-size: 2rem;
   color: #333;
-  top: 10px;
-  right: 16px;
   cursor: pointer;
 }
 
-
-.modal-header {
-  border-bottom: none !important;
-  padding-bottom: 0;
-  padding-top: 10px;
-  position: relative;
-  display: block; /* så titel placeres venstre */
-}
-
-.modal-title-wrapper {
-  width: 100%;
+/* =========================================================
+   MODAL BODY + TOP INFO (Udløbs-linjen)
+   ========================================================= */
+.modal-body {
+  padding: 0 4px;
+  margin-top: 16px !important;
   text-align: left;
-}
-
-.modal-title-underline {
-  height: 2px;
-  width: 80px;
-  background: #ddd;
-  margin-bottom: 6px;
-}
-
-
-.modal-footer {
-  border-top: none;
-}
-
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-size: 1rem;
-  border-bottom: 1px solid #e6e6e6;
-}
-
-.info-row:last-of-type {
-  border-bottom: none; /* ingen streg under sidste element */
-}
-
-.info-row .label {
-  font-weight: 600;
   color: #333;
 }
 
-.info-row .value {
-  color: #444;
-  text-align: right;
+.modal-body > p:first-of-type {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  margin: 10px 0 30px;
 }
 
-.label {
-  font-weight: bold;
-}
-
-.value {
-  text-align: right;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
+/* Dot status indikator */
 .dot {
   width: 14px;
   height: 14px;
@@ -444,18 +336,260 @@ a {
   display: inline-block;
 }
 
-.dot.danger {
-  background: #e02424;
+.dot.danger { background: #e02424; }
+.dot.warning { background: #f5b400; }
+.dot.success { background: #1fbf62; }
+.dot.expired { background: #000; }
+
+/* =========================================================
+   INFO ROWS (Udløbsdato, Mængde, Placering)
+   ========================================================= */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.97rem;
+  border-bottom: 1px solid #eee;
 }
 
-.dot.warning {
-  background: #f5b400;
+.info-row:last-of-type {
+  border-bottom: none;
 }
 
-.dot.success {
-  background: #1fbf62;
+.label {
+  font-weight: 600;
+  color: #222;
 }
-.dot.expired {
-    background: #000000;
+
+.value {
+  color: #444;
+  text-align: right;
 }
+
+/* =========================================================
+   OPSKRIFT-KNAP (grøn outline)
+   ========================================================= */
+.pm-btn-recipe {
+  background: #ffffff;
+  color: #08300f;
+  border: 2px solid #08300f;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  margin: 30px auto 18px;
+  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.10);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+}
+
+/* Hover-effekt (samme som de andre pm-knapper) */
+.pm-btn-recipe:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(8, 48, 15, 0.18); /* mildere og blødere */
+  filter: brightness(1.05);
+}
+
+/* Fjerner standard link-styling når router-link omslutter knappen */
+a:has(button.pm-btn-recipe) {
+  all: unset !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  display: flex; /* så indholdet ikke hopper */
+}
+
+/* Ikoner i knapper med TEKST */
+.pm-btn-recipe i {
+  font-size: 1.2rem; 
+}
+
+
+/* =========================================================
+   ACTION KNAPPER (delete, edit, used)
+   ========================================================= */
+.productmodal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Fælles layout til alle tre knapper */
+.pm-btn-delete,
+.pm-btn-edit,
+.pm-btn-used {
+  height: 58px;
+  border-radius: 999px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+/* Ikoner i runde IKON-knapper (delete + edit) */
+.pm-btn-delete i,
+.pm-btn-edit i {
+  font-size: 1.2rem;
+}
+
+.pm-btn-used i {
+  font-size: 1.5rem;   /* ens og lidt større */
+}
+
+/* DELETE (rød outline) */
+.pm-btn-delete {
+  border: 2px solid #ED1919;
+  color: #ED1919;
+  background: white;
+}
+
+.pm-btn-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(237, 25, 25, 0.25);
+  filter: brightness(1.05);
+}
+
+/* EDIT (grøn outline) */
+.pm-btn-edit {
+  border: 2px solid #08300f;
+  color: #08300f;
+  background: white;
+}
+
+.pm-btn-edit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(8,48,15,0.25);
+  filter: brightness(1.05);
+}
+
+/* USED (orange, fyldt) */
+.pm-btn-used {
+  background: #f27405;
+  color: white;
+  border: none;
+  flex: 1;
+  min-width: 130px;
+}
+
+.pm-btn-used:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(242,116,5,0.25);
+  filter: brightness(1.05);
+}
+
+/* =========================================================
+   RESPONSIVE TWEAKS
+   ========================================================= */
+@media (max-width: 420px) {
+  .productmodal-actions {
+    gap: 8px;
+  }
+  .pm-btn-delete,
+  .pm-btn-edit {
+    padding: 0 16px;
+    height: 52px;
+  }
+  .pm-btn-used {
+    height: 52px;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* Tablet */
+@media (min-width: 600px) {
+  .productmodal-box {
+    max-width: 500px;
+    padding: 32px 30px;
+  }
+
+  .modal-title {
+    font-size: 1.6rem;
+  }
+
+  .modal-body {
+    font-size: 1.05rem;
+  }
+
+  .pm-btn-recipe {
+    font-size: 1.05rem;
+    padding: 12px 28px;
+  }
+
+  .pm-btn-used {
+    font-size: 1.05rem;
+  }
+}
+
+/* Laptop */
+@media (min-width: 900px) {
+  .productmodal-box {
+    max-width: 600px;
+    padding: 36px 34px;
+  }
+
+  .modal-title {
+    font-size: 1.7rem;
+  }
+
+  .info-row {
+    font-size: 1.05rem;
+  }
+
+  .pm-btn-delete,
+  .pm-btn-edit {
+    height: 62px;
+  }
+
+  .pm-btn-used {
+    height: 62px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Desktop Large */
+@media (min-width: 1400px) {
+  .productmodal-box {
+    max-width: 720px;
+    padding: 42px 40px;
+  }
+
+  .modal-title {
+    font-size: 1.9rem;
+  }
+
+  .modal-body {
+    font-size: 1.10rem;
+  }
+
+  .pm-btn-recipe {
+    font-size: 1.1rem;
+    padding: 14px 32px;
+  }
+
+  .pm-btn-delete,
+  .pm-btn-edit {
+    height: 58px;
+  }
+
+  .pm-btn-used {
+    height: 58px;
+    font-size: 1.10rem;
+  }
+}
+
+
 </style>
