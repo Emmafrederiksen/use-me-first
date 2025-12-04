@@ -133,6 +133,7 @@ export default {
   .addcard-image {
     width: 150px;
     right: 20px;
+    bottom: 20px;
   }
 }
 
@@ -154,6 +155,8 @@ export default {
 
   .addcard-image {
     width: 170px;
+    right: 20px;
+    bottom: 20px;
   }
 }
 
