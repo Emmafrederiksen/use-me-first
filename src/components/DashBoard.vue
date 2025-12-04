@@ -318,8 +318,8 @@ expiredItemsCount() {
 
 .alert-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 20px;
+  right: 20px;
 }
 
 @keyframes fadeInAlert {
@@ -340,7 +340,7 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 20px;
+    font-size: 1.125rem;
   }
   
 }
@@ -357,11 +357,11 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 20px;
+    font-size: 1.125rem;
   }
 
   .alert-close {
-  font-size: 1.1rem;
+  font-size: 1rem;
   }
 }
 
@@ -379,11 +379,11 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 20px;
+    font-size: 1.125rem;
   }
 
   .alert-close {
-  font-size: 1.2rem;
+  font-size: 1rem;
   }
 
 }
@@ -401,7 +401,7 @@ expiredItemsCount() {
   }
 
   .alert-close {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   }
 }
 
