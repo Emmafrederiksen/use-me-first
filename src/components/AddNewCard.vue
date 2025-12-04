@@ -74,7 +74,7 @@ export default {
   font-size: 20px;
   font-weight: 600;
   line-height: 26px;
-  margin-bottom: 16px;
+  margin-bottom: 30px;
 }
 
 /* CALL-TO-ACTION KNAP */
@@ -98,6 +98,7 @@ export default {
   box-shadow: 0 8px 14px rgba(242,116,5,0.25);
   filter: brightness(1.05);
 }
+
 
 /* BILLEDET */
 .addcard-image {
@@ -186,7 +187,7 @@ export default {
   }
 
   .addcard-image {
-    width: 180px;
+    width: 190px;
     right: 40px;
     bottom: 20px;
   }
