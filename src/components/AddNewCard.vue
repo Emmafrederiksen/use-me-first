@@ -42,7 +42,7 @@ export default {
 
 /* WRAPPER – styrer ydre spacing så kortet flugter med resten */
 .addcard-wrapper {
-  margin: 2.5rem 1.5rem 0 1.5rem; /* samme spacing som andre sektioner */
+  margin: 3rem 1.5rem 0 1.5rem; /* samme spacing som andre sektioner */
 }
 
 /* KORT-BOKS */
