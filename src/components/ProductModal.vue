@@ -1,14 +1,12 @@
 <template>
-  <div
-    v-if="visible"
-    class="modal fade show d-block"
-    tabindex="-1"
-    role="dialog"
-  >
+  <div v-if="visible" class="modal fade show d-block" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <div class="modal-header justify-content-center position-relative">
-          <h5 class="modal-title">{{ product.name }}</h5>
+        <div class="modal-header position-relative">
+          <div class="modal-title-wrapper">
+            <h5 class="modal-title">{{ product.name }}</h5>
+            <div class="modal-title-underline"></div>
+          </div>
           <button
             type="button"
             class="close-icon position-absolute end-0 me-3"
@@ -235,17 +233,48 @@ export default {
 </script>
 
 <style scoped>
+
 .modal {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(3px);
 }
+
+
+/* Gør modalboks identisk med admin modal */
+.modal-content {
+  background: #ffffff;
+  border-radius: 24px !important;   /* Runde hjørner */
+  padding: 24px 20px 20px;          /* Indvendig padding */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  border: none;                     /* Fjern Bootstrap standard edge */
+}
+
+/* Sikrer at modal ikke går helt ud til kanter */
+.modal-dialog {
+  max-width: 420px !important; /* samme bredde som admin login */
+  margin: 20px auto !important; /* luft over/under + centreret */
+  padding: 0 16px; /* luft til siderne på små skærme */
+}
+
+
+
 .modal-title {
   font-weight: bold;
 }
 .modal-body {
-  text-align: center;
+  text-align: left !important;   /* ikke centreret */
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 0.95rem;
+  line-height: 1.45;
 }
-.date,
-.label {
+
+.modal-body p:first-of-type {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.date, .label {
   font-weight: bold;
 }
 .red-circle {
@@ -302,6 +331,7 @@ export default {
   text-decoration: none;
   box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
 }
+
 .btn-edit:hover,
 .btn-edit:focus,
 .btn-edit:active,
@@ -311,9 +341,14 @@ export default {
   background: #ffffff !important;
   color: #08300f !important;
   border: 2px solid #08300f !important;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
+
+  transform: translateY(-2px);
+  box-shadow: 0 14px 18px rgba(0, 0, 0, 0.18);
+
   outline: none !important;
+  transition: all 0.2s ease;
 }
+
 .btn-recipe {
   background: #ffffff;
   color: #08300f;
@@ -328,16 +363,39 @@ export default {
   width: fit-content;
   margin: 0 auto 10px;
 }
+
 .close-icon {
   background: none;
   border: none;
-  font-size: 3rem;
-  color: #000;
+  font-size: 2rem; 
+  color: #333;
+  top: 10px;
+  right: 16px;
+  cursor: pointer;
 }
+
+
 .modal-header {
-  font-size: 1.5rem;
-  border-bottom: 2px solid #000000;
+  border-bottom: none !important;
+  padding-bottom: 0;
+  padding-top: 10px;
+  position: relative;
+  display: block; /* så titel placeres venstre */
 }
+
+.modal-title-wrapper {
+  width: 100%;
+  text-align: left;
+}
+
+.modal-title-underline {
+  height: 2px;
+  width: 80px;
+  background: #ddd;
+  margin-bottom: 6px;
+}
+
+
 .modal-footer {
   border-top: none;
 }
@@ -345,7 +403,23 @@ export default {
 .info-row {
   display: flex;
   justify-content: space-between;
-  margin: 0.3rem 0;
+  padding: 6px 0;
+  font-size: 1rem;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.info-row:last-of-type {
+  border-bottom: none; /* ingen streg under sidste element */
+}
+
+.info-row .label {
+  font-weight: 600;
+  color: #333;
+}
+
+.info-row .value {
+  color: #444;
+  text-align: right;
 }
 
 .label {
@@ -362,11 +436,12 @@ a {
 }
 
 .dot {
-  display: inline-block;
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+  margin-right: 8px;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+  display: inline-block;
 }
 
 .dot.danger {
