@@ -7,7 +7,7 @@
 
         <div class="modal-header position-relative">
           <div class="modal-title-wrapper">
-            <h3 class="modal-title">{{ product.name }}</h3>
+            <h3 class="productmodal-title">{{ product.name }}</h3>
             <div class="modal-title-underline"></div>
           </div>
           <button

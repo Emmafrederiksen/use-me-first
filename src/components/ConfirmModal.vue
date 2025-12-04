@@ -102,6 +102,12 @@ export default {
   align-items: flex-start;
 }
 
+.confirm-title {
+  font-weight: 700;
+  margin: 0;
+  color: #000;
+}
+
 .confirm-title-wrapper {
   display: flex;
   flex-direction: column;
@@ -121,6 +127,9 @@ export default {
   font-size: 2rem;
   color: #333;
   cursor: pointer;
+  top: 15px;      /* løfter krydset op */
+  right: 15px;    /* flytter det lidt mere ud i hjørnet */
+  position: absolute;
 }
 
 /* ========================================= */
