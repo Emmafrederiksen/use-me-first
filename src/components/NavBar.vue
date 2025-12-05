@@ -3,19 +3,19 @@
         <nav>
             <ul>
                 <li>
-                    <router-link to="/"> <i class="bi bi-house d-flex justify-content-center nav-icon py-1"></i> Forside</router-link>
+                    <router-link to="/"> <i class="bi bi-house d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Forside</router-link>
                 </li>
                 <li>  
-                    <router-link to="/opskrifter" v-bind:class="{ 'router-link-active': $route.path.startsWith('/opskrift') }"> <i class="bi bi-fork-knife d-flex justify-content-center nav-icon py-1"></i> Opskrifter</router-link>
+                    <router-link to="/opskrifter" v-bind:class="{ 'router-link-active': $route.path.startsWith('/opskrift') }"> <i class="bi bi-fork-knife d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Opskrifter</router-link>
                 </li>
                 <li>
-                    <router-link to="/indtast"> <i class="bi bi-plus-circle d-flex justify-content-center nav-icon py-1"></i> Tilføj varer</router-link>
+                    <router-link to="/indtast"> <i class="bi bi-plus-circle d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Tilføj varer</router-link>
                 </li>
                 <li>
-                    <router-link to="/mitkoeleskab" v-bind:class="{ 'router-link-active': $route.path.startsWith('/mitkoeleskab') }" > <i class="bi bi-file-post d-flex justify-content-center nav-icon py-1"></i> Mit køleskab</router-link>
+                    <router-link to="/mitkoeleskab" v-bind:class="{ 'router-link-active': $route.path.startsWith('/mitkoeleskab') }" > <i class="bi bi-file-post d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Mit køleskab</router-link>
                 </li>
                 <li>
-                    <router-link to="/indkoebsliste"><i class="bi bi-pencil-square d-flex justify-content-center nav-icon py-1"></i> Indkøbsliste</router-link>
+                    <router-link to="/indkoebsliste"><i class="bi bi-pencil-square d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Indkøbsliste</router-link>
                 </li>
             </ul>
         </nav>
