@@ -7,7 +7,12 @@
     />
 
     <!-- Bootstrap alert -->
-    <div v-if="showAlert" class="alert-wrapper" role="alert">
+    <div
+      v-if="showAlert"
+      class="alert-wrapper"
+      role="alert"
+      aria-live="polite"
+      >
       <span class="alert-text">
         Du har <strong>{{ alertCount }}</strong> varer, som snart udløber 
         og du har <strong>{{ expiredItemsCount }}</strong> varer, som <strong>er udløbet</strong>
@@ -33,8 +38,8 @@
         <div class="recipes-header">
           <h2>Opskriftsforslag</h2>
 
-          <router-link to="/opskrifter" class="see-all-btn">
-            <i class="bi bi-arrow-right"></i>
+          <router-link to="/opskrifter" class="see-all-btn" aria-label="Se alle opskrifter">
+            <i class="bi bi-arrow-right" aria-hidden="true"></i> 
           </router-link>
         </div>
 
@@ -45,6 +50,7 @@
           <router-link
             :to="{ name: 'RecipeDetail', params: { id: 1 } }"
             class="recipe-card recipe-feature text-decoration-none"
+            aria-label="Se opskrift på Rugbrødschips"
           >
             <img :src="Rugbroedschips" alt="Rugbrødschips">
             <h3 class="recipe-title">Rugbrødschips</h3>
@@ -54,6 +60,7 @@
           <router-link
             :to="{ name: 'RecipeDetail', params: { id: 2 } }"
             class="recipe-card recipe-small text-decoration-none"
+            aria-label="Se opskrift på Pandekager"
           >
             <img :src="Pandekager" alt="Pandekager">
             <h3 class="recipe-title">Pandekager</h3>
@@ -63,6 +70,7 @@
           <router-link
             :to="{ name: 'RecipeDetail', params: { id: 3 } }"
             class="recipe-card recipe-small text-decoration-none"
+            aria-label="Se opskrift på Kylling i kokosmælk"
           >
             <img :src="Kylling" alt="Kylling i kokosmælk">
             <h3 class="recipe-title">Kylling i kokosmælk</h3>
