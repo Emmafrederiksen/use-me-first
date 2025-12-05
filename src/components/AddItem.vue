@@ -5,11 +5,25 @@
 
     />
 
-    <form @submit.prevent="submitForm" class="mx-4">
+    <form @submit.prevent="submitForm" class="mx-4" novalidate>
         <div class="mb-4 mt-5">
             <label for="name" class="form-label bold-label">Varenavn *</label>
-            <input type="text" class="form-control" id="name" placeholder="Indtast navn" v-model="Name" required>
+            <input
+                ref="nameInput" type="text" class="form-control" id="name" placeholder="Indtast navn"
+                v-model="Name" :aria-describedby="nameError ? 'name-error' : null"
+                :class="{'is-invalid': nameError }" required aria-required="true">
         </div>
+
+        <!-- Fejlbesked il skræmlæser for varenavn -->
+         <div
+            v-if="nameError"
+            id="name-error"
+            class="invalid-feedback"
+            role="alert"
+            aria-live="assertive"
+            >
+            Varenavn skal udfyldes
+         </div>
 
         <div class="mb-4">
             <label for="location" class="form-label bold-label">Placering</label>
@@ -22,8 +36,22 @@
 
         <div class="mb-4">
             <label for="date" class="form-label bold-label">Udløbsdato *</label>
-            <input type="date" class="form-control" id="date" v-model="Date" required>
+            <input 
+                ref="dateInput" type="date" class="form-control" id="date"
+                v-model="Date" :aria-describedby="dateError ? 'date-error' : null"
+                :class="{'is-invalid': dateError }" required aria-required="true">
         </div>
+
+        <!-- Fejlbesked til skræmlæser for udløbsdato -->
+        <div
+            v-if="dateError"
+            id="date-error"
+            class="invalid-feedback"
+            role="alert"
+            aria-live="assertive"
+            >
+            Udløbsdato skal udfyldes
+         </div>
 
         <div class="d-flex align-items-center gap-3">
             <div class="mb-4" style="width: 40%;">
@@ -45,7 +73,7 @@
         </div>
 
         <button to="/indtast" class="add-btn mt-3" type="submit">
-            <i class="bi bi-check2-circle me-2"></i>
+            <i class="bi bi-check2-circle me-2" aria-hidden="true"></i>
             Gem vare
         </button>
     </form>
@@ -75,6 +103,8 @@ export default {
             Date: '',
             Amount: null,
             Unit: '',
+            nameError: false,
+            dateError: false,
         }
     },
     
@@ -84,6 +114,20 @@ export default {
 
     methods: {
         submitForm() {
+            this.nameError = false;
+            this.dateError = false;
+
+            if (!this.Name) { 
+                this.nameError = true;
+                this.$refs.nameInput.classList.add('is-invalid');
+            }
+            if (!this.Date) { 
+                this.dateError = true;
+                this.$refs.dateInput.classList.add('is-invalid');
+            }
+
+            if (this.nameError || this.dateError ) return;
+
             // Samler data i et objekt: newItem
             const newItem = {
                 name: this.Name,
