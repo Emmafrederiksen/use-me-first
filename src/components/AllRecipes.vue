@@ -306,6 +306,7 @@ export default {
     max-width: 85%;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 4rem;
   }
 
   .recipes-grid {
@@ -336,6 +337,7 @@ export default {
 @media (min-width: 1800px) {
   .recipes-wrapper {
     max-width: 80%;
+    margin-top: 5rem;
   }
 
   .recipe-card,
