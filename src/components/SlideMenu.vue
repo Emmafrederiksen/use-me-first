@@ -54,7 +54,7 @@ export default {
   inset: 0;
   background: rgba(0,0,0,0.4);
   backdrop-filter: blur(3px);
-  z-index: 2000;
+  z-index: 2000 !important;
 }
 
 .menu {

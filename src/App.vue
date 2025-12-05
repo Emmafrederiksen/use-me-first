@@ -59,7 +59,8 @@ export default {
   margin: 0 auto;
   background-color: #FEFBF6;
   min-height: 100vh;
-  padding-bottom: 2rem; /* plads til mobil-navbar */
+  padding-bottom: 3rem; /* plads til mobil-navbar */
+
 }
 
 /* Når dark mode er slået til */
@@ -70,5 +71,10 @@ body.dark-mode {
 body.dark-mode #app {
   background-color: #2c2c2c !important;
 }
+@media (min-width: 600px) {
+  #app {
+    padding-bottom: 1rem;
+  }
+  }
 
 </style>
