@@ -9,17 +9,14 @@
 />
 
 <!-- Kun for admin -->
-<div v-if="isAdmin" class="text-end mx-4 mt-5">
-
-  <router-link to="/opskrifter/tilføj" class="add-btn mt-3 text-decoration-none">
-  <i class="bi bi-plus-circle me-2"></i>
+<div v-if="isAdmin" class="admin-add-wrapper">
+  <router-link to="/opskrifter/tilføj" class="add-btn text-decoration-none">
+    <i class="bi bi-plus-circle"></i>
     Tilføj ny opskrift
-</router-link>
-
+  </router-link>
 </div>
 
   <div class="recipes-wrapper">
-
     <div class="recipes-grid">
 
           <div v-for="recipe in recipes" :key="recipe.recipeID">
@@ -32,7 +29,6 @@
           </div>
 
         </div>
-
   </div>
 
    
@@ -142,6 +138,9 @@ export default {
 
 <style scoped>
 
+
+
+
 /* -------------------------------- */
 /* Base styling (mobil som standard) */
 /* -------------------------------- */
@@ -194,6 +193,43 @@ export default {
   font-weight: 600;
 }
 
+.admin-add-wrapper {
+  margin: 3rem 1.5rem 0 1.5rem;
+  text-align: right;
+}
+
+.add-btn {
+  background: #F27405;
+  color: white;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 14px rgba(0,0,0,0.14);
+  transition: 0.25s ease;
+}
+
+.add-btn:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+.add-btn i {
+  font-size: 1.25rem;
+}
+
+
+
 /* ------------------------------ */
 /* TABLET (≥600px → 991px) */
 /* ------------------------------ */
@@ -218,6 +254,12 @@ export default {
   .recipe-title {
   font-size: 1.125rem; /* = 18px */
   }
+  
+  .admin-add-wrapper {
+    margin-left: 3rem;
+    margin-right: 3rem;
+
+}
 
 }
 
@@ -226,11 +268,12 @@ export default {
 /* ------------------------------ */
 
 @media (min-width: 992px) and (max-width: 1399px) {
-  .recipes-wrapper,
-  .mx-4 {
+
+  .recipes-wrapper {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 4rem;
   }
 
   .recipes-grid {
@@ -244,6 +287,13 @@ export default {
 
   .recipe-title {
   font-size: 1.25rem; /* = 20px */
+  }
+
+  .admin-add-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
   }
 }
 
@@ -271,6 +321,12 @@ export default {
   .recipe-title {
   font-size: 1.25rem; /* = 20px */
   }
+
+  .admin-add-wrapper {
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* ------------------------------ */
@@ -290,6 +346,10 @@ export default {
   .recipes-grid {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 38px;
+  }
+
+  .admin-add-wrapper {
+    max-width: 80%;
   }
 }
 
