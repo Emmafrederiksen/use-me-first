@@ -101,12 +101,12 @@ export default {
 /* -------------------------------------- */
 
 .title {
-  font-size: 26px;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
 .subtitle {
-  font-size: 16px;
+  font-size: 1rem;
   margin-top: 0.5rem;
   opacity: 0.95;
 }
@@ -165,11 +165,11 @@ export default {
   }
 
   .title {
-    font-size: 32px;
+    font-size: 2rem; /* = 32px */
   }
 
   .subtitle {
-    font-size: 22px;
+    font-size: 1.375rem; /* = 22px */
   }
 }
 
@@ -187,11 +187,11 @@ export default {
   }
 
   .title {
-    font-size: 38px;
+    font-size: 2.250rem; /* = 36px */
   }
 
   .subtitle {
-    font-size: 22px;
+    font-size: 1.375rem; /* = 22px */
   }
 }
 
@@ -208,11 +208,11 @@ export default {
   }
 
   .title {
-    font-size: 42px;
+    font-size: 2.25rem; /* = 36px */
   }
 
   .subtitle {
-    font-size: 22px;
+    font-size: 1.250rem; /* = 20px */
   }
 }
 
@@ -229,11 +229,11 @@ export default {
   }
 
   .title {
-    font-size: 46px;
+    font-size: 2.25rem; /* = 36px */
   }
 
   .subtitle {
-    font-size: 24px;
+    font-size: 1.250rem; /* = 20px */
   }
 }
 

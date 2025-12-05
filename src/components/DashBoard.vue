@@ -28,49 +28,51 @@
 
     <AddNewCard />
 
-    <div class="mx-4 mt-5">
-      <div class="d-flex justify-content-between align-items-center mb-2">
-        <h2>Opskriftsforlag</h2>
-        <router-link to="/opskrifter" class="see-all-text">Se alle</router-link>
-      </div>
+      <div class="recipes-wrapper">
 
-      <router-link
-        :to="{ name: 'RecipeDetail', params: { id: 1 } }"
-        class="text-decoration-none"
-      > 
-        <div class="card recipe-card mb-3">
-          <img :src="Rugbroedschips" class="card-img" alt="Rugbrødschips">
-          <div class="card-img-overlay d-flex flex-column justify-content-end">
-            <h3 class="card-title text-white">Rugbrødschips</h3>
-          </div>
-        </div>
-      </router-link>
+        <div class="recipes-header">
+          <h2>Opskriftsforslag</h2>
 
-
-      <div class="row g-3">
-        <div class="col-6">
-          <router-link :to="{ name: 'RecipeDetail', params: { id: 2 } }" class="text-decoration-none">
-            <div class="card recipe-card">
-              <img :src="Pandekager" class="card-img" alt="Pandekager">
-              <div class="card-img-overlay d-flex flex-column justify-content-end">
-                <h3 class="card-title text-white">Pandekager</h3>
-              </div>
-            </div>
+          <router-link to="/opskrifter" class="see-all-btn">
+            <i class="bi bi-arrow-right"></i>
           </router-link>
         </div>
 
-        <div class="col-6">
-          <router-link :to="{ name: 'RecipeDetail', params: { id: 3 } }" class="text-decoration-none">
-            <div class="card recipe-card">
-              <img :src="Kylling" class="card-img" alt="Kylling i kokosmælk">
-              <div class="card-img-overlay d-flex flex-column justify-content-end">
-                <h3 class="card-title text-white">Kylling i kokosmælk</h3>
-              </div>
-            </div>
+
+        <div class="recipes-grid">
+
+          <!-- FEATURE CARD -->
+          <router-link
+            :to="{ name: 'RecipeDetail', params: { id: 1 } }"
+            class="recipe-card recipe-feature text-decoration-none"
+          >
+            <img :src="Rugbroedschips" alt="Rugbrødschips">
+            <h3 class="recipe-title">Rugbrødschips</h3>
           </router-link>
+
+          <!-- SMALL CARD 1 -->
+          <router-link
+            :to="{ name: 'RecipeDetail', params: { id: 2 } }"
+            class="recipe-card recipe-small text-decoration-none"
+          >
+            <img :src="Pandekager" alt="Pandekager">
+            <h3 class="recipe-title">Pandekager</h3>
+          </router-link>
+
+          <!-- SMALL CARD 2 -->
+          <router-link
+            :to="{ name: 'RecipeDetail', params: { id: 3 } }"
+            class="recipe-card recipe-small text-decoration-none"
+          >
+            <img :src="Kylling" alt="Kylling i kokosmælk">
+            <h3 class="recipe-title">Kylling i kokosmælk</h3>
+          </router-link>
+
         </div>
+
       </div>
-    </div>
+
+
 
 
 
@@ -307,7 +309,7 @@ expiredItemsCount() {
   align-items: flex-start;
   justify-content: space-between;
 
-  animation: fadeInAlert 0.35s ease;
+  animation: fadeInAlert 0.45s ease;
 }
 
 .alert-text {
@@ -318,8 +320,8 @@ expiredItemsCount() {
 
 .alert-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 20px;
+  right: 20px;
 }
 
 @keyframes fadeInAlert {
@@ -340,7 +342,7 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 20px;
+    font-size: 1.125rem;
   }
   
 }
@@ -357,11 +359,11 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 20px;
+    font-size: 1.125rem;
   }
 
   .alert-close {
-  font-size: 1.1rem;
+  font-size: 1rem;
   }
 }
 
@@ -379,11 +381,11 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 20px;
+    font-size: 1.125rem;
   }
 
   .alert-close {
-  font-size: 1.2rem;
+  font-size: 1rem;
   }
 
 }
@@ -401,50 +403,222 @@ expiredItemsCount() {
   }
 
   .alert-close {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   }
 }
 
 
-/* ----------------------------- */
+/* -------------------------------- */
+/* ---------- Opskrifter ---------- */
+/* -------------------------------- */
+
+/* WRAPPER */
+.recipes-wrapper {
+  margin: 3rem 1.5rem;
+}
+
+.see-all-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: #08300f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.25s ease;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+/* hover = orange med skygge */
+.see-all-btn:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.see-all-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+/* Juster container for alignment */
+.recipes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
 
 
+
+/* KORT GENEREL STYLING */
 .recipe-card {
   position: relative;
-  overflow: hidden;
   border-radius: 12px;
+  overflow: hidden;
+  display: block;
   box-shadow: 0 10px 14px rgba(0,0,0,0.14);
+
+  transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInRecipeCard 0.45s ease;
+  
 }
 
-.recipe-card .card-img {
-  height: 140px;
+.recipe-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.05);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.25);
+}
+
+.recipe-card img {
+  width: 100%;
+  height: 170px;
   object-fit: cover;
-  filter: brightness(70%);
+  filter: brightness(50%);
 }
 
-.recipe-card .card-img-overlay {
-  background: rgba(0,0,0,0.1);
+.recipe-title {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  margin: 0;
+  font-size: 18px;
   color: white;
-}
-
-h2 {
   font-weight: 600;
-  font-size: 22px;
-  color: #2c2c2c;
 }
 
-h3 {
-    font-weight: 600;
-    font-size: 18px;
-    margin-bottom: 0px;
+/* ------------------------------- */
+/* 📱 MOBILE (op til 599px)       */
+
+.recipes-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr; /* altid én kolonne i starten */
 }
 
-.see-all-text {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #F27405;
-  text-decoration: underline;
+/* det store kort fylder hele bredden */
+.recipe-feature {
+  grid-column: 1 / 3;
+  height: 220px;
 }
+
+.recipe-feature img {
+  height: 220px;
+}
+
+/* ----------------------- */
+/* TABLET (600px → 991px) */
+/* ----------------------- */
+
+@media (min-width: 600px) and (max-width: 991px) {
+
+  .recipes-wrapper {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr 1fr; /* to små kort side om side */
+    gap: 16px;
+  }
+
+  .recipe-feature {
+    grid-column: 1 / 3; /* stort kort fylder hele rækken */
+  }
+
+  .recipe-feature img {
+    height: 220px;
+  }
+
+  .recipe-small img {
+    height: 170px;
+  }
+}
+
+/* ----------------------- */
+/* LAPTOP (992px → 1399px) */
+/* ----------------------- */
+
+@media (min-width: 992px) and (max-width: 1399px) {
+
+  .recipes-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr; /* tre kolonner */
+  }
+
+  .recipe-feature {
+    grid-column: 1 / 3; /* stort kort fylder to kolonner */
+    height: 240px;
+  }
+
+  .recipe-feature img {
+    height: 240px;
+  }
+
+  .recipe-small img {
+    height: 170px;
+  }
+}
+
+
+
+/* ------------------------------- */
+/* 🖥️ DESKTOP (≥1400px) */
+/* Layout: 3 store lige store kort */
+/* ------------------------------- */
+
+@media (min-width: 1400px) {
+
+  .recipes-wrapper {
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  /* ALLE kort skal være ens store */
+  .recipe-card,
+  .recipe-card img {
+    height: 240px !important;
+  }
+
+  .recipe-feature {
+    grid-column: auto; /* mister sin store placering */
+  }
+}
+
+/* ULTRA BREDE SKÆRME */
+@media (min-width: 1800px) {
+  .recipes-wrapper {
+    max-width: 80%;
+    margin-top: 5rem;
+  }
+}
+
+
+@keyframes fadeInRecipeCard {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 
 
 </style>

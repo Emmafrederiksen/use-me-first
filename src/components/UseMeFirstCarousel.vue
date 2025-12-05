@@ -4,10 +4,10 @@
       <h2>Brug mig først</h2>
       <!-- desktop-pile -->
       <div class="d-none d-sm-flex align-items-center arrow-buttons">
-        <button class="btn btn-light rounded-circle border" @click="scrollLeft" aria-label="Scroll venstre">
+        <button class="arrow-btn" @click="scrollLeft" aria-label="Scroll venstre">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <button class="btn btn-light rounded-circle border" @click="scrollRight" aria-label="Scroll højre">
+        <button class="arrow-btn" @click="scrollRight" aria-label="Scroll højre">
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
@@ -19,7 +19,7 @@
           <div
             v-for="item in expiringSoon"
             :key="item.id"
-            class="usefirst-card card shadow-sm"
+            class="usefirst-card card shadow-sm carousel-item-animate"
             @click="$emit('open-product', item)"
           >
             <div class="card-body d-flex justify-content-between align-items-start">
@@ -113,8 +113,42 @@ export default {
     const uniqueItems = Array.from(new Map(combined.map(i => [i.id, i])).values());
 
     this.localItems = uniqueItems;
+
   }
-},
+  
+  const el = this.$refs.track;
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  el.addEventListener("mousedown", (e) => {
+    isDown = true;
+    el.classList.add("dragging");
+    startX = e.pageX - el.offsetLeft;
+    scrollLeft = el.scrollLeft;
+  });
+
+  el.addEventListener("mouseleave", () => {
+    isDown = false;
+    el.classList.remove("dragging");
+  });
+
+  el.addEventListener("mouseup", () => {
+    isDown = false;
+    el.classList.remove("dragging");
+  });
+
+  el.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startX) * 1.3;
+    el.scrollLeft = scrollLeft - walk;
+  });
+
+  },
+
 
   computed: {
 
@@ -179,6 +213,8 @@ export default {
       if (!el) return;
       el.scrollBy({ left: 280, behavior: 'smooth' });
     },
+
+    
   },
 
 };
@@ -198,6 +234,10 @@ export default {
   scroll-snap-type: x mandatory;
   padding-bottom: 10px;
   -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
+.usefirst-track.dragging {
+  cursor: grabbing;
 }
 
 .usefirst-card {
@@ -207,8 +247,14 @@ export default {
   border-radius: 16px;
   background: linear-gradient(140deg,#1f3121 0%,#446847 100%);
   cursor: pointer;
+
+  animation: fadeInCarousel 0.45s ease;
+  transition: box-shadow 0.25s ease, filter 0.25s ease;
 }
 
+.usefirst-card:hover {
+  filter: brightness(1.1);
+}
 
 .dot { 
   width:14px; height:14px; border-radius:50%;
@@ -228,6 +274,46 @@ export default {
 .dot.expired {
     background: #000000;
 }
+
+
+/* Wrapper til pilene */
+.arrow-buttons {
+  display: flex;
+  gap: 0.5rem;
+  animation: fadeInArrows 0.45s ease forwards;
+  opacity: 0;
+  margin-bottom: 1.4rem;
+}
+
+/* Knap-styling uden bootstrap */
+.arrow-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: none;
+  background: #08300f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: 0.25s ease;
+  cursor: pointer;
+}
+
+.arrow-btn:hover {
+  background: #f27405;
+  color: white;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.arrow-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+
 
 
 /* ------------------------------ */
@@ -267,11 +353,6 @@ h2 {
   margin-bottom: 1.4rem;
   }
 
-  .arrow-buttons {
-    margin-bottom: 1.4rem;
-    gap: 0.5rem;
-    font-size: 1.5rem;
-  }
 }
 
 /* ------------------------------ */
@@ -287,12 +368,6 @@ h2 {
 
   h2 {
   margin-bottom: 1.8rem;
-  }
-
-  .arrow-buttons {
-    margin-bottom: 2.1rem;
-    gap: 0.9rem;
-    font-size: 1.5rem;
   }
   
 }
@@ -323,6 +398,55 @@ h2 {
   }
 }
 
+
+/* ANIMATION ved indlæsning */
+
+@keyframes fadeInCarousel {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Sekventiel fade-in af hvert kort */
+.carousel-item-animate {
+  opacity: 0;
+  animation: fadeInItem 0.45s ease forwards;
+}
+
+.carousel-item-animate:nth-child(1) { animation-delay: 0.05s; }
+.carousel-item-animate:nth-child(2) { animation-delay: 0.12s; }
+.carousel-item-animate:nth-child(3) { animation-delay: 0.19s; }
+.carousel-item-animate:nth-child(4) { animation-delay: 0.26s; }
+.carousel-item-animate:nth-child(5) { animation-delay: 0.33s; }
+.carousel-item-animate:nth-child(6) { animation-delay: 0.40s; }
+.carousel-item-animate:nth-child(7) { animation-delay: 0.47s; }
+.carousel-item-animate:nth-child(8) { animation-delay: 0.54s; }
+.carousel-item-animate:nth-child(9) { animation-delay: 0.61s; }
+.carousel-item-animate:nth-child(10) { animation-delay: 0.68s; }
+
+/* Animation */
+@keyframes fadeInItem {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Fade + slide in animation til arrow buttons */
+@keyframes fadeInArrows {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
 </style>

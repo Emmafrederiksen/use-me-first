@@ -1,122 +1,103 @@
 <template>
-  <div
-    v-if="visible"
-    class="modal fade show d-block"
-    tabindex="-1"
-    role="dialog"
-  >
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Rediger {{ product.name }}</h5>
-          <button
-            type="button"
-            class="close-icon position-absolute end-0 me-3"
-            v-on:click="$emit('close')"
-            aria-label="Close"
-          >
-            <i class="bi bi-x"></i>
-          </button>
+  <div v-if="visible" class="edit-overlay">
+
+    <div class="edit-box">
+      
+      <!-- HEADER -->
+      <div class="edit-header">
+        <div class="edit-title-wrapper">
+          <h3 class="edit-title">Rediger {{ product.name }}</h3>
+          <div class="edit-title-underline"></div>
         </div>
-        <div class="modal-body">
-          <form @submit.prevent="submitForm" class="mx-4">
-            <div class="mb-4 mt-5">
-              <label for="name" class="form-label bold-label">Varenavn *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                placeholder="Indtast navn..."
-                v-model="Name"
-                required
-              />
+
+        <button class="edit-close" @click="$emit('close')">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+
+      <!-- BODY / FORM -->
+      <div class="edit-body">
+        <form @submit.prevent="submitForm">
+
+          <!-- NAVN -->
+          <div class="mb-4 mt-3">
+            <label class="edit-label">Varenavn *</label>
+            <input type="text" class="edit-input" v-model="Name" placeholder="Indtast navn..." required />
+          </div>
+
+          <!-- PLACERING -->
+          <div class="mb-4">
+            <label class="edit-label">Placering</label>
+            <select class="edit-select" v-model="Location">
+              <option value="1">Køleskab</option>
+              <option value="2">Fryser</option>
+              <option value="3">Depot</option>
+            </select>
+          </div>
+
+          <!-- UDLØBSDATO -->
+          <div class="mb-4">
+            <label class="edit-label">Udløbsdato *</label>
+            <input type="date" class="edit-input" v-model="Date" required />
+          </div>
+
+          <!-- MÆNGDE + ENHED -->
+          <div class="edit-row">
+            <div class="edit-col-small">
+              <label class="edit-label">Mængde</label>
+              <input type="number" class="edit-input" v-model="Amount" placeholder="1" />
             </div>
 
-            <div class="mb-4">
-              <label for="location" class="form-label bold-label"
-                >Placering</label
-              >
-              <select
-                id="location"
-                class="form-select"
-                aria-label="Vælg placering"
-                v-model="Location"
-              >
-                <option value="1">Køleskab</option>
-                <option value="2">Fryser</option>
-                <option value="3">Depot</option>
+            <div class="edit-col-large">
+              <label class="edit-label">Enhed</label>
+              <select class="edit-select" v-model="Unit">
+                <option disabled value="">Vælg enhed</option>
+                <option value="1">Gram</option>
+                <option value="2">Bakke(r)</option>
+                <option value="3">Stk.</option>
+                <option value="4">Kilo</option>
+                <option value="5">Liter</option>
+                <option value="6">Pakke(r)</option>
               </select>
             </div>
+          </div>
 
-            <div class="mb-4">
-              <label for="date" class="form-label bold-label"
-                >Udløbsdato *</label
-              >
-              <input
-                type="date"
-                class="form-control"
-                id="date"
-                v-model="Date"
-                required
-              />
-            </div>
+          <!-- GEM-KNAP -->
+          <button class="edit-save-btn" type="submit">
+            <i class="bi bi-check2-circle"></i>
+            Gem ændringer
+          </button>
 
-            <div class="d-flex align-items-center gap-3">
-              <div class="mb-4" style="width: 30%">
-                <label for="amount" class="form-label bold-label">Mængde</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="amount"
-                  placeholder="1"
-                  v-model="Amount"
-                />
-              </div>
-
-              <div class="mb-4" style="width: 70%">
-                <select
-                  id="value"
-                  class="form-select"
-                  aria-label="Vælg enhed"
-                  style="margin-top: 32px"
-                  v-model="Unit"
-                >
-                  <option disabled value="">Vælg enhed</option>  
-                  <option value="1">Gram</option>
-                  <option value="2">Bakke(r)</option>
-                  <option value="3">Stk.</option>
-                  <option value="4">Kilo</option>
-                  <option value="5">Liter</option>
-                  <option value="6">Pakke(r)</option>
-                </select>
-              </div>
-            </div>
-
-            <button to="/indtast" class="add-btn mt-3" type="submit">
-              <i class="bi bi-check2-circle me-2"></i>
-              Gem ændringer
-            </button>
-          </form>
-        </div>
+        </form>
       </div>
+
     </div>
+
   </div>
 </template>
 
+
 <script>
+
 import { toast } from "vue3-toastify";
+
 export default {
+
   name: "EditModal",
+
   props: {
     visible: {
       type: Boolean,
       default: false,
     },
+
     product: {
       type: Object,
       required: true,
     },
+
   },
+
   data() {
     return {
       Name: "",
@@ -126,6 +107,7 @@ export default {
       Unit: "",
     };
   },
+
   methods: {
     submitForm() {
       // --- Map dropdown values back to text ---
@@ -182,9 +164,11 @@ export default {
       this.$emit("close");
     },
   },
+
   watch: {
     product: {
       immediate: true,
+
       handler(newProduct) {
         if (newProduct) {
           // Name
@@ -253,91 +237,194 @@ export default {
     },
   },
 };
+
+
 </script>
 
 <style scoped>
-.modal {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.modal-title {
-  font-weight: bold;
-}
 
-
-.btn-primary {
-  background: #f27405;
-  color: #ffffff;
-  font-weight: 500;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-}
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
-  background: #f27405 !important;
-  color: #ffffff !important;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-  outline: none !important;
-}
-.btn-cancel {
-  background: #ffffff;
-  color: #08300f;
-  font-weight: 500;
-  border: 2px solid #08300f;
-  border-radius: 999px;
-  padding: 8px 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-}
-.btn-cancel:hover,
-.btn-cancel:focus,
-.btn-cancel:active {
-  background: #ffffff !important;
-  color: #08300f !important;
-  border: 2px solid #08300f !important;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-  outline: none !important;
-}
-
-.close-icon {
-  background: none;
-  border: none;
-  font-size: 3rem;
-  color: #000;
-}
-.modal-header {
-  font-size: 1.5rem;
-  border-bottom: 2px solid #000000;
-}
-.modal-footer {
-  border-top: none;
-}
-.add-btn {
-  background: #f27405;
-  color: #ffffff;
-  font-weight: 500;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-  width: 100%;
+/* =========================================================
+   OVERLAY — samme blur & z-index som ConfirmModal
+   ========================================================= */
+.edit-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.add-btn i {
-  font-size: 1.2rem;
-  line-height: 1;
+  z-index: 3000 !important;
 }
 
-.bold-label {
-  font-weight: 600;
+/* =========================================================
+   MODAL BOX
+   ========================================================= */
+.edit-box {
+  background: #fff;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 420px;
+  padding: 24px 22px 26px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+  position: relative;
 }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.edit-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
+.edit-title-underline {
+  height: 2px;
+  width: 90px;
+  background: #dddddd;
+  margin-top: 4px;
+}
+
+.edit-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+  top: 15px;      /* løfter krydset op */
+  right: 15px;    /* flytter det lidt mere ud i hjørnet */
+  position: absolute;
+}
+
+/* =========================================================
+   BODY + FORM FIELDS
+   ========================================================= */
+.edit-body {
+  margin-top: 18px;
+}
+
+.edit-label {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* INPUTS */
+.edit-input,
+.edit-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #d0d5dd; 
+  background: #fff;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  transition: 0.2s ease;
+}
+
+.edit-input:focus,
+.edit-select:focus {
+  border-color: #08300f;
+  box-shadow: 0 0 0 2px rgba(8, 48, 15, 0.15);
+  outline: none;
+}
+
+/* EXTRA styling — custom dropdown pil */
+.edit-select {
+  padding-right: 40px; /* giver plads til custom pil */
+  appearance: none;    /* fjern default pil */
+
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L8 9L15 1' stroke='%2308300F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center; /* ryk pil ind */
+  background-size: 16px;
+}
+
+/* =========================================================
+   RÆKKER OG KOLONNER TIL MÆNGDE + ENHED
+   ========================================================= */
+
+/* Mængde + Enhed række */
+.edit-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.edit-col-small {
+  width: 30%;
+}
+
+.edit-col-large {
+  width: 70%;
+}
+
+/* =========================================================
+   GEM ÆNDRINGER KNAP — samme stil som orange knapper
+   ========================================================= */
+.edit-save-btn {
+  width: 100%;
+  background: #f27405;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.edit-save-btn i {
+  font-size: 1.4rem;
+}
+
+.edit-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(242,116,5,0.25);
+  filter: brightness(1.05);
+}
+
+/* =========================================================
+   RESPONSIVE — som ConfirmModal & ProductModal
+   ========================================================= */
+@media (min-width: 600px) {
+  .edit-box {
+    max-width: 500px;
+    padding: 32px 28px;
+  }
+
+  .edit-title {
+    font-size: 1.55rem;
+  }
+
+  .edit-save-btn {
+    font-size: 1.05rem;
+  }
+}
+
+
+
 </style>
