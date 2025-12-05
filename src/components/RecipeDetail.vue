@@ -8,20 +8,20 @@
         @open-menu="openMenu"
       />
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="goBack">
-            <i class="bi bi-arrow-left-circle fs-1 mx-2"></i>
+          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="goBack" aria-label="Gå tilbage til forrige side">
+            <i class="bi bi-arrow-left-circle fs-1 mx-2" aria-hidden="true"></i>
           </button>
 
           <div 
             v-if="isAdmin" 
             class="admin-action-buttons d-flex gap-3 position-absolute"
           >
-            <button class="admin-btn-edit" @click="editRecipe">
-              <i class="bi bi-pencil"></i>
+            <button class="admin-btn-edit" @click="editRecipe" aria-label="Rediger opskrift">
+              <i class="bi bi-pencil" aria-hidden="true"></i>
             </button>
 
-            <button class="admin-btn-delete" @click="showDeleteRecipeModal = true">
-              <i class="bi bi-trash3"></i>
+            <button class="admin-btn-delete" @click="showDeleteRecipeModal = true" aria-label="Slet opskrift">
+              <i class="bi bi-trash3" aria-hidden="true"></i>
             </button>
           </div>
           
@@ -33,8 +33,8 @@
 
     <div class="time mt-4 mx-4 d-flex justify-content-end">
       <div class="time-pill d-flex align-items-center py-1 rounded-4">
-        <i class="bi bi-clock me-2"></i>
-        <span>{{ recipe.totalTime }}</span>
+        <i class="bi bi-clock me-2" aria-hidden="true"></i>
+        <span aria-label="Total tid">{{ recipe.totalTime }}</span>
       </div>
     </div>
 
@@ -53,9 +53,13 @@
           <p class="mb-1 fw-semibold">Antal</p> <!-- Labelen -->
 
           <div class="portion-control d-flex align-items-center gap-2">
-            <i class="bi bi-dash-square fs-1 mx-1" @click="decreasePortion"></i>
-            <p class="mb-0 mx-1">{{ portion }}</p>
-            <i class="bi bi-plus-square fs-1 mx-1" @click="increasePortion"></i>
+            <button @click="decreasePortion" class="icon-button" aria-label="Mindre portion">
+              <i class="bi bi-dash-square fs-1 mx-1" aria-hidden="true"></i>
+            </button>
+            <span class="mb-0 mx-1" aria-live="polite">{{ portion }}</span>
+            <button @click="increasePortion" class="icon-button" aria-label="Større portion">
+              <i class="bi bi-plus-square fs-1 mx-1" aria-hidden="true"></i>
+            </button>
           </div>
     </div>
 
@@ -78,14 +82,17 @@
     <div class="mx-4 mt-5">
         <h3 class="mb-4">Fremgangsmåde</h3>
         <div>
-            <div class="col-12" v-for="(step, index) in steps" :key="index">
-                <div class="card step-card">
-                    <div class="card-body d-flex align-items-start gap-4">
-                        <p class="step-number"> {{ step.step < 10 ? '0' + step.step : step.step }}</p>
-                        <p class="step-text"> {{ step.stepDescription }}</p>
-                    </div>
+          <div role="list">
+            <div class="col-12" v-for="(step, index) in steps" :key="index" role="listitem" :aria-label="`Step ${step.step}: ${step.stepDescription}`">
+              <div class="card step-card">
+                <div class="card-body d-flex align-items-start gap-4">
+                  <p class="step-number"> {{ step.step < 10 ? '0' + step.step : step.step }}</p>
+                  <p class="step-text"> {{ step.stepDescription }}</p>
                 </div>
+              </div>
             </div>
+          </div>
+
         </div>
     </div>
 
@@ -318,6 +325,14 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     color: #08300F;
   }
+
+  .icon-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
 
 
   .ingredient-row {
