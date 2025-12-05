@@ -458,4 +458,16 @@ a {
 .dot.expired {
     background: #000000;
 }
+
+.dark-mode .modal-content{
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+.dark-mode .info-row span {
+  color: #ffffff;
+}
+
+.dark-mode .close-icon {
+  filter: invert(1);
+}
 </style>

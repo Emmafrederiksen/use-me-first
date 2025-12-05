@@ -136,4 +136,17 @@ export default {
 .modal-footer {
   border-top: none;
 }
+
+.dark-mode .modal-content {
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+.dark-mode .btn-cancel {
+  background: #444444;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+.dark-mode .close-icon {
+  color: #ffffff;
+}
 </style>

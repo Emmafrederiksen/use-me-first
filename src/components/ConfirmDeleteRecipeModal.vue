@@ -97,4 +97,15 @@ export default {
 .admin-btn-delete:hover {
   filter: brightness(0.95);
 }
+
+.dark-mode .admin-modal {
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+.dark-mode .admin-btn-cancel {
+  background-color: #444444;
+}
+.dark-mode .btn-close {
+  filter: invert(1);
+}
 </style>

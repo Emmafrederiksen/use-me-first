@@ -36,6 +36,11 @@
             <i class="bi bi-list"></i>
           </button>
 
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="darkMode" @change="toggleDarkMode">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Mørk tilstand</label>
+          </div>
+
         </div>
 
 
@@ -65,6 +70,11 @@ export default {
     isAdmin: { type: Boolean, default: false }
 
   },
+  data() {
+    return {
+      darkMode: false,
+    };
+  },
 
   computed: {
     heading() {
@@ -76,6 +86,26 @@ export default {
       return this.subtitleOverride || this.$route?.meta?.subtitle || "";
     },
   },
+
+  mounted() {
+    // Dark mode persistent
+    if (localStorage.getItem("darkModeEnabled") === "1") {
+      this.darkMode = true;
+      document.body.classList.add("dark-mode");
+    }
+  },
+
+  methods: {
+    toggleDarkMode() {
+      if (this.darkMode) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("darkModeEnabled", "1");
+      } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.removeItem("darkModeEnabled");
+      }
+    },
+  }
 };
 
 </script>

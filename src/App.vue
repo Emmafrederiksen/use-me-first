@@ -61,4 +61,14 @@ export default {
   min-height: 100vh;
   padding-bottom: 2rem; /* plads til mobil-navbar */
 }
+
+/* Når dark mode er slået til */
+body.dark-mode {
+  background-color: #2c2c2c !important;
+}
+
+body.dark-mode #app {
+  background-color: #2c2c2c !important;
+}
+
 </style>
