@@ -10,8 +10,8 @@
 
 <!-- Kun for admin -->
 <div v-if="isAdmin" class="text-end mx-4 mt-5">
-  <router-link to="/opskrifter/tilføj" class="add-btn mt-3 text-decoration-none">
-  <i class="bi bi-plus-circle me-2"></i>
+  <router-link to="/opskrifter/tilføj" class="add-btn mt-3 text-decoration-none" role="button">
+  <i class="bi bi-plus-circle me-2" aria-hidden="true"></i>
     Tilføj ny opskrift
 </router-link>
 
@@ -30,7 +30,7 @@
         :key="recipe.recipeID"
         class="col-6"
       >
-      <router-link :to="`/opskrift/${recipe.recipeID}`" class="text-decoration-none">
+      <router-link :to="`/opskrift/${recipe.recipeID}`" class="text-decoration-none" :aria-label="`Åben opskrift ${recipe.title}`">
         <div class="card recipe-card mb-2">
           <img 
             class="card-img"
