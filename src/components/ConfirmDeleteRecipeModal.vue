@@ -1,12 +1,18 @@
 <template>
   <div v-if="visible" class="admin-modal-overlay">
-    <div class="admin-modal">
+    <div
+      class="admin-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-recipe-title"
+      ref="modal"
+      >
       <div class="d-flex justify-content-between align-items-start mb-3">
         <div>
-          <h3 class="mb-1">Slet opskrift</h3>
+          <h3 id="delete-recipe-title" class="mb-1">Slet opskrift</h3>
           <div class="admin-modal-underline"></div>
         </div>
-        <button class="btn-close" @click="$emit('close')"></button>
+        <button class="btn-close" @click="$emit('close')" aria-label="Luk modal"></button>
       </div>
 
       <p class="mb-3">
@@ -17,8 +23,10 @@
 
       <div class="d-flex justify-content-between gap-2 mt-3">
         <button
+          ref="cancelBtn"
           class="btn admin-btn-cancel flex-fill"
           @click="$emit('close')"
+          aria-label="Annuller sletning"
         >
           Annuller
         </button>
@@ -26,6 +34,7 @@
         <button
           class="btn admin-btn-delete flex-fill"
           @click="$emit('confirm')"
+          aria-label="Bekræft sletning af opskrift"
         >
           Slet opskrift
         </button>
@@ -45,6 +54,16 @@ export default {
     recipeTitle: {
       type: String,
       default: "",
+    },
+  },
+
+  watch: {
+    visible(newVal) {
+      if (newVal) {
+        this.$nextTick(() => {
+          this.$refs.cancelBtn.focus();
+        });
+      }
     },
   },
 };
