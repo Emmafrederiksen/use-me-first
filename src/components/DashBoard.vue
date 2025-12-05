@@ -613,6 +613,9 @@ expiredItemsCount() {
   }
 }
 
+.dark-mode h2 {
+  color: #ffffff;
+}
 
 @keyframes fadeInRecipeCard {
   from { opacity: 0; transform: translateY(-6px); }

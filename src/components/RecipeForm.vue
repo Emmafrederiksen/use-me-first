@@ -412,4 +412,21 @@ export default {
         font-size: 16px; 
         line-height: 1;
     }
+    
+    .dark-mode label {
+        color: #ffffff;
+    }
+    .dark-mode .form-control {
+        background-color: #9c9c9c;
+        border: 1px solid #444444;
+    }
+
+    .dark-mode select {
+        background-color: #9c9c9c;
+        border: 1px solid #444444;
+    }
+    
+    .dark-mode .btn-add-ing {
+        border: 1px solid #ffffff;
+    }
 </style>

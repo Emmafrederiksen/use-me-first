@@ -591,5 +591,16 @@ a:has(button.pm-btn-recipe) {
   }
 }
 
+.dark-mode .modal-content{
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+.dark-mode .info-row span {
+  color: #ffffff;
+}
+
+.dark-mode .close-icon {
+  filter: invert(1);
+}
 
 </style>

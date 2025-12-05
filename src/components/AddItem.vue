@@ -144,8 +144,19 @@ export default {
     font-weight: 600;
     font-size: 18px;
     margin-bottom: 10px;
-    
 }
 
+.dark-mode input {
+    background-color: #9c9c9c;
+    border: 1px solid #444444;
+}
+.dark-mode select {
+    background-color: #9c9c9c;
+    border: 1px solid #444444;
+}
+.dark-mode label {
+    color: #ffffff;
+
+}
 
 </style>

@@ -425,6 +425,18 @@ export default {
   }
 }
 
+.dark-mode .modal-content {
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+.dark-mode .close-icon {
+  color: #ffffff;
+}
+
+.dark-mode .form-control, .dark-mode .form-select {
+  background-color: #9c9c9c;
+  border: 1px solid #444444;
+}
 
 
 </style>

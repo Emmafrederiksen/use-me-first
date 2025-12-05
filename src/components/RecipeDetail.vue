@@ -397,5 +397,23 @@
   font-size: 18px;
 }
 
+.dark-mode .admin-btn-delete {
+  background: #2c2c2c;
+}
+.dark-mode .admin-btn-edit {
+  background: #2c2c2c;
+  color: #ffffff;        
+  border: 2px solid #ffffff;
+}
+
+.dark-mode h3,
+.dark-mode p,
+.dark-mode .bi-dash-square,
+.dark-mode .bi-plus-square,
+.dark-mode .time {
+  color: #ffffff;
+}
+
+
   </style>
   

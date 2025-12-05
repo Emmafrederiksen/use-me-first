@@ -9,7 +9,7 @@
     <!-- Søge funktion -->
     <div class="d-flex align-items-center gap-2 mt-5 mx-4 mb-3">
       <div class="input-group search-wrap shadow rounded-5">
-        <span class="input-group-text bg-white border-0"><i class="bi bi-search"></i></span>
+        <span class="input-group-text border-0"><i class="bi bi-search"></i></span>
         <input v-model.trim="query" type="search" class="form-control border-0" placeholder="Søg efter varer" />
       </div>
       <button class="btn btn-white shadow rounded-3 px-3 border"><i class="bi bi-sliders2"></i></button>
@@ -319,5 +319,27 @@ export default {
 .dot.expired {
     background: #000000;
 }
+.input-group-text {
+    background-color: #ffffff;
+}
+.btn-white {
+    background-color: #ffffff;
+}
+    
+.dark-mode .form-control {
+    background-color: #9c9c9c;
+    border: 1px solid #444444;
+}
+.dark-mode .input-group-text, .dark-mode .i{
+    background-color: #9c9c9c;
+    color:#ffffff;
+}
+.dark-mode .btn-white {
+    background-color: #9c9c9c;
+    color: #ffffff;
+}
 
+.dark-mode .text-muted {
+    color: #cccccc !important;
+}
 </style>

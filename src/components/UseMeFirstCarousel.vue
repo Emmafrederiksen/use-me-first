@@ -399,6 +399,9 @@ h2 {
 }
 
 
+.dark-mode h2 {
+  color: #ffffff;
+}
 /* ANIMATION ved indlæsning */
 
 @keyframes fadeInCarousel {

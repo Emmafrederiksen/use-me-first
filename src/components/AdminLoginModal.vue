@@ -259,6 +259,21 @@ export default {
   font-size: 1.2rem;
 }
 
+.dark-mode .admin-modal{
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+.dark-mode .btn-close {
+  filter: invert(1);
+}
+
+.dark-mode .admin-input {
+  background-color: #9c9c9c;
+  border: 1px solid #444444;
+}
+.dark-mode .admin-btn-cancel {
+  background: #444444;
+}
 /* RESPONSIV */
 @media (min-width: 600px) {
   .admin-box {

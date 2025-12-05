@@ -63,6 +63,14 @@ export default {
 
 }
 
+/* Når dark mode er slået til */
+body.dark-mode {
+  background-color: #2c2c2c !important;
+}
+
+body.dark-mode #app {
+  background-color: #2c2c2c !important;
+}
 @media (min-width: 600px) {
   #app {
     padding-bottom: 1rem;
