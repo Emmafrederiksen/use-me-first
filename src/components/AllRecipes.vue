@@ -10,6 +10,7 @@
 
 <!-- Kun for admin -->
 <div v-if="isAdmin" class="text-end mx-4 mt-5">
+
   <router-link to="/opskrifter/tilføj" class="add-btn mt-3 text-decoration-none">
   <i class="bi bi-plus-circle me-2"></i>
     Tilføj ny opskrift
@@ -17,35 +18,24 @@
 
 </div>
 
+  <div class="recipes-wrapper">
 
-  <div class="mx-4 mt-5">
-    <div class="row g-3">
+    <div class="recipes-grid">
 
-      <div v-if="recipes.length === 0">
-        <p>Ingen opskrifter fundet.</p>
-      </div>
-
-      <div
-        v-for="recipe in recipes"
-        :key="recipe.recipeID"
-        class="col-6"
-      >
-      <router-link :to="`/opskrift/${recipe.recipeID}`" class="text-decoration-none">
-        <div class="card recipe-card mb-2">
-          <img 
-            class="card-img"
-            :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)"
-            :alt="recipe.title"
-          />
-          <div class="card-img-overlay d-flex flex-column justify-content-end">
-            <h3>{{ recipe.title }}</h3>
+          <div v-for="recipe in recipes" :key="recipe.recipeID">
+            <router-link :to="`/opskrift/${recipe.recipeID}`" class="text-decoration-none">
+              <div class="recipe-card">
+                <img class="card-img" :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)" :alt="recipe.title"/>
+                  <h3 class="recipe-title">{{ recipe.title }}</h3>
+              </div>
+            </router-link>
           </div>
-        </div>
-      </router-link>
 
-    </div>
-    </div>
- </div>
+        </div>
+
+  </div>
+
+   
 
 
 <!-- Admin login modal -->
@@ -60,6 +50,7 @@
 
 
 <script>
+
 import HeaderCard from "./HeaderCard.vue";
 import RecipeDataService from "@/services/RecipeDataService.js";
 import AdminLoginModal from './AdminLoginModal.vue'; 
@@ -67,8 +58,8 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
 
-
 export default {
+
   name: "AllRecipes",
 
   data() {
@@ -148,61 +139,174 @@ export default {
 
 </script>
 
+
 <style scoped>
+
+/* -------------------------------- */
+/* Base styling (mobil som standard) */
+/* -------------------------------- */
+
+.recipes-wrapper {
+  margin: 3rem 1.5rem;
+}
+
+.recipes-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr; /* to per række på mobil */
+  
+}
+
 .recipe-card {
   position: relative;
+  border-radius: 24px;
   overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.14);
-}
-
-.recipe-card .card-img {
-  height: 140px;
-  object-fit: cover;
-  filter: brightness(70%);
-}
-
-.recipe-card .card-img-overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.1),
-    rgba(0, 0, 0, 0.7)
-  );
-  color: white;
-}
-
-.see-all-text {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #f27405;
-  text-decoration: underline;
-}
-
-h3 {
-  font-weight: 500;
-  font-size: 18px;
-  margin-bottom: 0px;
-}
-
-.add-btn {
-  background: #F27405;
-  color: #ffffff;
-  font-weight: 500;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
+  display: block;
   box-shadow: 0 10px 14px rgba(0,0,0,0.14);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+  transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInRecipeCard 0.45s ease;
+  
 }
 
-.add-btn i {
-  font-size: 16px; 
-  line-height: 1;
+.recipe-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.05);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.25);
 }
+
+.recipe-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  filter: brightness(50%);
+}
+
+
+.recipe-title {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  margin: 0;
+  font-size: 1rem; /* = 16px */
+  color: white;
+  font-weight: 600;
+}
+
+/* ------------------------------ */
+/* TABLET (≥600px → 991px) */
+/* ------------------------------ */
+
+@media (min-width: 600px) and (max-width: 991px) {
+  .recipes-wrapper {
+    
+    margin-top: 3rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+    
+  .recipes-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .recipe-card .card-img {
+    height: 190px;
+  }
+
+  .recipe-title {
+  font-size: 1.125rem; /* = 18px */
+  }
+
+}
+
+/* ------------------------------ */
+/* SMALL → MEDIUM LAPTOP (992px → 1399px) */
+/* ------------------------------ */
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  .recipes-wrapper,
+  .mx-4 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 22px;
+  }
+
+  .recipe-card .card-img {
+    height: 200px;
+  }
+
+  .recipe-title {
+  font-size: 1.25rem; /* = 20px */
+  }
+}
+
+/* ------------------------------ */
+/* LARGE DESKTOP (≥1400px) */
+/* ------------------------------ */
+
+@media (min-width: 1400px) {
+  .recipes-wrapper {
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 38px;
+  }
+
+  .recipe-card,
+  .recipe-card img {
+    height: 240px !important;
+  }
+
+  .recipe-title {
+  font-size: 1.25rem; /* = 20px */
+  }
+}
+
+/* ------------------------------ */
+/* ULTRA WIDE (≥1800px) */
+/* ------------------------------ */
+
+@media (min-width: 1800px) {
+  .recipes-wrapper {
+    max-width: 80%;
+  }
+
+  .recipe-card,
+  .recipe-card img {
+    height: 260px !important;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 38px;
+  }
+}
+
+/* ------------------------------ */
+/* Fade-in animation */
+/* ------------------------------ */
+
+@keyframes fadeInRecipeCard {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 </style>

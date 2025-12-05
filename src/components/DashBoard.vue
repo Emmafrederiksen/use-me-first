@@ -56,7 +56,7 @@
             class="recipe-card recipe-small text-decoration-none"
           >
             <img :src="Pandekager" alt="Pandekager">
-            <h3 class="recipe-title">Pandekager</h3>
+            <h3 class="recipe-title">Gammeldags pandekager</h3>
           </router-link>
 
           <!-- SMALL CARD 2 -->
@@ -299,7 +299,7 @@ expiredItemsCount() {
 .alert-wrapper {
   background: white;
   color: #2c2c2c;
-  border-radius: 16px;
+  border-radius: 24px;
   padding: 1.5rem 1.2rem;
   margin: 3rem 1.5rem 0 1.5rem; /* mobil margin */
   box-shadow: 0 10px 14px rgba(0,0,0,0.12);
@@ -313,7 +313,7 @@ expiredItemsCount() {
 }
 
 .alert-text {
-  font-size: 1rem;
+  font-size: 1rem; /* = 16px */
   line-height: 1.45;
   padding-right: 2rem;
 }
@@ -342,7 +342,7 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 1.125rem;
+    font-size: 1.125rem; /* = 18px */
   }
   
 }
@@ -359,7 +359,7 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 1.125rem;
+    font-size: 1.125rem; /* = 18px */
   }
 
   .alert-close {
@@ -381,7 +381,7 @@ expiredItemsCount() {
   }
 
   .alert-text {
-    font-size: 1.125rem;
+    font-size: 1.125rem; /* = 18px */
   }
 
   .alert-close {
@@ -403,7 +403,7 @@ expiredItemsCount() {
   }
 
   .alert-close {
-  font-size: 1.1rem;
+  font-size: 1.1rem; 
   }
 }
 
@@ -426,7 +426,7 @@ expiredItemsCount() {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1rem; 
   font-weight: 700;
   text-decoration: none;
   transition: 0.25s ease;
@@ -457,11 +457,10 @@ expiredItemsCount() {
 }
 
 
-
 /* KORT GENEREL STYLING */
 .recipe-card {
   position: relative;
-  border-radius: 12px;
+  border-radius: 24px;
   overflow: hidden;
   display: block;
   box-shadow: 0 10px 14px rgba(0,0,0,0.14);
@@ -486,10 +485,11 @@ expiredItemsCount() {
 
 .recipe-title {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
   margin: 0;
-  font-size: 18px;
+  font-size: 1rem; /* = 16px */
   color: white;
   font-weight: 600;
 }
@@ -541,6 +541,10 @@ expiredItemsCount() {
   .recipe-small img {
     height: 170px;
   }
+
+  .recipe-title {
+  font-size: 1.125rem; /* = 18px */
+  }
 }
 
 /* ----------------------- */
@@ -572,6 +576,11 @@ expiredItemsCount() {
   .recipe-small img {
     height: 170px;
   }
+
+  .recipe-title {
+  font-size: 1.25rem; /* = 20px */
+  }
+
 }
 
 
@@ -602,6 +611,10 @@ expiredItemsCount() {
 
   .recipe-feature {
     grid-column: auto; /* mister sin store placering */
+  }
+
+  .recipe-title {
+  font-size: 1.25rem; /* = 20px */
   }
 }
 
