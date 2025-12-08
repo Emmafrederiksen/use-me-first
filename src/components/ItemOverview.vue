@@ -1,62 +1,78 @@
 <template>
-  <HeaderCard
 
+  <HeaderCard
     :show-back="true"
     :title-override="itemName"
     :subtitle-override="subtitleText"
     @open-menu="openMenu"
-
   />
 
-  <!-- Liste over alle varer i denne gruppe -->
-  <div class="mx-4 mt-5" v-if="sortedEntries.length">
+  <div class="itemoverview-wrapper">
 
-    <!-- Ét kort pr. enhed i denne gruppe -->
-    <div
-      v-for="item in sortedEntries"
-      :key="item.id"
-      class="card item-card mb-3 shadow-sm"
-    >
-      <div class="card-body d-flex justify-content-between align-items-start" v-on:click="openProductModal(item)">
-        <div class="text-white">
-          <div class="fw-bold">{{ item.name }}</div>
+    <!-- LISTE OVER ENKELTE VARER I GRUPPEN -->
+    <div class="items-wrapper" v-if="sortedEntries.length">
 
-          <small class="d-block">
+      <div
+        v-for="item in sortedEntries"
+        :key="item.id"
+        class="item-card"
+        @click="openProductModal(item)"
+      >
+
+        <div class="card-body">
+
+          <div>
+            <div class="fw-bold">{{ item.name }}</div>
+
+            <small class="d-block">
               <template v-if="daysLeft(item.expiresAt) < 0">
-                Udløbet for 
-                    <strong>
-                      {{ Math.abs(daysLeft(item.expiresAt)) }}          <!-- Math.abs = tager det positive tal af et negativt tal -->
-                      {{ Math.abs(daysLeft(item.expiresAt)) === 1 ? 'dag' : 'dage' }}
-                    </strong> 
-                    siden          
+                Udløbet for
+                <strong>
+                  {{ Math.abs(daysLeft(item.expiresAt)) }}
+                  {{ Math.abs(daysLeft(item.expiresAt)) === 1 ? 'dag' : 'dage' }}
+                </strong>
+                siden
               </template>
+
               <template v-else-if="daysLeft(item.expiresAt) === 0">
-                Udløber<strong> i dag</strong>
+                Udløber <strong>i dag</strong>
               </template>
+
               <template v-else-if="daysLeft(item.expiresAt) === 1">
                 Udløber <strong>i morgen</strong>
               </template>
+
               <template v-else>
                 Udløber om <strong>{{ daysLeft(item.expiresAt) }} dage</strong>
               </template>
-          </small>
-           
+            </small>
+          </div>
+
+          <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))"></span>
+
         </div>
-        <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))"></span>
       </div>
+
     </div>
+
+    <!-- Empty message -->
+    <p v-else class="empty-message">
+      Der er ingen varer i denne kategori.
+    </p>
+
   </div>
-  
-  <ProductModal 
-        v-if="selectedProduct && showModal" 
-        v-bind:visible="showModal" 
-        v-bind:product="selectedProduct" 
-        v-on:close="showModal = false"
-        v-on:delete-product="deleteProduct"
-        v-on:update-product="updateProduct"
-    />
+
+  <ProductModal
+    v-if="selectedProduct && showModal"
+    :visible="showModal"
+    :product="selectedProduct"
+    @close="showModal = false"
+    @delete-product="deleteProduct"
+    @update-product="updateProduct"
+  />
 
 </template>
+
 
 <script>
 
@@ -214,33 +230,138 @@ export default {
 
 <style scoped>
 
+/* --------------------------------------------- */
+/* WRAPPER — samme som MyFridge */
+/* --------------------------------------------- */
 
-.item-card { 
-    border:0; 
-    border-radius:16px; 
-    background: linear-gradient(140deg,#1f3121  0%,#446847 100%);
-    }
-
-.dot { 
-    width:14px; 
-    height:14px; 
-    border-radius:50%; 
-    box-shadow:0 0 0 2px rgba(255,255,255,.6); 
-    }
-
-.dot.danger { 
-    background:#E02424; 
-    } 
-    
-.dot.warning { 
-    background:#F5B400; 
-    } 
-    
-.dot.success { 
-    background:#1FBF62; 
+.itemoverview-wrapper {
+  margin: 3rem 1.5rem;
 }
-.dot.expired {
-    background: #000000;
+
+/* Container til liste */
+.items-wrapper {
+  margin-top: 2rem;
+}
+
+
+/* --------------------------------------------- */
+/* ITEM CARDS */
+/* --------------------------------------------- */
+
+.item-card {
+  background: linear-gradient(140deg, #1f3121 0%, #446847 100%);
+  border-radius: 22px;
+  padding: 0;
+  margin-bottom: 1.2rem;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.20);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInCard 0.45s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.25);
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.4rem 1.6rem;
+}
+
+
+/* --------------------------------------------- */
+/* DOT STATUS */
+/* --------------------------------------------- */
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-left: 14px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.45);
+}
+
+.dot.expired { background: #000; }
+.dot.danger  { background: #e02424; }
+.dot.warning { background: #f5b400; }
+.dot.success { background: #1fbf62; }
+
+
+/* --------------------------------------------- */
+/* EMPTY MESSAGE */
+/* --------------------------------------------- */
+
+.empty-message {
+  font-size: 1rem;
+  margin-top: 2rem;
+  color: #777;
+}
+
+
+/* --------------------------------------------- */
+/* RESPONSIVE BREAKPOINTS */
+/* --------------------------------------------- */
+
+@media (min-width: 600px) {
+  .itemoverview-wrapper {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .itemoverview-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .itemoverview-wrapper {
+    max-width: 85%;
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .itemoverview-wrapper {
+    max-width: 80%;
+    margin-top: 5rem;
+  }
+}
+
+
+/* --------------------------------------------- */
+/* DARK MODE */
+/* --------------------------------------------- */
+
+.dark-mode .item-card {
+  background: linear-gradient(140deg, #1f3121 0%, #446847 100%);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+}
+
+.dark-mode .dot {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.35);
+}
+
+.dark-mode .empty-message {
+  color: #cccccc;
+}
+
+
+/* --------------------------------------------- */
+/* ANIMATION */
+/* --------------------------------------------- */
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 </style>

@@ -326,6 +326,17 @@ export default {
   display: flex;
   align-items: center;
   box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  border: 1.8px solid #dadada;  
+  transition: all 0.25s ease;
+}
+
+.search-wrap:hover {
+    border-color: #678a69;  
+}
+
+.search-wrap:focus-within {
+    border-color: #678a69;  
+    box-shadow: 0 0 0 2px rgba(8,48,15,0.15);
 }
 
 .search-wrap i {
