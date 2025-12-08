@@ -23,7 +23,7 @@
                 <i class="bi bi-file-post" aria-hidden="true"></i> Mit køleskab
             </router-link>
 
-            <router-link to="/indkoebsliste" @click="$emit('close')" aria-current="$route.path === '/indkoebsliste' ? 'page' : null">
+            <router-link to="/indkoebsliste" @click="$emit('close')" :aria-current="$route.path === '/indkoebsliste' ? 'page' : null">
                 <i class="bi bi-pencil-square" aria-hidden="true"></i> Indkøbsliste
             </router-link>
         </nav>
