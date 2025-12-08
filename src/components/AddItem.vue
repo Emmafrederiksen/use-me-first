@@ -1,10 +1,13 @@
 <template>
-  <HeaderCard @open-menu="openMenu" titleOverride="Tilføj vare" />
+  <HeaderCard
+    @open-menu="openMenu"
+    :titleOverride="'Tilføj vare'"
+  />
 
   <div class="additem-wrapper">
     <form @submit.prevent="validateAndSubmit" class="additem-grid" novalidate>
 
-      <!-- VARER NAVN -->
+      <!-- VARENAVN -->
       <div class="form-section name-section">
         <label for="name" class="form-label">Varenavn *</label>
 
@@ -18,10 +21,8 @@
           :aria-describedby="nameError ? 'name-error' : null"
           :class="{ 'input-error': nameError }"
           aria-required="true"
-          required
         />
 
-        <!-- Fejlbesked -->
         <p
           v-if="nameError"
           id="name-error"
@@ -62,10 +63,8 @@
           :aria-describedby="dateError ? 'date-error' : null"
           :class="{ 'input-error': dateError }"
           aria-required="true"
-          required
         />
 
-        <!-- Fejlbesked -->
         <p
           v-if="dateError"
           id="date-error"
@@ -77,7 +76,7 @@
         </p>
       </div>
 
-      <!-- MÆNGDE + ENHED -->
+      <!-- MÆNGDE -->
       <div class="form-section amount-section">
         <label for="amount" class="form-label">Mængde</label>
 
@@ -87,12 +86,13 @@
           class="form-control"
           placeholder="Indtast antal"
           v-model="Amount"
-          :aria-describedby="unitError ? 'unit-error' : null"
           :aria-invalid="unitError ? 'true' : 'false'"
+          :aria-describedby="unitError ? 'unit-error' : null"
           :class="{ 'input-error': unitError }"
         />
       </div>
 
+      <!-- ENHED -->
       <div class="form-section unit-section">
         <label for="unit" class="form-label">Enhed</label>
 
@@ -113,7 +113,6 @@
           <option value="6">Pakke(r)</option>
         </select>
 
-        <!-- Fejl -->
         <p
           v-if="unitError"
           id="unit-error"
@@ -121,11 +120,11 @@
           role="alert"
           aria-live="assertive"
         >
-          Hvis du angiver en mængde, skal du vælge en enhed.
+          Hvis du angiver en mængde, skal du også vælge en enhed.
         </p>
       </div>
 
-      <!-- GEM KNAP -->
+      <!-- SUBMIT -->
       <div class="submit-wrapper">
         <button type="submit" class="add-btn">
           <i class="bi bi-check2-circle"></i>
@@ -137,32 +136,30 @@
   </div>
 </template>
 
+
 <script>
-import HeaderCard from './HeaderCard.vue';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import HeaderCard from "./HeaderCard.vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
-  name: 'AddItem',
+  name: "AddItem",
 
   props: {
-    openMenu: {
-      type: Function,
-      required: true,
-    },
+    openMenu: { type: Function, required: true },
   },
 
   components: { HeaderCard },
 
   data() {
     return {
-      Name: '',
-      Location: '1',
-      Date: '',
+      Name: "",
+      Location: "1",
+      Date: "",
       Amount: null,
-      Unit: '',
+      Unit: "",
 
-      // fejlstates
+      // Errors
       nameError: false,
       dateError: false,
       unitError: false,
@@ -176,7 +173,6 @@ export default {
       this.unitError = this.Amount && !this.Unit;
 
       if (this.nameError || this.dateError || this.unitError) return;
-
       this.submitForm();
     },
 
@@ -189,18 +185,18 @@ export default {
         unit: this.Unit,
       };
 
-      const existingItems = JSON.parse(localStorage.getItem('myFridgeItems') || '[]');
-      existingItems.push(newItem);
-      localStorage.setItem('myFridgeItems', JSON.stringify(existingItems));
+      const items = JSON.parse(localStorage.getItem("myFridgeItems") || "[]");
+      items.push(newItem);
+      localStorage.setItem("myFridgeItems", JSON.stringify(items));
 
-      this.Name = '';
-      this.Location = '1';
-      this.Date = '';
+      this.Name = "";
+      this.Location = "1";
+      this.Date = "";
       this.Amount = null;
-      this.Unit = '';
+      this.Unit = "";
 
-      toast.success('Din vare er blevet gemt!', {
-        autoClose: 2500,
+      toast.success("Din vare er blevet gemt!", {
+        autoClose: 2000,
         position: toast.POSITION.TOP_CENTER,
       });
     },
@@ -208,39 +204,70 @@ export default {
 };
 </script>
 
+
 <style scoped>
 
-/* Wrapper matcher RecipeForm */
+/* ---------------------------------------------
+   WRAPPER + GRID
+--------------------------------------------- */
+
 .additem-wrapper {
   margin: 3rem 1.5rem;
 }
 
 .additem-grid {
   display: grid;
-  gap: 2rem;
+  gap: 2.2rem;
 }
+
+.form-section {
+  width: 100%;
+}
+
+/* ---------------------------------------------
+   LABELS
+--------------------------------------------- */
 
 .form-label {
   font-weight: 600;
   font-size: 1.125rem;
   margin-bottom: 8px;
+  color: #2c2c2c;
 }
 
-/* Inputs */
+/* ---------------------------------------------
+   INPUTS + SELECTS (samme som RecipeForm)
+--------------------------------------------- */
+
 .form-control,
 .form-select {
   width: 100%;
   padding: 10px 14px;
-  border-radius: 14px;
+  font-size: 1rem;
   background: #fff;
+  border-radius: 14px;
   border: 1.8px solid #dadada;
-  transition: 0.25s ease;
+  transition: all 0.25s ease;
   box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
-/* ============================================================
-   SELECT — CUSTOM DROPDOWN PIL
-   ============================================================ */
+/* hover */
+.form-control:hover,
+.form-select:hover {
+  border-color: #678a69;
+}
+
+/* fokus */
+.form-control:focus,
+.form-select:focus {
+  border-color: #678a69;
+  box-shadow: 0 0 0 2px rgba(8, 48, 15, 0.15);
+  outline: none;
+}
+
+/* ---------------------------------------------
+   CUSTOM DROPDOWN PIL
+--------------------------------------------- */
 
 .form-select {
   appearance: none;
@@ -250,52 +277,53 @@ export default {
   background-position: right 14px center;
   background-size: 16px;
 }
-/* ------------------------ */
 
-.form-control:focus,
-.form-select:focus {
-  border-color: #678a69;
-  box-shadow: 0 0 0 2px rgba(8, 48, 15, 0.15);
-  outline: none;
-  background-color: #ffffff;
-}
+/* ---------------------------------------------
+   ERROR STATE
+--------------------------------------------- */
 
-
-/* Error state */
 .input-error {
-  border-color: #d93025;
-  box-shadow: 0 0 0 2px rgba(217,48,37,0.25);
+  border-color: #d93025 !important;
+  box-shadow: 0 0 0 2px rgba(217,48,37,0.25) !important;
 }
 
 .error-text {
+  margin-top: 6px;
   color: #d93025;
   font-size: 0.9rem;
-  margin-top: 6px;
 }
 
-/* Submit */
+/* ---------------------------------------------
+   SUBMIT BUTTON
+--------------------------------------------- */
+
 .submit-wrapper {
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
 }
 
 .add-btn {
   background: #F27405;
-  color: white;
-  padding: 12px 22px;
+  color: #fff;
+  border: none;
   border-radius: 999px;
+  padding: 12px 22px;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  border: none;
   box-shadow: 0 10px 14px rgba(0,0,0,0.14);
 }
 
-/* RESPONSIVE GRID (samme logik som RecipeForm.vue) */
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(242,116,5,0.35);
+}
 
-/* Tablet */
+/* ---------------------------------------------
+   RESPONSIVE GRID
+--------------------------------------------- */
+
 @media (min-width: 600px) {
   .additem-wrapper {
     margin-left: 3rem;
@@ -303,7 +331,6 @@ export default {
   }
 }
 
-/* Laptop – to kolonner */
 @media (min-width: 992px) {
   .additem-wrapper {
     max-width: 800px;
@@ -320,27 +347,25 @@ export default {
   .date-section { grid-column: 2; }
   .amount-section { grid-column: 1; }
   .unit-section { grid-column: 2; }
-
-  .submit-wrapper {
-    grid-column: 2;
-  }
+  .submit-wrapper { grid-column: 2; }
 }
 
-/* Desktop */
 @media (min-width: 1400px) {
   .additem-wrapper {
     max-width: 85%;
   }
 }
 
-/* Ultrawide */
 @media (min-width: 1800px) {
   .additem-wrapper {
     max-width: 80%;
   }
 }
 
-/* Dark mode */
+/* ---------------------------------------------
+   DARK MODE
+--------------------------------------------- */
+
 .dark-mode .form-control,
 .dark-mode .form-select {
   background: #4a4a4a;
@@ -348,28 +373,43 @@ export default {
   border: 1px solid #777;
 }
 
+/* dropdown-pilen KUN til select */
 .dark-mode .form-select {
+  background: #4a4a4a;
+  color: #fff;
+  border: 1px solid #777;
   background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L8 9L15 1' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
 }
 
-
-.form-control:hover,
-.form-select:hover {
-  border-color: #678a69;
+.dark-mode .form-control:hover,
+.dark-mode .form-select:hover {
+  border-color: #8fd5a1;
 }
 
+.dark-mode .form-control:focus,
+.dark-mode .form-select:focus {
+  border-color: #8fd5a1;
+  box-shadow: 0 0 0 3px rgba(143,213,161,0.25);
+}
 
 .dark-mode .form-label {
   color: #ccc;
 }
 
 .dark-mode .error-text {
-  color: #ff7a7a;
+  color: #ff7777;
 }
 
-.dark-mode .form-control::placeholder,
-.dark-mode .form-select::placeholder {
-  color: #e0e0e0;
+.dark-mode .form-control::placeholder {
+  color: #e4e4e4;
+}
+
+.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 
 </style>
+
