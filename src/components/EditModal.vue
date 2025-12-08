@@ -337,9 +337,14 @@ export default {
   transition: 0.2s ease;
 }
 
+.edit-input:hover,
+.edit-select:hover {
+  border-color: #678a69;
+}
+
 .edit-input:focus,
 .edit-select:focus {
-  border-color: #08300f;
+  border-color: #678a69;
   box-shadow: 0 0 0 2px rgba(8, 48, 15, 0.15);
   outline: none;
 }

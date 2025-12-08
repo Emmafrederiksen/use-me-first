@@ -31,8 +31,6 @@
         </div>
   </div>
 
-   
-
 
 <!-- Admin login modal -->
   <AdminLoginModal

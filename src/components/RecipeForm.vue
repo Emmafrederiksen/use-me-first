@@ -1,120 +1,139 @@
 <template>
-  <HeaderCard :showBack="true" :titleOverride="recipeTitle" />
-  <div class="mx-4 mt-4">
-    <form @submit.prevent="submitRecipe">
-      
-        <label for="title" class="form-label fw-bold">Titel</label>
-        <input type="text" id="title" name="title" placeholder="Tilføj titel..." class="mb-3 form-control" ref="title" />
-      
-      
-        <label for="formFile" class="form-label mt-4 fw-bold">Billede</label>
-        <input class="mb-3 form-control" type="file" id="formFile" name="image"/>
+  <HeaderCard
+    :showBack="true"
+    :titleOverride="recipeTitle"
+    @open-menu="openMenu"
+  />
 
-        <label for="totalTime" class="form-label mt-4 fw-bold">Tid i alt</label>
-        <input type="text" id="totalTime" class="mb-3 form-control" name="totalTime" placeholder="Tilføj tid..." ref="totalTime" />
+  <div class="recipeform-wrapper">
+    <form @submit.prevent="submitRecipe" class="recipeform-grid">
 
-        <label for="desciption" class="form-label mt-4 fw-bold">Beskrivelse</label>
-        <textarea id="description" class="mb-3 form-control auto-grow" name="description" rows="3" placeholder="Tilføj beskrivelse..." @input="autoGrow($event)" ref="description"></textarea>
+      <!-- Titel -->
+      <div class="form-section title-section">
+        <label for="title" class="form-label">Titel</label>
+        <input type="text" id="title" class="form-control" placeholder="Tilføj titel..." ref="title" />
+      </div>
 
-        <label class="mb-3 fw-bold mt-4">Ingredienser</label>
-        <br />
+      <!-- Billede -->
+      <div class="form-section image-section">
+        <label for="formFile" class="form-label">Billede</label>
+        <input type="file" id="formFile" class="form-control" />
+      </div>
 
-         <!-- INGREDIENT LIST -->
-      <div v-for="(ingredient, index) in ingredients" :key="index" class="mb-3">
+      <!-- Tid -->
+      <div class="form-section time-section">
+        <label class="form-label">Tid i alt</label>
+        <input type="text" id="totalTime" class="form-control" placeholder="Tilføj tid..." ref="totalTime" />
+      </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-1">
-            <label class="form-label m-0">Ingrediens navn</label>
+      <!-- Beskrivelse -->
+      <div class="form-section description-section">
+        <label class="form-label">Beskrivelse</label>
+        <textarea
+          id="description"
+          class="form-control auto-grow"
+          rows="3"
+          placeholder="Tilføj beskrivelse..."
+          @input="autoGrow($event)"
+          ref="description"
+        ></textarea>
+      </div>
 
-            <button
-                v-if="ingredients.length > 1"
-                type="button"
-                class="btn btn-sm"
-                @click="removeIngredient(index)"
-            >
-            <i class="bi bi-trash3 text-danger fs-4"></i>
+      <!-- Ingredienser -->
+      <div class="form-section ingredients-section">
+        <label class="form-label">Ingredienser</label>
+
+        <div v-for="(ingredient, index) in ingredients" :key="index" class="ingredient-card">
+
+          <div class="ingredient-header">
+            <span>Ingrediens {{ index + 1 }}</span>
+            <button v-if="ingredients.length > 1" type="button" class="btn-delete" @click="removeIngredient(index)">
+              <i class="bi bi-trash3"></i>
             </button>
-        </div>
+          </div>
 
-        <input
+          <input
             type="text"
             class="form-control mb-2"
             v-model="ingredient.name"
             placeholder="Tilføj navn..."
-        />
+          />
 
-        <div class="d-flex align-items-center gap-3">
-          <div style="width: 40%;">
-            <label class="form-label m-0">Mængde</label>
-            <input type="number"
-                   class="form-control"
-                   v-model="ingredient.amount"
-                   placeholder="Indtast antal" />
-          </div>
+          <div class="ingredient-row">
+            <div>
+              <label class="form-label">Mængde</label>
+              <input type="number" v-model="ingredient.amount" class="form-control" />
+            </div>
 
-          <div style="width: 60%;">
-            <label class="form-label m-0">Enhed</label>
-            <select class="form-select"
-                v-model="ingredient.unit">
+            <div>
+              <label class="form-label">Enhed</label>
+              <select v-model="ingredient.unit" class="form-select">
                 <option disabled value="">Vælg enhed</option>
-                <option 
-                    v-for="unit in units" 
-                    :key="unit.id" 
-                    :value="unit.name"
-                >
-                    {{ unit.name }}
+                <option v-for="unit in units" :key="unit.unitID" :value="unit.name">
+                  {{ unit.name }}
                 </option>
-            </select>
+              </select>
+            </div>
           </div>
+
+        </div>
+
+        <div class="add-small-wrapper">
+          <button type="button" class="btn add-small" @click="addIngredient">
+            <i class="bi bi-plus-circle"></i> Tilføj ingrediens
+          </button>
         </div>
       </div>
 
-        <div class="d-flex justify-content-end"> 
-            <button type="button" class="btn btn-add-ing" @click="addIngredient">
-                <i class="bi bi-plus-circle me-1"></i>
-                Tilføj ingrediens
+      <!-- Steps -->
+      <div class="form-section steps-section">
+        <label class="form-label">Fremgangsmåde</label>
+
+        <div v-for="(step, index) in steps" :key="index" class="step-card">
+
+          <div class="step-header">
+            <span>Trin {{ index + 1 }}</span>
+            <button v-if="steps.length > 1" type="button" class="btn-delete" @click="removeStep(index)">
+              <i class="bi bi-trash3"></i>
             </button>
-        </div>
+          </div>
 
-        <label class="mb-3 fw-bold mt-4">Fremgangsmåde</label>
-        <br />
-
-    <div v-for="(step, index) in steps" :key="index" class="mb-3">
-        <div class="d-flex justify-content-between align-items-center mb-1">
-            <label class="form-label m-0">Trin {{ index + 1 }}</label>
-
-            <button
-            v-if="steps.length > 1"
-            type="button"
-            class="btn btn-sm"
-            @click="removeStep(index)"
-            >
-            <i class="bi bi-trash3 text-danger fs-4"></i>
-            </button>
-        </div>
-
-        <textarea
+          <textarea
             v-model="step.description"
-            class="form-control mb-3 auto-grow"
-            rows="2"
-            placeholder="Tilføj beskrivelse af trin..."
+            class="form-control auto-grow"
+            placeholder="Tilføj beskrivelse..."
             @input="autoGrow($event)"
-        ></textarea>
-    </div>
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-add-ing" @click="addStep">
-                <i class="bi bi-plus-circle me-1"></i>
-                Tilføj trin
-            </button>
+          ></textarea>
+
         </div>
-        <div class="d-flex justify-content-center mt-5">
-            <button type="submit" class="btn add-btn">
-                <i class="bi bi-check2-circle me-2"></i>
-                {{ submitButtonText }}
-            </button>
+
+        <div class="add-small-wrapper">
+          <button type="button" class="btn add-small" @click="addStep">
+            <i class="bi bi-plus-circle"></i> Tilføj trin
+          </button>
         </div>
+      </div>
+
+      <!-- SUBMIT KNAP (ligger i grid) -->
+      <div class="submit-wrapper">
+        <button type="submit" class="add-btn">
+          <i class="bi bi-check2-circle me-2"></i>
+          {{ submitButtonText }}
+        </button>
+      </div>
+
     </form>
   </div>
+
+  <AdminLoginModal
+    v-if="showAdminLogin"
+    :visible="showAdminLogin"
+    @close="showAdminLogin = false"
+    @login-success="handleAdminLoginSuccess"
+  />
 </template>
+
+
 
 <script>
 
@@ -377,56 +396,345 @@ export default {
 </script>
 
 <style scoped>
-    textarea.form-control {
-        resize: none;
-    }
-    .btn-add-ing {
-        background: #08300f;
-        color: #ffffff;
-        border-radius: 999px;
-        border: none;
-        font-weight: 400;
-        padding: 6px 18px;
-        font-size: 14px;
-    }
-    .auto-grow {
-        overflow: hidden;
-        resize: none; /* brugeren må ikke ændre selv */
-    }
-    .add-btn {
-        background: #F27405;
-        color: #ffffff;
-        font-weight: 500;
-        border: none;
-        border-radius: 999px;
-        padding: 8px 18px;
-        margin-bottom: 10px;
-        text-decoration: none;
-        box-shadow: 0 10px 14px rgba(0,0,0,0.14);
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .add-btn i {
-        font-size: 16px; 
-        line-height: 1;
-    }
-    
-    .dark-mode label {
-        color: #ffffff;
-    }
-    .dark-mode .form-control {
-        background-color: #9c9c9c;
-        border: 1px solid #444444;
-    }
 
-    .dark-mode select {
-        background-color: #9c9c9c;
-        border: 1px solid #444444;
-    }
-    
-    .dark-mode .btn-add-ing {
-        border: 1px solid #ffffff;
-    }
+/* ============================================================
+   WRAPPER
+   ============================================================ */
+
+.recipeform-wrapper {
+  margin: 3rem 1.5rem;
+  display: grid;
+  gap: 2.2rem;
+}
+
+/* Sektion spacing */
+.form-section {
+  margin-bottom: 2.2rem;
+  width: 100%;
+}
+
+/* ============================================================
+   LABELS
+   ============================================================ */
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 1.125rem; /* = 18px */
+  color: #2c2c2c;
+}
+
+/* ============================================================
+   INPUT, SELECT & TEXTAREA — BASE (samme som EditModal)
+   ============================================================ */
+
+.form-control,
+.form-select,
+textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  background: #fff;
+  border-radius: 14px;
+  border: 1.8px solid #dadada;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  resize: none; /* textarea må ikke hånd-resizes */
+  overflow: hidden; /* auto-grow virker stadig */
+}
+
+/* Hover-effekt */
+.form-control:hover,
+.form-select:hover,
+textarea:hover {
+  border-color: #678a69;
+}
+
+/* Fokus — grøn highlight + halo */
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+  border-color: #678a69;
+  box-shadow: 0 0 0 2px rgba(8, 48, 15, 0.15);
+  outline: none;
+  background-color: #ffffff;
+  
+}
+
+/* ============================================================
+   SELECT — CUSTOM DROPDOWN PIL
+   ============================================================ */
+
+.form-select {
+  appearance: none; /* fjern default pil */
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L8 9L15 1' stroke='%2308300F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+}
+
+/* ============================================================
+   INGREDIENS- & STEP-KORT
+   ============================================================ */
+
+.ingredient-card,
+.step-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 10px 14px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.125rem; /* = 18px */
+}
+
+.ingredient-header,
+.step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: .6rem;
+}
+
+.ingredient-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 1.125rem;
+}
+
+.ingredient-row > div {
+  flex: 1;
+}
+
+/* Slet-knappen */
+.btn-delete {
+  background: transparent;
+  border: none;
+  color: #e02424;
+  font-size: 1.2rem;
+}
+
+/* ============================================================
+   "Tilføj ingrediens" / "Tilføj trin" buttons
+   ============================================================ */
+
+.add-small-wrapper {
+  display: flex;
+  justify-content: flex-end; /* flytter knapperne til højre */
+  
+}
+
+.add-small {
+  background: #08300f;
+  color: white;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  transition: .2s ease;
+  border: none;
+  box-shadow: 0 8px 14px rgba(0,0,0,0.3);
+}
+
+.add-small:hover {
+  background: #08300f;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(8,48,15,0.25);
+  filter: brightness(1.05);
+}
+
+/* ============================================================
+   SUBMIT-KNAP (samme som orange knapper)
+   ============================================================ */
+
+.submit-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 3rem;
+}
+
+.add-btn {
+  background: #F27405;
+  color: white;
+  font-weight: 600;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+  box-shadow: 0 10px 14px rgba(0,0,0,0.14);
+  transition: 0.25s ease;
+}
+
+.add-btn:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+.add-btn i {
+  font-size: 1.25rem;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* TABLET (600–991px) */
+@media (min-width: 600px) and (max-width: 991px) {
+  .recipeform-wrapper {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 4rem;
+  }
+}
+
+/* LAPTOP (992px → 1399px) */
+@media (min-width: 992px) {
+  .recipeform-wrapper {
+    max-width: 800px; /* du kan justere */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+
+  .recipeform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.2rem 2rem;
+    max-width: 800px;
+  }
+
+  /* Række 1 */
+  .title-section {
+    grid-column: 1; /* venstre */
+  }
+
+  .image-section {
+    grid-column: 2; /* højre */
+  }
+
+  /* Række 2 */
+  .time-section {
+    grid-column: 1; /* venstre */
+  }
+
+  .description-section {
+    grid-column: 2; /* højre */
+  }
+
+  /* Ingredienser og steps = full width */
+  .ingredients-section,
+  .steps-section {
+    grid-column: 1 / 3;
+  }
+
+  /* Submit-knap = højre kolonne */
+  .submit-wrapper {
+    grid-column: 2;
+    justify-content: flex-end;
+    margin-top: 0rem;
+  }
+}
+
+/* DESKTOP (1400px+) */
+@media (min-width: 1400px) {
+  .recipeform-wrapper {
+    max-width: 85%;
+    margin-top: 4rem;
+  }
+
+  .recipeform-grid {
+    max-width: 100%;
+  }
+}
+
+/* ULTRAWIDE (1800px+) */
+@media (min-width: 1800px) {
+  .recipeform-wrapper {
+    max-width: 80%;
+    margin-top: 5rem;
+  }
+}
+
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+
+.dark-mode .ingredient-card,
+.dark-mode .step-card {
+  background: #2b2b2b;
+  border: 1px solid #444;
+  color: #f1f1f1;
+}
+
+.dark-mode .form-control,
+.dark-mode .form-select,
+.dark-mode textarea {
+  background-color: #4a4a4a;
+  border: 1px solid #777;
+  color: #fff;
+}
+
+.dark-mode .form-label {
+  color: #ccc;
+}
+
+.dark-mode .form-control::placeholder,
+.dark-mode .form-select::placeholder,
+.dark-mode textarea::placeholder {
+  color: #ccc;
+}
+
+.dark-mode .form-control:hover,
+.dark-mode .form-select:hover,
+.dark-mode textarea:hover {
+  border-color: #8fd5a1;
+}
+
+.dark-mode .form-control:focus,
+.dark-mode .form-select:focus,
+.dark-mode textarea:focus {
+  border-color: #8fd5a1;
+  box-shadow: 0 0 0 3px rgba(143,213,161,0.25);
+}
+
+.dark-mode .add-small {
+  background: #0f4c1d;
+  color: #fff;
+}
+
+.dark-mode .add-small:hover {
+  background: #136829;
+  color: #fff;
+  box-shadow: 0 8px 14px rgba(19,104,41,0.25);
+
+}
+
+.dark-mode .add-btn {
+  background: #F27405;
+  color: white;
+  box-shadow: 0 8px 14px rgba(0,0,0,0.3);
+}
+
+.add-btn:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+
 </style>
