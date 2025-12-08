@@ -7,15 +7,15 @@
         :alt="recipe.title"
         @open-menu="openMenu"
       />
-        <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" @click="goBack" aria-label="Gå tilbage til forrige side">
-            <i class="bi bi-arrow-left-circle fs-1 mx-2" aria-hidden="true"></i>
+      <div class="card-img-overlay d-flex flex-column justify-content-end">
+        <div class="header-inner">
+          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" 
+                  @click="goBack" 
+                  aria-label="Gå tilbage til forrige side">
+            <i class="bi bi-arrow-left-circle fs-1" aria-hidden="true"></i>
           </button>
 
-          <div 
-            v-if="isAdmin" 
-            class="admin-action-buttons d-flex gap-3 position-absolute"
-          >
+          <div v-if="isAdmin" class="admin-action-buttons d-flex gap-3 position-absolute">
             <button class="admin-btn-edit" @click="editRecipe" aria-label="Rediger opskrift">
               <i class="bi bi-pencil" aria-hidden="true"></i>
             </button>
@@ -24,10 +24,11 @@
               <i class="bi bi-trash3" aria-hidden="true"></i>
             </button>
           </div>
-          
 
-          <h1 class="mx-2"> {{ recipe.title }}</h1>
+          <h1 class="recipe-title">{{ recipe.title }}</h1>
         </div>
+</div>
+
       </div>
     </section>
 
@@ -261,12 +262,17 @@
   
   <style scoped>
 
-  h1 {
+  /* -------------------------------- */
+  /* Base styling (mobil som standard) */
+  /* -------------------------------- */
+
+  .recipe-title {
     margin: 0;
     font-size: 26px;
     font-weight: 700;
-    margin-bottom: 0.5rem;
- }
+    margin-bottom: 2rem;
+  }
+  
 
   h3 {
     font-weight: 700;
@@ -302,6 +308,7 @@
   .recipe-header-card .card-img-overlay {
     background: rgba(0,0,0,0.2); 
     color: white;
+    padding: 0;
   }
   
   .recipe-header-card .icon-top {
@@ -374,7 +381,7 @@
 
 .admin-action-buttons {
   top: 40px;
-  right: 20px;
+  right: 48px;
   z-index: 10;
 }
 
@@ -429,6 +436,86 @@
   color: #ffffff;
 }
 
+/* -------------------------------------- */
+/*         RESPONSIVT LAYOUT WRAPPER      */
+/* -------------------------------------- */
 
-  </style>
+.header-inner {
+  width: 100%;
+  padding-left: 1.5rem; /* Mobil spacing */
+  padding-right: 1.5rem; 
+  padding-top: 2rem;
+}
+
+/* ------------------------------ */
+/* TABLET (≥600px → 991px) */
+/* ------------------------------ */
+
+@media (min-width: 600px) {
+  .header-inner {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 3rem;
+  }
+
+  .recipe-title {
+    font-size: 2rem; /* = 32px */
+  }
+}
+
+
+/* ------------------------------ */
+/* SMALL → MEDIUM LAPTOP (992px → 1399px) */
+/* ------------------------------ */
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  .header-inner {
+    max-width: 800px;
+    padding-left: 0%;
+    padding-right: 0%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 3rem;
+  }
+
+  .recipe-title {
+    font-size: 2.250rem; /* = 36px */
+  }
+}
+
+/* -------------------------------------- */
+/* DESKTOP XL (≥ 1400px → 1799px)         */
+/* -------------------------------------- */
+@media (min-width: 1400px) and (max-width: 1799px) {
+  .header-inner {
+    max-width: 85%;
+    padding-left: 0%;
+    padding-right: 0%;
+    margin: 0 auto;
+    padding-top: 3rem;
+  }
+
+  .recipe-title {
+    font-size: 2.25rem; /* = 36px */
+  }
+}
+
+/* ------------------------------ */
+/* ULTRA WIDE (≥1800px) */
+/* ------------------------------ */
+
+@media (min-width: 1800px) {
+  .header-inner {
+    max-width: 80%;
+    padding-left: 0%;
+    padding-right: 0%;
+    margin: 0 auto;
+    padding-top: 3rem;
+  }
+  .recipe-title {
+    font-size: 2.25rem; /* = 36px */
+  }
+}
+
+</style>
   
