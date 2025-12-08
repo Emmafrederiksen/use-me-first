@@ -21,8 +21,8 @@ toast.configure({
   draggable: false,
   closeOnClick: true,
   position: toast.POSITION.TOP_CENTER,
-  autoClose: 2500,
-  theme: "dark",
+  autoClose: 3000,
+  theme: "light",
   newestOnTop: true,
 });
 
