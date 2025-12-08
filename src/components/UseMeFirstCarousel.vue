@@ -248,7 +248,7 @@ export default {
   min-width: 240px;
   scroll-snap-align: start;
   border: 0;
-  border-radius: 16px;
+  border-radius: 18px;
   background: linear-gradient(140deg,#1f3121 0%,#446847 100%);
   cursor: pointer;
 
