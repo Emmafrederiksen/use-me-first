@@ -117,7 +117,7 @@
       <!-- SUBMIT KNAP (ligger i grid) -->
       <div class="submit-wrapper">
         <button type="submit" class="add-btn">
-          <i class="bi bi-check2-circle me-2"></i>
+          <i class="bi bi-check2-circle"></i>
           {{ submitButtonText }}
         </button>
       </div>
@@ -473,7 +473,7 @@ textarea:focus {
    ============================================================ */
 
 .form-select {
-  appearance: none; /* fjern default pil */
+  appearance: none;
   padding-right: 40px;
   background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L8 9L15 1' stroke='%2308300F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
