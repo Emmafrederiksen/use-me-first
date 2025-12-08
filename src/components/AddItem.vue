@@ -213,6 +213,7 @@ export default {
 
 .additem-wrapper {
   margin: 3rem 1.5rem;
+  animation: fadeInDown 0.45s ease;
 }
 
 .additem-grid {
@@ -409,6 +410,12 @@ export default {
 
 .dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 </style>
