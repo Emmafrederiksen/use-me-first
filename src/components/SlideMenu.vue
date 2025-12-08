@@ -1,30 +1,30 @@
 <template>
-  <div class="overlay" v-if="visible" @click="$emit('close')">
-    <aside class="menu" @click.stop>
+  <div class="overlay" v-if="visible" @click="$emit('close')" aria-modal="true" role="dialog">
+    <aside class="menu" @click.stop role="menu" aria-label="Sidemenu">
       
-      <button class="close-btn" @click="$emit('close')">
-        <i class="bi bi-x-lg"></i>
+      <button class="close-btn" @click="$emit('close')" aria-label="Luk menu">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
       </button>
 
         <nav>
-            <router-link to="/" class="pt-5" @click="$emit('close')">
-                <i class="bi bi-house"></i> Forside
+            <router-link to="/" class="pt-5" @click="$emit('close')" :aria-current="$route.path === '/' ? 'page' : null">
+                <i class="bi bi-house" aria-hidden="true"></i> Forside
             </router-link>
 
-            <router-link to="/opskrifter" :class="{ 'router-link-active': $route.path.startsWith('/opskrift') }" @click="$emit('close')">
-                <i class="bi bi-fork-knife"></i> Opskrifter
+            <router-link to="/opskrifter" :class="{ 'router-link-active': $route.path.startsWith('/opskrift') }" @click="$emit('close')" :aria-current="$route.path.startsWith('/opskrift') ? 'page' : null">
+                <i class="bi bi-fork-knife" aria-hidden="true"></i> Opskrifter
             </router-link>
 
-            <router-link to="/indtast" @click="$emit('close')">
-                <i class="bi bi-plus-circle"></i> Tilføj varer
+            <router-link to="/indtast" @click="$emit('close')" :aria-current="$route.path === '/indtast' ? 'page' : null">
+                <i class="bi bi-plus-circle" aria-hidden="true"></i> Tilføj varer
             </router-link>
 
-            <router-link to="/mitkoeleskab" :class="{ 'router-link-active': $route.path.startsWith('/mitkoeleskab') }" @click="$emit('close')">
-                <i class="bi bi-file-post"></i> Mit køleskab
+            <router-link to="/mitkoeleskab" :class="{ 'router-link-active': $route.path.startsWith('/mitkoeleskab') }" @click="$emit('close')" :aria-current="$route.path.startsWith('/mitkoeleskab') ? 'page' : null">
+                <i class="bi bi-file-post" aria-hidden="true"></i> Mit køleskab
             </router-link>
 
-            <router-link to="/indkoebsliste" @click="$emit('close')">
-                <i class="bi bi-pencil-square"></i> Indkøbsliste
+            <router-link to="/indkoebsliste" @click="$emit('close')" :aria-current="$route.path === '/indkoebsliste' ? 'page' : null">
+                <i class="bi bi-pencil-square" aria-hidden="true"></i> Indkøbsliste
             </router-link>
         </nav>
 

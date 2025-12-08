@@ -1,17 +1,17 @@
 <template>
-  <div v-if="visible" class="edit-overlay">
+  <div v-if="visible" class="edit-overlay" role="dialog" aria-modal="true" aria-labelledby="editTitle">
 
     <div class="edit-box">
       
       <!-- HEADER -->
       <div class="edit-header">
         <div class="edit-title-wrapper">
-          <h3 class="edit-title">Rediger {{ product.name }}</h3>
+          <h3 id="editTitle" class="edit-title">Rediger {{ product.name }}</h3>
           <div class="edit-title-underline"></div>
         </div>
 
-        <button class="edit-close" @click="$emit('close')">
-          <i class="bi bi-x"></i>
+        <button class="edit-close" @click="$emit('close')" aria-label="Luk modal">
+          <i class="bi bi-x" aria-hidden="true"></i>
         </button>
       </div>
 
@@ -21,14 +21,14 @@
 
           <!-- NAVN -->
           <div class="mb-4 mt-3">
-            <label class="edit-label">Varenavn *</label>
-            <input type="text" class="edit-input" v-model="Name" placeholder="Indtast navn..." required />
+            <label class="edit-label" for="productName">Varenavn *</label>
+            <input id="productName" type="text" class="edit-input" v-model="Name" placeholder="Indtast navn..." required />
           </div>
 
           <!-- PLACERING -->
           <div class="mb-4">
-            <label class="edit-label">Placering</label>
-            <select class="edit-select" v-model="Location">
+            <label class="edit-label" for="productLocation">Placering</label>
+            <select id="productLocation" class="edit-select" v-model="Location">
               <option value="1">Køleskab</option>
               <option value="2">Fryser</option>
               <option value="3">Depot</option>
@@ -37,20 +37,20 @@
 
           <!-- UDLØBSDATO -->
           <div class="mb-4">
-            <label class="edit-label">Udløbsdato *</label>
-            <input type="date" class="edit-input" v-model="Date" required />
+            <label class="edit-label" for="productDate">Udløbsdato *</label>
+            <input id="productDate" type="date" class="edit-input" v-model="Date" required />
           </div>
 
           <!-- MÆNGDE + ENHED -->
           <div class="edit-row">
             <div class="edit-col-small">
-              <label class="edit-label">Mængde</label>
-              <input type="number" class="edit-input" v-model="Amount" placeholder="1" />
+              <label class="edit-label" for="productAmount">Mængde</label>
+              <input id="productAmount" type="number" class="edit-input" v-model="Amount" placeholder="1" />
             </div>
 
             <div class="edit-col-large">
-              <label class="edit-label">Enhed</label>
-              <select class="edit-select" v-model="Unit">
+              <label class="edit-label" for="productUnit">Enhed</label>
+              <select id="productUnit" class="edit-select" v-model="Unit">
                 <option disabled value="">Vælg enhed</option>
                 <option value="1">Gram</option>
                 <option value="2">Bakke(r)</option>
@@ -64,7 +64,7 @@
 
           <!-- GEM-KNAP -->
           <button class="edit-save-btn" type="submit">
-            <i class="bi bi-check2-circle"></i>
+            <i class="bi bi-check2-circle" aria-hidden="true"></i>
             Gem ændringer
           </button>
 
