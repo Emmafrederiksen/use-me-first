@@ -329,6 +329,7 @@ export default {
   .additem-wrapper {
     margin-left: 3rem;
     margin-right: 3rem;
+    margin-top: 3rem;
   }
 }
 
@@ -337,6 +338,7 @@ export default {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 4rem;
   }
 
   .additem-grid {
@@ -354,12 +356,14 @@ export default {
 @media (min-width: 1400px) {
   .additem-wrapper {
     max-width: 85%;
+    margin-top: 4rem;
   }
 }
 
 @media (min-width: 1800px) {
   .additem-wrapper {
     max-width: 80%;
+    margin-top: 5rem;
   }
 }
 
