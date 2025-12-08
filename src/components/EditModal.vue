@@ -156,8 +156,7 @@ export default {
       };
 
       toast.success("Dine ændringer er blevet gemt! Varen er nu opdateret", {
-        autoClose: 3000,
-        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,        
       });
 
       this.$emit("update-product", updatedProduct);
@@ -249,8 +248,7 @@ export default {
 .edit-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;

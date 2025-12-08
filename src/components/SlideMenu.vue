@@ -52,8 +52,8 @@ export default {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(3px);
+  background: rgba(0,0,0,0.55);
+ 
   z-index: 2000 !important;
 }
 
