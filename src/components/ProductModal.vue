@@ -597,11 +597,11 @@ a:has(button.pm-btn-recipe) {
   }
 }
 
-.dark-mode .modal-content{
+.dark-mode .productmodal-content, .dark-mode .productmodal-box {
   background-color: #2c2c2c;
   color: #ffffff;
 }
-.dark-mode .info-row span {
+.dark-mode .modal-body span, .dark-mode h3 {
   color: #ffffff;
 }
 

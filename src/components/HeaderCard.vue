@@ -50,10 +50,6 @@
             <i class="bi bi-list" aria-hidden="true"></i>
           </button>
 
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="darkMode" @change="toggleDarkMode">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Mørk tilstand</label>
-          </div>
 
         </div>
 
@@ -61,6 +57,18 @@
       </div>
 
       <p class="subtitle mb-0" v-html="subheading"></p>
+
+      <!-- Dark mode toggle -->
+        <div class="toggle-right">
+            <div class="dark-toggle" @click="toggleDarkMode">
+              <i v-if="darkMode" class="bi bi-moon-fill"></i>
+              <i v-else class="bi bi-brightness-high-fill"></i>
+
+              <div class="toggle-switch">
+                <div class="knob" :class="{ active: darkMode }"></div>
+              </div>
+            </div>
+          </div>
 
     </div>
   </section>
@@ -111,6 +119,8 @@ export default {
 
   methods: {
     toggleDarkMode() {
+      this.darkMode = !this.darkMode;
+
       if (this.darkMode) {
         document.body.classList.add("dark-mode");
         localStorage.setItem("darkModeEnabled", "1");
@@ -118,7 +128,7 @@ export default {
         document.body.classList.remove("dark-mode");
         localStorage.removeItem("darkModeEnabled");
       }
-    },
+    }
   }
 };
 
@@ -321,7 +331,71 @@ export default {
   }
 }
 
+/* -------------------------------------- */
+/*       CUSTOM DARK MODE TOGGLE          */
+/* -------------------------------------- */
 
+.dark-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
 
+.dark-toggle i {
+  font-size: 1.7rem;
+  color: #ffffff;
+  transition: 0.25s ease;
+}
 
+/* Switch base */
+.toggle-switch {
+  width: 44px;
+  height: 22px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 20px;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+/* Knappen */
+.knob {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: 0.3s ease;
+}
+
+/* Når dark-mode er aktiv */
+.knob.active {
+  transform: translateX(22px);
+}
+
+/* DARK MODE STYLING */
+.dark-mode .toggle-switch {
+  background: rgba(0,0,0,0.5);
+}
+
+.dark-mode .knob {
+  background: #ffa349;
+}
+
+.dark-mode .dark-toggle i {
+  color: #ffa349;
+}
+
+.dark-toggle {
+  margin-left: auto;
+}
+
+.toggle-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px; /* valgfrit */
+}
 </style>

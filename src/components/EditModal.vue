@@ -430,17 +430,22 @@ export default {
   }
 }
 
-.dark-mode .modal-content {
+.dark-mode .edit-box {
   background-color: #2c2c2c;
   color: #ffffff;
 }
-.dark-mode .close-icon {
-  color: #ffffff;
+
+.dark-mode .edit-close {
+  filter: invert(1);
 }
 
-.dark-mode .form-control, .dark-mode .form-select {
+.dark-mode .edit-input, .dark-mode .edit-select {
   background-color: #9c9c9c;
   border: 1px solid #444444;
+}
+
+.dark-mode .edit-label, .dark-mode h3 {
+  color: #ffffff;
 }
 
 

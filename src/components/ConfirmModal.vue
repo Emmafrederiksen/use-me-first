@@ -213,16 +213,21 @@ export default {
   }
 }
 
-.dark-mode .modal-content {
+.dark-mode .confirm-box {
   background-color: #2c2c2c;
   color: #ffffff;
 }
-.dark-mode .btn-cancel {
+.dark-mode .pm-btn-cancel {
   background: #444444;
   color: #ffffff;
   border: 2px solid #ffffff;
 }
-.dark-mode .close-icon {
+
+.dark-mode p, .dark-mode h3 {
   color: #ffffff;
+}
+
+.dark-mode .confirm-close {
+  filter: invert(1);
 }
 </style>

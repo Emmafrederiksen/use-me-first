@@ -261,11 +261,11 @@ export default {
   font-size: 1.2rem;
 }
 
-.dark-mode .admin-modal{
+.dark-mode .admin-box{
   background-color: #2c2c2c;
   color: #ffffff;
 }
-.dark-mode .btn-close {
+.dark-mode .admin-close {
   filter: invert(1);
 }
 
@@ -273,8 +273,14 @@ export default {
   background-color: #9c9c9c;
   border: 1px solid #444444;
 }
-.dark-mode .admin-btn-cancel {
+.dark-mode .pm-btn-cancel {
   background: #444444;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+.dark-mode h3, .dark-mode .admin-description {
+  color: #ffffff;
 }
 /* RESPONSIV */
 @media (min-width: 600px) {
