@@ -155,6 +155,13 @@ export default {
     HeaderCard,
   },
 
+  props: {
+    openMenu: {
+      type: Function,
+      required: true,
+    },
+  },
+
   data() {
     return {
 
