@@ -9,10 +9,11 @@
     <!-- Søge funktion -->
     <div class="d-flex align-items-center gap-2 mt-5 mx-4 mb-3">
       <div class="input-group search-wrap shadow rounded-5">
-        <span class="input-group-text border-0"><i class="bi bi-search"></i></span>
-        <input v-model.trim="query" type="search" class="form-control border-0" placeholder="Søg efter varer" />
+        <span class="input-group-text border-0"><i class="bi bi-search" aria-hidden="true"></i></span>
+        <label class="visually-hidden" for="searchInput">Søg efter varer</label> <!-- bruges kun af skærmlæseren -->
+        <input id="searchInput" v-model.trim="query" type="search" class="form-control border-0" placeholder="Søg efter varer" />
       </div>
-      <button class="btn btn-white shadow rounded-3 px-3 border"><i class="bi bi-sliders2"></i></button>
+      <button class="btn btn-white shadow rounded-3 px-3 border" aria-label="Åben filtermenu"><i class="bi bi-sliders2" aria-hidden="true"></i></button>
     </div>
 
     <!-- liste -->
@@ -25,6 +26,9 @@
       :key="group.name" 
       class="card item-card mb-3 shadow-sm"
       @click="goToGroup(group)"
+      role="button"
+      tabindex="0"
+      @keyup.enter="goToGroup(group)"
       >
 
         <div class="card-body d-flex justify-content-between align-items-start">
@@ -53,7 +57,7 @@
             </small>
 
             </div>
-            <span class="dot" :class="badgeClass(daysLeft(group.earliest))"></span>
+            <span class="dot" :class="badgeClass(daysLeft(group.earliest))" aria-hidden="true"></span>
         </div>
         </div>
 
