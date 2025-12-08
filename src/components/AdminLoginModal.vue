@@ -10,8 +10,8 @@
           <div class="admin-title-underline"></div>
         </div>
 
-        <button class="admin-close" @click="$emit('close')">
-          <i class="bi bi-x"></i>
+        <button class="admin-close" @click="$emit('close')" aria-label="Luk admin log ind">
+          <i class="bi bi-x" aria-hidden="true"></i>
         </button>
       </div>
 
@@ -19,15 +19,17 @@
       <p class="admin-description">Log ind for at administrere opskrifter.</p>
 
       <!-- Input fields -->
-      <label class="admin-label">Brugernavn *</label>
+      <label for="username" class="admin-label">Brugernavn *</label>
       <input
+        id="username"
         v-model="username"
         class="admin-input mb-3"
         placeholder="Indtast dit brugernavn..."
       />
 
-      <label class="admin-label">Adgangskode *</label>
+      <label for="password" class="admin-label">Adgangskode *</label>
       <input
+        id="password"
         v-model="password"
         type="password"
         class="admin-input mb-4"
@@ -37,12 +39,12 @@
       <!-- Buttons -->
       <div class="admin-actions">
         <button class="pm-btn-cancel" @click="$emit('close')">
-          <i class="bi bi-x-lg"></i>
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
           Annuller
         </button>
 
         <button class="pm-btn-used" @click="handleLogin">
-          <i class="bi bi-check2-circle"></i>
+          <i class="bi bi-check2-circle" aria-hidden="true"></i>
           Log ind
         </button>
       </div>

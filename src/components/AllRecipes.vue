@@ -11,7 +11,7 @@
 <!-- Kun for admin -->
 <div v-if="isAdmin" class="admin-add-wrapper">
   <router-link to="/opskrifter/tilføj" class="add-btn text-decoration-none">
-    <i class="bi bi-plus-circle"></i>
+    <i class="bi bi-plus-circle" aria-hidden="true"></i>
     Tilføj ny opskrift
   </router-link>
 </div>
@@ -20,7 +20,7 @@
     <div class="recipes-grid">
 
           <div v-for="recipe in recipes" :key="recipe.recipeID">
-            <router-link :to="`/opskrift/${recipe.recipeID}`" class="text-decoration-none">
+            <router-link :to="`/opskrift/${recipe.recipeID}`" class="text-decoration-none" :aria-label="`Åben opskrift ${recipe.title}`">
               <div class="recipe-card">
                 <img class="card-img" :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)" :alt="recipe.title"/>
                   <h3 class="recipe-title">{{ recipe.title }}</h3>

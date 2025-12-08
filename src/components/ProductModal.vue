@@ -1,5 +1,11 @@
 <template>
-  <div v-if="visible" class="productmodal-overlay" tabindex="-1" role="dialog">
+  <div
+    v-if="visible"
+    class="productmodal-overlay"
+    tabindex="-1"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="product-modal-title">
 
     <div class="productmodal-box" role="document">
 
@@ -7,16 +13,16 @@
 
         <div class="modal-header position-relative">
           <div class="modal-title-wrapper">
-            <h3 class="productmodal-title">{{ product.name }}</h3>
+            <h3 class="productmodal-title" id="product-modal-title"> {{ product.name }}</h3>
             <div class="modal-title-underline"></div>
           </div>
           <button
             type="button"
             class="close-icon position-absolute end-0"
             v-on:click="$emit('close')"
-            aria-label="Close"
+            aria-label="Luk modal"
           >
-            <i class="bi bi-x"></i>
+            <i class="bi bi-x" aria-hidden="true"></i>
           </button>
         </div>
 
@@ -66,16 +72,16 @@
         
         <div class="productmodal-actions">
 
-          <button type="button" class="pm-btn-delete" v-on:click="openConfirmModal('delete')">
-            <i class="bi bi-trash3"></i>
+          <button type="button" class="pm-btn-delete" v-on:click="openConfirmModal('delete')" aria-label="Slet vare">
+            <i class="bi bi-trash3" aria-hidden="true"></i>
           </button>
 
-          <button type="button" class="pm-btn-edit" v-on:click="openEditModal()">
-            <i class="bi bi-pencil"></i>
+          <button type="button" class="pm-btn-edit" v-on:click="openEditModal()" aria-label="Rediger vare">
+            <i class="bi bi-pencil" aria-hidden="true"></i>
           </button>
 
-          <button type="button" class="pm-btn-used" v-on:click="openConfirmModal('markUsed')">
-            <i class="bi bi-check2-circle"></i>
+          <button type="button" class="pm-btn-used" v-on:click="openConfirmModal('markUsed')" aria-label="Marker som brugt">
+            <i class="bi bi-check2-circle" aria-hidden="true"></i>
             Marker som brugt
           </button>
 

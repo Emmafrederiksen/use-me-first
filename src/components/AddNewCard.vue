@@ -8,7 +8,7 @@
         </h3>
 
         <router-link to="/indtast" class="addcard-btn">
-          <i class="bi bi-plus-circle"></i>
+          <i class="bi bi-plus-circle" aria-hidden="true"></i>
           Tilføj varer
         </router-link>
       </div>

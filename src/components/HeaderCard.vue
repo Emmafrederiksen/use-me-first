@@ -10,8 +10,9 @@
             v-if="showBack"
             @click="$router.back()"
             class="back-btn me-3"
+            aria-label="Gå tilbage"
           >
-            <i class="bi bi-arrow-left-circle fs-1 text-white"></i>
+            <i class="bi bi-arrow-left-circle fs-1 text-white" aria-hidden="true"></i>
           </button>
 
           <h1 class="title mb-1">{{ heading }}</h1>
@@ -22,18 +23,31 @@
 
           <!-- Admin ikoner -->
           <div v-if="showAdminIcon" class="me-3">
-            <button v-if="!isAdmin" @click="$emit('open-admin-login')" class="admin-icon-btn">
-              <i class="bi bi-person-lock"></i>
+            <button 
+              v-if="!isAdmin"
+              @click="$emit('open-admin-login')"
+              class="admin-icon-btn"
+              aria-label="Åben admin login"
+              >
+              <i class="bi bi-person-lock" aria-hidden="true"></i>
             </button>
 
-            <button v-else @click="$emit('logout-admin')" class="admin-logout-btn">
-              <i class="bi bi-box-arrow-right"></i>
+            <button
+              v-else @click="$emit('logout-admin')"
+              class="admin-logout-btn"
+              aria-label="Log ud som admin"
+              >
+              <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
             </button>
           </div>
 
           <!-- BURGERMENU (kun tablet/desktop) -->
-          <button class="burger-btn d-none d-md-flex" @click="$emit('open-menu')">
-            <i class="bi bi-list"></i>
+          <button
+            class="burger-btn d-none d-md-flex"
+            @click="$emit('open-menu')"
+            aria-label="Åben menu"
+            >
+            <i class="bi bi-list" aria-hidden="true"></i>
           </button>
 
           <div class="form-check form-switch">

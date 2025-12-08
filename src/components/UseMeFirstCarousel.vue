@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-wrapper">
+  <div class="carousel-wrapper" role="region" aria-label="Varer der udløber snart">
     <div class="d-flex justify-content-between align-items-center">
       <h2>Brug mig først</h2>
       <!-- desktop-pile -->
@@ -20,7 +20,11 @@
             v-for="item in expiringSoon"
             :key="item.id"
             class="usefirst-card card shadow-sm carousel-item-animate"
+            role="button"
+            tabindex="0"
             @click="$emit('open-product', item)"
+            @keyup.enter="$emit('open-product', item)"
+            :aria-lable="'Åben detaljer for ' + item.name"
           >
             <div class="card-body d-flex justify-content-between align-items-start">
               <div class="text-white">
