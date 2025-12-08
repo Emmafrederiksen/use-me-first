@@ -1,70 +1,86 @@
 <template>
 
-    <HeaderCard 
-    
-    @open-menu="openMenu"
-    
-    />
+  <HeaderCard @open-menu="openMenu" />
 
-    <!-- Søge funktion -->
-    <div class="d-flex align-items-center gap-2 mt-5 mx-4 mb-3">
-      <div class="input-group search-wrap shadow rounded-5">
-        <span class="input-group-text border-0"><i class="bi bi-search"></i></span>
-        <input v-model.trim="query" type="search" class="form-control border-0" placeholder="Søg efter varer" />
+  <div class="myfridge-wrapper">
+
+    <!-- SEARCH ROW -->
+    <div class="search-row">
+
+      <div class="search-wrap">
+        <i class="bi bi-search"></i>
+        <input
+          v-model.trim="query"
+          type="search"
+          placeholder="Søg efter varer"
+        />
       </div>
-      <button class="btn btn-white shadow rounded-3 px-3 border"><i class="bi bi-sliders2"></i></button>
+
+      <button class="filter-btn">
+        <i class="bi bi-sliders2"></i>
+      </button>
+
     </div>
 
-    <!-- liste -->
+    <!-- 📦 ITEM LIST -->
+    <div class="items-wrapper">
 
-    
-
-    <div class="mt-5 mx-4">
-
-      <div v-for="group in groupedItems" 
-      :key="group.name" 
-      class="card item-card mb-3 shadow-sm"
-      @click="goToGroup(group)"
+      <div
+        v-for="group in groupedItems"
+        :key="group.name"
+        class="item-card"
+        @click="goToGroup(group)"
       >
 
-        <div class="card-body d-flex justify-content-between align-items-start">
-            <div class="text-white">
+        <div class="card-body">
+
+          <div>
             <div class="fw-bold">{{ group.name }}</div>
-            <small class="d-block">Antal: <strong>{{ group.count }}</strong></small>
+            <small>Antal: <strong>{{ group.count }}</strong></small>
 
             <small class="d-block">
-            <template v-if="daysLeft(group.earliest) < 0">
-                Udløbet for 
-                <strong> 
-                    {{ Math.abs(daysLeft(group.earliest)) }}     <!-- Math.abs = tager det positive tal af et negativt tal -->
-                    {{ Math.abs(daysLeft(group.earliest)) === 1 ? 'dag' : 'dage' }}     
-                </strong> 
-                siden       
-            </template>
-            <template v-else-if="daysLeft(group.earliest) === 0">
-                Udløber<strong>  i dag </strong>
-            </template>
-            <template v-else-if="daysLeft(group.earliest) === 1">
+              <template v-if="daysLeft(group.earliest) < 0">
+                Udløbet for
+                <strong>
+                  {{ Math.abs(daysLeft(group.earliest)) }}
+                  {{ Math.abs(daysLeft(group.earliest)) === 1 ? 'dag' : 'dage' }}
+                </strong>
+                siden
+              </template>
+
+              <template v-else-if="daysLeft(group.earliest) === 0">
+                Udløber <strong>i dag</strong>
+              </template>
+
+              <template v-else-if="daysLeft(group.earliest) === 1">
                 Udløber <strong>i morgen</strong>
               </template>
-            <template v-else>
-                Udløber om <strong> {{ daysLeft(group.earliest) }} dage </strong>
-            </template>
+
+              <template v-else>
+                Udløber om
+                <strong>{{ daysLeft(group.earliest) }} dage</strong>
+              </template>
             </small>
+          </div>
 
-            </div>
-            <span class="dot" :class="badgeClass(daysLeft(group.earliest))"></span>
+          <span class="dot" :class="badgeClass(daysLeft(group.earliest))"></span>
+
         </div>
-        </div>
+      </div>
 
-
-      <p v-if="groupedItems.length === 0" class="text-muted mt-4">Ingen varer matcher “{{ query }}”.</p>
+      <p
+        v-if="groupedItems.length === 0"
+        class="empty-message"
+      >
+        Ingen varer matcher "{{ query }}".
+      </p>
 
     </div>
 
-    
+  </div>
 
 </template>
+
 
 
 <script>
@@ -281,65 +297,214 @@ export default {
 
 <style scoped>
 
-.search-wrap { 
-    background:#fff; 
-    border-radius:999px; 
-    box-shadow:0 6px 16px rgba(0,0,0,.08); 
-    width:100%;
-    }
+/* -------------------------------------------------- */
+/* WRAPPER — Samme spacing som AddItem / RecipeForm */
+/* -------------------------------------------------- */
 
-.search-wrap .form-control:focus { 
-    box-shadow:none; 
-    }
-
-.item-card { 
-    border:0; 
-    border-radius:16px; 
-    background: linear-gradient(140deg,#1f3121  0%,#446847 100%);
-    }
-
-.dot { 
-    width:14px; 
-    height:14px; 
-    border-radius:50%; 
-    box-shadow:0 0 0 2px rgba(255,255,255,.6); 
-    }
-
-.dot.danger { 
-    background:#E02424; 
-    } 
-    
-.dot.warning { 
-    background:#F5B400; 
-    } 
-    
-.dot.success { 
-    background:#1FBF62; 
-}
-.dot.expired {
-    background: #000000;
-}
-.input-group-text {
-    background-color: #ffffff;
-}
-.btn-white {
-    background-color: #ffffff;
-}
-    
-.dark-mode .form-control {
-    background-color: #9c9c9c;
-    border: 1px solid #444444;
-}
-.dark-mode .input-group-text, .dark-mode .i{
-    background-color: #9c9c9c;
-    color:#ffffff;
-}
-.dark-mode .btn-white {
-    background-color: #9c9c9c;
-    color: #ffffff;
+.myfridge-wrapper {
+  margin: 3rem 1.5rem;
 }
 
-.dark-mode .text-muted {
-    color: #cccccc !important;
+/* -------------------------------------------------- */
+/* SEARCH BAR */
+/* -------------------------------------------------- */
+
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  animation: fadeInCard 0.45s ease;
 }
+
+.search-wrap {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.search-wrap i {
+  font-size: 1.25rem;
+  color: #08300f;
+}
+
+.search-wrap input {
+  border: none;
+  width: 100%;
+  background: transparent;
+  margin-left: 10px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search-wrap input::placeholder {
+  color: #777;
+}
+
+/* FILTER BUTTON */
+.filter-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(0,0,0,0.20);
+}
+
+/* -------------------------------------------------- */
+/* ITEM CARDS */
+/* -------------------------------------------------- */
+
+.items-wrapper {
+  margin-top: 2rem;
+}
+
+.item-card {
+  background: linear-gradient(140deg, #1f3121 0%, #446847 100%);
+  border-radius: 22px;
+  padding: 0;
+  margin-bottom: 1.2rem;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.20);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInCard 0.45s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.25);
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.4rem 1.6rem;
+}
+
+/* Farve dot */
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-left: 14px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.45);
+}
+
+.dot.expired { background: #000; }
+.dot.danger  { background: #e02424; }
+.dot.warning { background: #f5b400; }
+.dot.success { background: #1fbf62; }
+
+/* --------------------------------------------- */
+/* EMPTY MESSAGE */
+/* --------------------------------------------- */
+
+.empty-message {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 2rem;
+  text-align: start;
+}
+
+/* -------------------------------------------------- */
+/* RESPONSIVE BREAKPOINTS — MATCHER ADDITEM/RECIPEFORM */
+/* -------------------------------------------------- */
+
+@media (min-width: 600px) {
+  .myfridge-wrapper {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .myfridge-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .myfridge-wrapper {
+    max-width: 85%;
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .myfridge-wrapper {
+    max-width: 80%;
+    margin-top: 5rem;
+  }
+}
+
+/* -------------------------------------------------- */
+/* DARK MODE */
+/* -------------------------------------------------- */
+
+.dark-mode .search-wrap {
+  background: #4a4a4a;
+}
+
+.dark-mode .search-wrap input {
+  color: #ffffff;
+}
+
+.dark-mode .search-wrap input::placeholder {
+  color: #dddddd;
+}
+
+.dark-mode .search-wrap i {
+  color: #ffffff;
+}
+
+.dark-mode .filter-btn {
+  background: #4a4a4a;
+  color: #ffffff;
+  border: 1px solid #666;
+}
+
+.dark-mode .item-card {
+  background: linear-gradient(140deg, #1f3121 0%, #446847 100%);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+}
+
+.dark-mode .dot {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.35);
+}
+
+.dark-mode .empty-message {
+  color: #cccccc;
+}
+
+/* -------------------------------------------------- */
+/* ANIMATIONS */
+/* -------------------------------------------------- */
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
 </style>

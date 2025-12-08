@@ -602,7 +602,7 @@ textarea:focus {
   .recipeform-wrapper {
     margin-left: 3rem;
     margin-right: 3rem;
-    margin-top: 4rem;
+    margin-top: 3rem;
   }
 }
 
