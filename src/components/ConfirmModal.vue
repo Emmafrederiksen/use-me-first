@@ -1,17 +1,17 @@
 <template>
-  <div v-if="visible" class="confirm-overlay">
+  <div v-if="visible" class="confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
 
     <div class="confirm-box">
 
       <!-- HEADER -->
       <div class="confirm-header">
         <div class="confirm-title-wrapper">
-          <h3 class="confirm-title">{{ productName }}</h3>
+          <h3 id="confirmTitle" class="confirm-title">{{ productName }}</h3>
           <div class="modal-title-underline"></div>
         </div>
 
-        <button class="confirm-close" @click="$emit('close')">
-          <i class="bi bi-x"></i>
+        <button class="confirm-close" @click="$emit('close')" aria-label="Luk modal">
+          <i class="bi bi-x" aria-hidden="true"></i>
         </button>
       </div>
 
@@ -24,12 +24,12 @@
       <!-- KNAPPER -->
       <div class="confirm-actions">
         <button class="pm-btn-cancel" @click="$emit('close')">
-          <i class="bi bi-x-lg"></i>
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
           Annuller
         </button>
 
         <button class="pm-btn-used" @click="$emit('confirm', actionType)">
-          <i class="bi bi-check2-circle"></i>
+          <i class="bi bi-check2-circle" aria-hidden="true"></i>
           Bekræft
         </button>
       </div>

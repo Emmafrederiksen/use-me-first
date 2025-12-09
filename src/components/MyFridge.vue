@@ -8,16 +8,18 @@
     <div class="search-row">
 
       <div class="search-wrap">
-        <i class="bi bi-search"></i>
+        <i class="bi bi-search" aria-hidden="true"></i>
+        <label class="visually-hidden" for="searchInput">Søg efter varer</label> <!-- bruges kun af skærmlæseren -->
         <input
+          id="searchInput"     
           v-model.trim="query"
           type="search"
           placeholder="Søg efter varer"
         />
       </div>
 
-      <button class="filter-btn">
-        <i class="bi bi-sliders2"></i>
+      <button class="filter-btn" aria-label="Åben filtermenu">
+        <i class="bi bi-sliders2" aria-hidden="true"></i>
       </button>
 
     </div>
@@ -30,6 +32,9 @@
         :key="group.name"
         class="item-card"
         @click="goToGroup(group)"
+        role="button"
+        tabindex="0"
+        @keyup.enter="goToGroup(group)"
       >
 
         <div class="card-body">
@@ -63,7 +68,10 @@
             </small>
           </div>
 
-          <span class="dot" :class="badgeClass(daysLeft(group.earliest))"></span>
+            </div>
+            <span class="dot" :class="badgeClass(daysLeft(group.earliest))" aria-hidden="true"></span>
+        </div>
+        </div>
 
         </div>
       </div>

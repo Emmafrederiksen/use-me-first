@@ -3,19 +3,34 @@
         <nav>
             <ul>
                 <li>
-                    <router-link to="/"> <i class="bi bi-house d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Forside</router-link>
+                    <router-link
+                        to="/" :aria-current="$route.path === '/' ? 'page' : null">
+                        <i class="bi bi-house d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Forside
+                    </router-link>
                 </li>
                 <li>  
-                    <router-link to="/opskrifter" v-bind:class="{ 'router-link-active': $route.path.startsWith('/opskrift') }"> <i class="bi bi-fork-knife d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Opskrifter</router-link>
+                    <router-link
+                        to="/opskrifter" v-bind:class="{ 'router-link-active': $route.path.startsWith('/opskrift') }" :aria-current="$route.path.startsWith('/opskrift') ? 'page' : null">
+                        <i class="bi bi-fork-knife d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Opskrifter
+                    </router-link>
                 </li>
                 <li>
-                    <router-link to="/indtast"> <i class="bi bi-plus-circle d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Tilføj varer</router-link>
+                    <router-link
+                        to="/indtast" :aria-current="$route.path === '/indtast' ? 'page' : null">
+                        <i class="bi bi-plus-circle d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Tilføj varer
+                    </router-link>
                 </li>
                 <li>
-                    <router-link to="/mitkoeleskab" v-bind:class="{ 'router-link-active': $route.path.startsWith('/mitkoeleskab') }" > <i class="bi bi-file-post d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Mit køleskab</router-link>
+                    <router-link
+                        to="/mitkoeleskab" v-bind:class="{ 'router-link-active': $route.path.startsWith('/mitkoeleskab') }" :aria-current="$route.path.startsWith('/mitkoeleskab') ? 'page' : null">
+                        <i class="bi bi-file-post d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Mit køleskab
+                    </router-link>
                 </li>
                 <li>
-                    <router-link to="/indkoebsliste"><i class="bi bi-pencil-square d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Indkøbsliste</router-link>
+                    <router-link
+                        to="/indkoebsliste" :aria-current="$route.path === '/indkoebsliste' ? 'page' : null">
+                        <i class="bi bi-pencil-square d-flex justify-content-center nav-icon py-1" aria-hidden="true"></i> Indkøbsliste
+                    </router-link>
                 </li>
             </ul>
         </nav>
