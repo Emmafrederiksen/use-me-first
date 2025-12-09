@@ -51,6 +51,7 @@
           <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))"></span>
 
         </div>
+        <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))" aria-hidden="true"></span>
       </div>
 
     </div>

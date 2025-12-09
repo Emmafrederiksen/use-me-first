@@ -47,8 +47,8 @@
 
           <div class="ingredient-header">
             <span>Ingrediens {{ index + 1 }}</span>
-            <button v-if="ingredients.length > 1" type="button" class="btn-delete" @click="removeIngredient(index)">
-              <i class="bi bi-trash3"></i>
+            <button v-if="ingredients.length > 1" type="button" class="btn-delete" @click="removeIngredient(index)" :aria-label="`Slet ingrediens ${index + 1}`">
+              <i class="bi bi-trash3" aria-hidden="true"></i>
             </button>
           </div>
 
@@ -80,7 +80,7 @@
 
         <div class="add-small-wrapper">
           <button type="button" class="btn add-small" @click="addIngredient">
-            <i class="bi bi-plus-circle"></i> Tilføj ingrediens
+            <i class="bi bi-plus-circle" aria-hidden="true"></i> Tilføj ingrediens
           </button>
         </div>
       </div>
@@ -93,7 +93,7 @@
 
           <div class="step-header">
             <span>Trin {{ index + 1 }}</span>
-            <button v-if="steps.length > 1" type="button" class="btn-delete" @click="removeStep(index)">
+            <button v-if="steps.length > 1" type="button" class="btn-delete" @click="removeStep(index)" :aria-label="`Slet trin ${index + 1}`">
               <i class="bi bi-trash3"></i>
             </button>
           </div>
@@ -109,7 +109,7 @@
 
         <div class="add-small-wrapper">
           <button type="button" class="btn add-small" @click="addStep">
-            <i class="bi bi-plus-circle"></i> Tilføj trin
+            <i class="bi bi-plus-circle" aria-hidden="true"></i> Tilføj trin
           </button>
         </div>
       </div>
@@ -117,7 +117,7 @@
       <!-- SUBMIT KNAP (ligger i grid) -->
       <div class="submit-wrapper">
         <button type="submit" class="add-btn">
-          <i class="bi bi-check2-circle"></i>
+          <i class="bi bi-check2-circle me-2" aria-hidden="true"></i>
           {{ submitButtonText }}
         </button>
       </div>
