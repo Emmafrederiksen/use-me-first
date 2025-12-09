@@ -1,36 +1,43 @@
 <template>
+
     <section class="recipe-header-card">
       <div class="card recipe-card">
-       <img 
-        class="card-img" 
-        :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)"
-        :alt="recipe.title"
-        @open-menu="openMenu"
-      />
-      <div class="card-img-overlay d-flex flex-column justify-content-end">
-        <div class="header-inner">
-          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" 
-                  @click="goBack" 
-                  aria-label="Gå tilbage til forrige side">
-            <i class="bi bi-arrow-left-circle fs-1" aria-hidden="true"></i>
-          </button>
+        <img 
+          class="card-img" 
+          :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)"
+          :alt="recipe.title"
+          @open-menu="openMenu"
+        />
+        <div class="card-img-overlay">
+          <div class="header-inner">
+          
+            <!-- Venstre gruppe -->
+            <div class="left-group">
+              <button class="back-btn" @click="goBack">
+                <i class="bi bi-arrow-left-short"></i>
+              </button>
 
-          <div v-if="isAdmin" class="admin-action-buttons d-flex gap-3 position-absolute">
-            <button class="admin-btn-edit" @click="editRecipe" aria-label="Rediger opskrift">
-              <i class="bi bi-pencil" aria-hidden="true"></i>
-            </button>
+              <h1 class="recipe-title">{{ recipe.title }}</h1>
+            </div>
 
-            <button class="admin-btn-delete" @click="showDeleteRecipeModal = true" aria-label="Slet opskrift">
-              <i class="bi bi-trash3" aria-hidden="true"></i>
-            </button>
+            <!-- Admin -->
+            <div v-if="isAdmin" class="admin-action-buttons">
+              <button class="admin-btn-edit" @click="editRecipe">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="admin-btn-delete" @click="showDeleteRecipeModal = true">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </div>
+
           </div>
-
-          <h1 class="recipe-title">{{ recipe.title }}</h1>
-        </div>
-</div>
-
+       </div>
       </div>
     </section>
+
+    <div class="recipes-wrapper">
+
+    </div>
 
     <div class="time mt-4 mx-4 d-flex justify-content-end">
       <div class="time-pill d-flex align-items-center py-1 rounded-4">
@@ -268,9 +275,9 @@
 
   .recipe-title {
     margin: 0;
-    font-size: 26px;
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 2rem;
+    color: #ffffff;
   }
   
 
@@ -285,41 +292,109 @@
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     overflow: hidden;
-    margin-bottom: 2rem;
+    box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.1);
   }
 
   .recipe-header-card .card {
     border: none;       /* fjerner Bootstrap-card border */
     border-radius: 0;   /* selve card’et behøver ikke radius, parent styrer det */
   }
-
-  .recipe-header-card .recipe-card {
-    position: relative;
-  }
   
   .recipe-header-card .card-img {
     width: 100%;
     height: 230px;
     object-fit: cover;
-    filter: brightness(70%);
-    border-radius: inherit; /* arver parentens border-radius*/
+    filter: brightness(50%);
+    border-radius: inherit; /* arver parentens border-radius */
   }
   
-  .recipe-header-card .card-img-overlay {
-    background: rgba(0,0,0,0.2); 
-    color: white;
-    padding: 0;
+  .card-img-overlay {
+    display: flex;
+    align-items: flex-end; /* sikrer at alt ligger nede */
+    padding: 1.5rem;       /* let spacing rundt */
   }
-  
-  .recipe-header-card .icon-top {
-    position: absolute;
-    top: 40px;;
-  }
-  
 
-  .icon-top i {
-    color: white;
-  }
+  /* KNAPPER */
+
+ .back-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: #08300f;
+  backdrop-filter: blur(6px);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.back-btn i {
+  font-size: 1.9rem;
+  color: #ffffff;
+}
+
+/* Hover som på dashboard */
+.back-btn:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.back-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+
+.admin-action-buttons {
+  display: flex;
+  gap: 0.6rem;
+  align-self: flex-start; 
+  margin-top: 0.2rem;
+}
+
+
+.admin-btn-edit {
+  background: #ffffff;
+  color: #08300f;        
+  border: 2px solid #08300f;
+  border-radius: 35%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.admin-btn-edit i {
+  font-size: 18px;
+}
+
+.admin-btn-delete {
+  background: #ffffff;
+  color: #ed1919;       
+  border: 2px solid #ed1919;
+  border-radius: 35%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.admin-btn-delete i {
+  font-size: 18px;
+}
+
+
 
   .time button {
     background: #f8f9fa;
@@ -379,45 +454,7 @@
     margin-top: 0.5rem;
 }
 
-.admin-action-buttons {
-  top: 40px;
-  right: 48px;
-  z-index: 10;
-}
 
-.admin-btn-edit {
-  background: #ffffff;
-  color: #08300f;        
-  border: 2px solid #08300f;
-  border-radius: 35%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-}
-
-.admin-btn-edit i {
-  font-size: 18px;
-}
-
-.admin-btn-delete {
-  background: #ffffff;
-  color: #ed1919;       
-  border: 2px solid #ed1919;
-  border-radius: 35%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-}
-
-.admin-btn-delete i {
-  font-size: 18px;
-}
 
 .dark-mode .admin-btn-delete {
   background: #2c2c2c;
@@ -443,10 +480,20 @@
 
 .header-inner {
   width: 100%;
-  padding-left: 1.5rem; /* Mobil spacing */
-  padding-right: 1.5rem; 
-  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0;
 }
+
+.left-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+
+
 
 /* ------------------------------ */
 /* TABLET (≥600px → 991px) */
@@ -456,11 +503,12 @@
   .header-inner {
     padding-left: 3rem;
     padding-right: 3rem;
-    padding-top: 3rem;
+    padding-top: 6rem;
   }
 
   .recipe-title {
-    font-size: 2rem; /* = 32px */
+    font-size: 1.5rem; 
+    font-weight: 700;
   }
 }
 

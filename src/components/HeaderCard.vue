@@ -15,7 +15,7 @@
             <i class="bi bi-arrow-left-short fs-1 text-white" aria-hidden="true"></i>
           </button>
 
-          <h1 class="title mb-1">{{ heading }}</h1>
+          <h1 class="title">{{ heading }}</h1>
         </div>
 
         <!-- Højre side -->
