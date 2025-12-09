@@ -222,9 +222,45 @@ export default {
   font-size: 1.4rem;
 }
 
+.admin-icon-btn:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.admin-icon-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+.admin-icon-btn:hover i {
+  color: white;
+  transform: translateY(-2px);
+}
+
 .admin-logout-btn i {
   color: #b00000;
   font-size: 1.4rem;
+}
+
+.admin-logout-btn:hover {
+  background: #b00000;
+  color: white;
+  border-color: #b00000;
+  box-shadow: 0 8px 14px rgba(176, 0, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+.admin-logout-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+.admin-logout-btn:hover i {
+  color: white;
+  transform: translateY(-2px);
 }
 
 /* -------------------------------------- */
