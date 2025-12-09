@@ -270,13 +270,26 @@ export default {
 }
 
 .dark-mode .admin-input {
-  background-color: #9c9c9c;
-  border: 1px solid #444444;
+  background-color: #4a4a4a;
+  border: 1px solid #777;
+  color: #ffffff;
 }
 .dark-mode .pm-btn-cancel {
-  background: #444444;
+  background: #7c7c7c;
   color: #ffffff;
   border: 2px solid #ffffff;
+}
+.dark-mode .pm-btn-cancel:hover {
+  box-shadow: 0 8px 14px rgba(255,255,255,0.25);
+}
+
+.dark-mode .admin-input:focus {
+  border-color: #8fd5a1;
+  box-shadow: 0 0 0 2px rgba(143, 213, 161, 0.15);
+}
+
+.dark-mode .admin-input:hover {
+  border-color: #8fd5a1;
 }
 
 .dark-mode h3, .dark-mode .admin-description {

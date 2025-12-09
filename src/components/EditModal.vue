@@ -440,11 +440,20 @@ export default {
 }
 
 .dark-mode .edit-input, .dark-mode .edit-select {
-  background-color: #9c9c9c;
-  border: 1px solid #444444;
+  background-color: #4a4a4a;
+  border: 1px solid #777;
+  color: #fff;
 }
 
-.dark-mode .edit-label, .dark-mode h3 {
+.dark-mode .edit-input:hover , .dark-mode .edit-select:hover {
+  border-color: #8fd5a1;
+}
+.dark-mode .edit-input:focus , .dark-mode .edit-select:focus {
+  border-color: #8fd5a1;
+  box-shadow: 0 0 0 2px rgba(143, 213, 161, 0.15);
+}
+
+.dark-mode .edit-label, .dark-mode h3, .dark-mode select {
   color: #ffffff;
 }
 

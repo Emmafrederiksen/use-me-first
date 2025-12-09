@@ -609,4 +609,23 @@ a:has(button.pm-btn-recipe) {
   filter: invert(1);
 }
 
+.dark-mode .pm-btn-recipe, .dark-mode .pm-btn-edit {
+  background: #08300f;
+  color: white;
+  box-shadow: 0 8px 14px rgba(0,0,0,0.3);
+}
+
+.dark-mode .pm-btn-delete {
+  background: #ed1919;
+  color: white;
+  box-shadow: 0 8px 14px rgba(0,0,0,0.3);
+}
+
+.dark-mode .pm-btn-recipe:hover, .dark-mode .pm-btn-edit:hover {
+  box-shadow: 0 8px 14px rgba(0, 255, 64, 0.103);
+}
+.dark-mode .pm-btn-delete:hover {
+  box-shadow: 0 8px 14px rgba(255, 0, 0, 0.25);
+}
+
 </style>
