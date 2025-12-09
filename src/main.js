@@ -7,11 +7,17 @@ import AllRecipes from './components/AllRecipes.vue'
 import MyFridge from './components/MyFridge.vue'
 import ShoppingList from './components/ShoppingList.vue'
 import RecipeDetail from './components/RecipeDetail.vue'
+
+import ItemOverview from './components/ItemOverview.vue'
+import RecipeForm from './components/RecipeForm.vue'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import ItemOverview from './components/ItemOverview.vue'
-import RecipeForm from './components/RecipeForm.vue'
+
+import Toast from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 
 const router = createRouter({ 
     history: createWebHistory(),
@@ -113,4 +119,15 @@ const app = createApp(App);
 
 app.use(router);
 
+app.use(Toast, {
+  autoClose: 3000,
+  position: "top-center",
+  closeOnClick: true,
+  draggable: false,
+  newestOnTop: true,
+  pauseOnHover: true,
+  theme: "light"
+});
+
 app.mount('#app');
+

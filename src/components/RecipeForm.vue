@@ -47,8 +47,8 @@
 
           <div class="ingredient-header">
             <span>Ingrediens {{ index + 1 }}</span>
-            <button v-if="ingredients.length > 1" type="button" class="btn-delete" @click="removeIngredient(index)">
-              <i class="bi bi-trash3"></i>
+            <button v-if="ingredients.length > 1" type="button" class="btn-delete" @click="removeIngredient(index)" :aria-label="`Slet ingrediens ${index + 1}`">
+              <i class="bi bi-trash3" aria-hidden="true"></i>
             </button>
           </div>
 
@@ -62,7 +62,7 @@
           <div class="ingredient-row">
             <div>
               <label class="form-label">Mængde</label>
-              <input type="number" v-model="ingredient.amount" class="form-control" />
+              <input type="number" v-model="ingredient.amount" class="form-control" placeholder="Indtast antal..." />
             </div>
 
             <div>
@@ -80,7 +80,7 @@
 
         <div class="add-small-wrapper">
           <button type="button" class="btn add-small" @click="addIngredient">
-            <i class="bi bi-plus-circle"></i> Tilføj ingrediens
+            <i class="bi bi-plus-circle" aria-hidden="true"></i> Tilføj ingrediens
           </button>
         </div>
       </div>
@@ -93,7 +93,7 @@
 
           <div class="step-header">
             <span>Trin {{ index + 1 }}</span>
-            <button v-if="steps.length > 1" type="button" class="btn-delete" @click="removeStep(index)">
+            <button v-if="steps.length > 1" type="button" class="btn-delete" @click="removeStep(index)" :aria-label="`Slet trin ${index + 1}`">
               <i class="bi bi-trash3"></i>
             </button>
           </div>
@@ -109,7 +109,7 @@
 
         <div class="add-small-wrapper">
           <button type="button" class="btn add-small" @click="addStep">
-            <i class="bi bi-plus-circle"></i> Tilføj trin
+            <i class="bi bi-plus-circle" aria-hidden="true"></i> Tilføj trin
           </button>
         </div>
       </div>
@@ -117,7 +117,7 @@
       <!-- SUBMIT KNAP (ligger i grid) -->
       <div class="submit-wrapper">
         <button type="submit" class="add-btn">
-          <i class="bi bi-check2-circle me-2"></i>
+          <i class="bi bi-check2-circle me-2" aria-hidden="true"></i>
           {{ submitButtonText }}
         </button>
       </div>
@@ -473,7 +473,7 @@ textarea:focus {
    ============================================================ */
 
 .form-select {
-  appearance: none; /* fjern default pil */
+  appearance: none;
   padding-right: 40px;
   background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L8 9L15 1' stroke='%2308300F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -602,7 +602,7 @@ textarea:focus {
   .recipeform-wrapper {
     margin-left: 3rem;
     margin-right: 3rem;
-    margin-top: 4rem;
+    margin-top: 3rem;
   }
 }
 
@@ -686,6 +686,17 @@ textarea:focus {
   color: #f1f1f1;
 }
 
+/* dropdown-pilen KUN til select */
+.dark-mode .form-select {
+  background: #4a4a4a;
+  color: #fff;
+  border: 1px solid #777;
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L8 9L15 1' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+}
+
 .dark-mode .form-control,
 .dark-mode .form-select,
 .dark-mode textarea {
@@ -742,6 +753,7 @@ textarea:focus {
   box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
   transform: translateY(-2px);
 }
+
 
 
 </style>

@@ -116,6 +116,8 @@ import { toast } from "vue3-toastify";
 export default {
   name: "ProductModal",
 
+  emits: ["close", "delete-product", "update-product"],
+
   components: {
     ConfirmModal,
     EditModal,
@@ -260,13 +262,13 @@ export default {
 .productmodal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);   /* ← Blur tilbage */
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3000 !important; /* ← vigtig ændring */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 3000 !important;
 }
 
 

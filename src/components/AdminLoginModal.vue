@@ -100,7 +100,7 @@ export default {
 .admin-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0,0,0,0.55);
   backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
