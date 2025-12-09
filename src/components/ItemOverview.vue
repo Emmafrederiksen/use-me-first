@@ -48,10 +48,10 @@
             </small>
           </div>
 
-          <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))"></span>
+          <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))" aria-hidden="true"></span>
 
         </div>
-        <span class="dot" :class="badgeClass(daysLeft(item.expiresAt))" aria-hidden="true"></span>
+    
       </div>
 
     </div>
@@ -230,7 +230,7 @@ export default {
 </script>
 
 <style scoped>
-
+z
 /* --------------------------------------------- */
 /* WRAPPER — samme som MyFridge */
 /* --------------------------------------------- */

@@ -116,6 +116,8 @@ import { toast } from "vue3-toastify";
 export default {
   name: "ProductModal",
 
+  emits: ["close", "delete-product", "update-product"],
+
   components: {
     ConfirmModal,
     EditModal,
