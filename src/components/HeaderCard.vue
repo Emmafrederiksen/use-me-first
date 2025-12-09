@@ -12,7 +12,7 @@
             class="back-btn me-3"
             aria-label="Gå tilbage"
           >
-            <i class="bi bi-arrow-left-circle fs-1 text-white" aria-hidden="true"></i>
+            <i class="bi bi-arrow-left-short fs-1 text-white" aria-hidden="true"></i>
           </button>
 
           <h1 class="title mb-1">{{ heading }}</h1>
@@ -170,8 +170,38 @@ export default {
 /* -------------------------------------- */
 
 .back-btn {
-  background: transparent;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(6px);
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.back-btn i {
+  font-size: 1.9rem;
+  color: #ffffff;
+}
+
+/* Hover som på dashboard */
+.back-btn:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.back-btn:active {
+  transform: scale(0.95);
+  box-shadow: none;
 }
 
 .admin-icon-btn,

@@ -70,8 +70,7 @@ export default {
 .confirm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;

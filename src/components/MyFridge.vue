@@ -68,10 +68,7 @@
             </small>
           </div>
 
-            </div>
-            <span class="dot" :class="badgeClass(daysLeft(group.earliest))" aria-hidden="true"></span>
-        </div>
-        </div>
+          <span class="dot" :class="badgeClass(daysLeft(group.earliest))" aria-hidden="true"></span>
 
         </div>
       </div>
@@ -334,6 +331,149 @@ export default {
   display: flex;
   align-items: center;
   box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  border: 1.8px solid #dadada;  
+  transition: all 0.25s ease;
+}
+
+.search-wrap:hover {
+    border-color: #678a69;  
+}
+
+.search-wrap:focus-within {
+    border-color: #678a69;  
+    box-shadow: 0 0 0 2px rgba(8,48,15,0.15);
+}
+
+.search-wrap i {
+  font-size: 1.25rem;
+  color: #08300f;
+}
+
+.search-wrap input {
+  border: none;
+  width: 100%;
+  background: transparent;
+  margin-left: 10px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search-wrap input::placeholder {
+  color: #777;
+}
+
+/* FILTER BUTTON */
+.filter-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(0,0,0,0.20);
+}
+
+/* -------------------------------------------------- */
+/* ITEM CARDS */
+/* -------------------------------------------------- */
+
+.items-wrapper {
+  margin-top: 2rem;
+}
+
+.item-card {
+  background: linear-gradient(140deg, #1f3121 0%, #446847 100%);
+  border-radius: 22px;
+  padding: 0;
+  margin-bottom: 1.2rem;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.20);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInCard 0.45s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.25);
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.4rem 1.6rem;
+}
+
+/* Farve dot */
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-left: 14px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.45);
+}
+
+.dot.expired { background: #000; }
+.dot.danger  { background: #e02424; }
+.dot.warning { background: #f5b400; }
+.dot.success { background: #1fbf62; }
+
+/* --------------------------------------------- */
+/* EMPTY MESSAGE */
+/* --------------------------------------------- */
+
+.empty-message {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 2rem;
+  text-align: start;
+}
+
+/* -------------------------------------------------- */
+/* RESPONSIVE BREAKPOINTS — MATCHER ADDITEM/RECIPEFORM */
+/* -------------------------------------------------- */
+
+@media (min-width: 600px) {
+  .myfridge-wrapper {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .myfridge-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .myfridge-wrapper {
+    max-width: 85%;
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .myfridge-wrapper {
+    max-width: 80%;
+    margin-top: 5rem;
+  }
+}
+
 }
 
 .search-wrap i {

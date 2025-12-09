@@ -7,11 +7,24 @@ import AllRecipes from './components/AllRecipes.vue'
 import MyFridge from './components/MyFridge.vue'
 import ShoppingList from './components/ShoppingList.vue'
 import RecipeDetail from './components/RecipeDetail.vue'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+
 import ItemOverview from './components/ItemOverview.vue'
 import RecipeForm from './components/RecipeForm.vue'
+
+
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
+
+// GLOBAL TOAST KONFIGURATION
+toast.configure({
+  draggable: false,
+  closeOnClick: true,
+  position: toast.POSITION.TOP_CENTER,
+  autoClose: 3000,
+  theme: "light",
+  newestOnTop: true,
+});
 
 const router = createRouter({ 
     history: createWebHistory(),
@@ -114,3 +127,4 @@ const app = createApp(App);
 app.use(router);
 
 app.mount('#app');
+
