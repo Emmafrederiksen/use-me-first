@@ -295,6 +295,10 @@ export default {
 .dark-mode h3, .dark-mode .admin-description {
   color: #ffffff;
 }
+
+.dark-mode .admin-input::placeholder {
+  color: #e4e4e4;
+}
 /* RESPONSIV */
 @media (min-width: 600px) {
   .admin-box {

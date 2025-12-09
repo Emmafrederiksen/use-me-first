@@ -432,7 +432,8 @@
 .dark-mode p,
 .dark-mode .bi-dash-square,
 .dark-mode .bi-plus-square,
-.dark-mode .time {
+.dark-mode .time, 
+.dark-mode .portion-control span {
   color: #ffffff;
 }
 
