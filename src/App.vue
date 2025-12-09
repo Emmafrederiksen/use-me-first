@@ -87,7 +87,7 @@ body.dark-mode #app {
 
 
 /* ======================================= */
-/*        ELEGANT ORANGE TOAST DESIGN       */
+/*              TOAST DESIGN               */
 /* ======================================= */
 
 .Toastify__toast {

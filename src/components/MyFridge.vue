@@ -474,8 +474,6 @@ export default {
   }
 }
 
-}
-
 .search-wrap i {
   font-size: 1.25rem;
   color: #08300f;
