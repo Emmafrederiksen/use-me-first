@@ -75,6 +75,8 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 3000 !important; /* højere end ProductModal */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /* ========================================= */

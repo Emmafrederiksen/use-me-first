@@ -266,7 +266,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3000; 
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 3000 !important;
 }
 
 
