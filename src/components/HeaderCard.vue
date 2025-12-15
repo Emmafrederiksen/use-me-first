@@ -163,7 +163,7 @@ export default {
   font-size: 1rem;
   margin-top: 0.5rem;
   opacity: 0.95;
-  max-width: 210px;
+  max-width: 215px;
 }
 
 /* -------------------------------------- */
