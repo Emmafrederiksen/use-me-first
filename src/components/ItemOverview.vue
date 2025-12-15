@@ -144,10 +144,8 @@ export default {
         }, 
 
         badgeClass(days) { // Vælger farve baseret på antal dage til udløbsdato
-            if( days < 0 ) return 'expired';
-            if (days < 3) return 'danger'; 
-            if (days <= 4) return 'warning';
-            
+            if( days < 0 ) return 'danger';
+            if (days < 3) return 'warning';             
             return 'success';
         },
         openProductModal(item) {
@@ -285,7 +283,6 @@ export default {
   box-shadow: 0 0 0 2px rgba(255,255,255,0.45);
 }
 
-.dot.expired { background: #000; }
 .dot.danger  { background: #e02424; }
 .dot.warning { background: #f5b400; }
 .dot.success { background: #1fbf62; }
