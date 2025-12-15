@@ -129,7 +129,7 @@ export default {
 
     // tekst til underoverskriften
     subtitleText () {
-        return `Du har ${this.totalCount} ${this.itemName.toLowerCase()} i køleskabet. Brug den øverste først.`; 
+        return `Du har ${this.totalCount} ${this.itemName.toLowerCase()} i køleskabet. <br>Brug den øverste først.`; 
     }
   },
 
