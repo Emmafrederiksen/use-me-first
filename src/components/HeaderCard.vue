@@ -12,7 +12,7 @@
             class="back-btn me-3"
             aria-label="Gå tilbage"
           >
-            <i class="bi bi-arrow-left-short fs-1 text-white" aria-hidden="true"></i>
+            <i class="bi bi-arrow-left-short" aria-hidden="true"></i>
           </button>
 
           <h1 class="title">{{ heading }}</h1>
@@ -21,37 +21,60 @@
         <!-- Højre side -->
         <div class="right-controls">
 
-          <!-- Admin ikoner -->
-          <div v-if="showAdminIcon" class="me-3">
-            <button 
-              v-if="!isAdmin"
-              @click="$emit('open-admin-login')"
-              class="admin-icon-btn"
-              aria-label="Åben admin login"
-              >
-              <i class="bi bi-person-lock" aria-hidden="true"></i>
-            </button>
+  <!-- 🔹 OPSKRIFT ADMIN ACTIONS -->
+  <div
+    v-if="variant === 'recipe' && showRecipeActions && isAdmin"
+    class="recipe-admin-actions"
+  >
+    <button
+      class="admin-btn-edit"
+      @click="$emit('edit-recipe')"
+      aria-label="Rediger opskrift"
+    >
+      <i class="bi bi-pencil"></i>
+    </button>
 
-            <button
-              v-else @click="$emit('logout-admin')"
-              class="admin-logout-btn"
-              aria-label="Log ud som admin"
-              >
-              <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
-            </button>
-          </div>
+    <button
+      class="admin-btn-delete"
+      @click="$emit('delete-recipe')"
+      aria-label="Slet opskrift"
+    >
+      <i class="bi bi-trash3"></i>
+    </button>
+  </div>
 
-          <!-- BURGERMENU (kun tablet/desktop) -->
-          <button
-            class="burger-btn d-none d-md-flex"
-            @click="$emit('open-menu')"
-            aria-label="Åben menu"
-            >
-            <i class="bi bi-list" aria-hidden="true"></i>
-          </button>
+  <!-- 🔹 GLOBAL ADMIN LOGIN / LOGOUT -->
+  <div v-if="showAdminIcon">
+    <button 
+      v-if="!isAdmin"
+      @click="$emit('open-admin-login')"
+      class="admin-icon-btn"
+      aria-label="Åben admin login"
+    >
+      <i class="bi bi-person-lock"></i>
+    </button>
 
+    <button
+      v-else
+      @click="$emit('logout-admin')"
+      class="admin-logout-btn"
+      aria-label="Log ud som admin"
+    >
+      <i class="bi bi-box-arrow-right"></i>
+    </button>
+  </div>
 
-        </div>
+  <!-- 🔹 BURGERMENU -->
+  <button
+    class="burger-btn d-none d-md-flex"
+    @click="$emit('open-menu')"
+    aria-label="Åben menu"
+  >
+    <i class="bi bi-list"></i>
+  </button>
+
+</div>
+
 
 
       </div>
@@ -89,7 +112,12 @@ export default {
 
     showAdminIcon: { type: Boolean, default: false },
 
-    isAdmin: { type: Boolean, default: false }
+    isAdmin: { type: Boolean, default: false },
+
+    variant: { type: String, default: "default" }, // "default" | "recipe"
+    recipeImage: { type: String, default: "" },
+    showRecipeActions: { type: Boolean, default: false }
+
 
   },
   data() {
@@ -170,8 +198,8 @@ export default {
 /* -------------------------------------- */
 
 .back-btn {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
   background: rgba(255,255,255,0.2);
   backdrop-filter: blur(6px);
@@ -179,6 +207,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  flex-shrink: 0;
 
   box-shadow: 0 6px 18px rgba(0,0,0,0.18);
   cursor: pointer;
@@ -226,6 +256,60 @@ export default {
   color: #b00000;
   font-size: 1.4rem;
 }
+
+.recipe-admin-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.recipe-admin-actions .admin-btn-edit,
+.recipe-admin-actions .admin-btn-delete {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.admin-btn-edit {
+  background: #ffffff;
+  color: #08300f;
+  border: 2.5px solid #041a09;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+  transition: 0.25s ease;
+}
+
+.admin-btn-edit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(21, 128, 41, 0.25);
+  filter: brightness(1.05);
+}
+
+.admin-btn-delete {
+  background: #ffffff;
+  color: #ed1919;
+  border: 2px solid #ed1919;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+  transition: 0.25s ease;
+}
+
+.admin-btn-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(237, 25, 25, 0.25);
+  filter: brightness(1.05);
+}
+
+.recipe-admin-actions button:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+
+
 
 /* -------------------------------------- */
 /*         RESPONSIVT LAYOUT WRAPPER      */
@@ -321,11 +405,14 @@ export default {
   }
 }
 
-/* CONTROLS */
 .right-controls {
   display: flex;
   align-items: center;
+  gap: 0.75rem; 
+  margin-left: auto;
 }
+
+
 
 .burger-btn {
   background: transparent;

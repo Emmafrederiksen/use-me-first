@@ -39,7 +39,7 @@
           <h2>Opskriftsforslag</h2>
 
           <router-link to="/opskrifter" class="see-all-btn" aria-label="Se alle opskrifter">
-            <i class="bi bi-arrow-right" aria-hidden="true"></i> 
+            <i class="bi bi-arrow-right-short" aria-hidden="true"></i> 
           </router-link>
         </div>
 
@@ -426,8 +426,8 @@ expiredItemsCount() {
 }
 
 .see-all-btn {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
   background: #08300f;
   color: #ffffff;
@@ -440,6 +440,11 @@ expiredItemsCount() {
   transition: 0.25s ease;
   cursor: pointer;
   margin-bottom: 12px;
+}
+
+.see-all-btn i {
+  font-size: 1.9rem;
+  color: #ffffff;
 }
 
 /* hover = orange med skygge */
@@ -594,7 +599,7 @@ expiredItemsCount() {
 
 
 /* ------------------------------- */
-/* 🖥️ DESKTOP (≥1400px) */
+/* DESKTOP (≥1400px) */
 /* Layout: 3 store lige store kort */
 /* ------------------------------- */
 
@@ -634,15 +639,17 @@ expiredItemsCount() {
   }
 }
 
-.dark-mode h2 {
-  color: #ffffff;
-}
+
 
 @keyframes fadeInRecipeCard {
   from { opacity: 0; transform: translateY(-6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+
+.dark-mode h2 {
+  color: #ffffff;
+}
 
 
 </style>
