@@ -309,7 +309,7 @@ expiredItemsCount() {
   color: #2c2c2c;
   border-radius: 24px;
   padding: 1.5rem 1.2rem;
-  margin: 3rem 1.5rem 0 1.5rem; /* mobil margin */
+  margin: 2rem 1.5rem 0 1.5rem; /* mobil margin */
   box-shadow: 0 10px 14px rgba(0,0,0,0.12);
 
   position: relative;
@@ -330,6 +330,11 @@ expiredItemsCount() {
   position: absolute;
   top: 20px;
   right: 20px;
+  opacity: 100%;
+}
+
+.alert-close:focus {
+  box-shadow: none;
 }
 
 @keyframes fadeInAlert {
@@ -346,6 +351,7 @@ expiredItemsCount() {
   .alert-wrapper {
     margin-left: 3rem;
     margin-right: 3rem;
+    margin-top: 3rem;
     padding: 2rem 1.8rem;
   }
 

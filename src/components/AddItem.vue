@@ -212,7 +212,7 @@ export default {
 --------------------------------------------- */
 
 .additem-wrapper {
-  margin: 3rem 1.5rem;
+  margin: 2rem 1.5rem;
   animation: fadeInDown 0.45s ease;
 }
 
@@ -319,6 +319,10 @@ export default {
 .add-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 14px rgba(242,116,5,0.35);
+}
+
+.add-btn:active {
+  transform: scale(0.95);
 }
 
 /* ---------------------------------------------

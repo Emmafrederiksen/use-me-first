@@ -181,16 +181,30 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
   cursor: pointer;
   transition: 0.2s ease;
   border: none;
+}
+
+.pm-btn-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(237, 25, 25, 0.25);
+  filter: brightness(1.05);
+}
+
+.pm-btn-confirm:active {
+  transform: scale(0.95);
 }
 
 .pm-btn-used:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 14px rgba(242,116,5,0.25);
   filter: brightness(1.05);
+}
+
+.pm-btn-cancel:active {
+  transform: scale(0.95);
 }
 
 .pm-btn-cancel i,

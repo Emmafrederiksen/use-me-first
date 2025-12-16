@@ -20,7 +20,7 @@ import "vue3-toastify/dist/index.css";
 
 
 const router = createRouter({ 
-    history: createWebHistory(),
+    history: createWebHistory('/fridgeflow/'),
     routes: [
         {
             path: '/', 

@@ -189,6 +189,10 @@ export default {
   box-shadow: 0 8px 14px rgba(8, 48, 15, 0.25);
 }
 
+.pm-btn-cancel:active {
+  transform: scale(0.95);
+}
+
 /* BEKRÆFT (orange) */
 .pm-btn-used {
   flex: 1;
@@ -211,6 +215,11 @@ export default {
   box-shadow: 0 8px 14px rgba(242, 116, 5, 0.25);
   filter: brightness(1.05);
 }
+
+.pm-btn-used:active {
+  transform: scale(0.95);
+}
+
 
 /* Ikoner større */
 .pm-btn-cancel i,
@@ -248,6 +257,16 @@ export default {
 }
 
 .pm-btn-danger {
-  background-color: #dc3545;
+  background-color: #e02424;
 }
+
+.pm-btn-danger:hover {
+  box-shadow: 0 8px 14px rgba(237, 25, 25, 0.25);
+}
+
+.pm-btn-danger:active {
+  transform: scale(0.95)
+}
+
+
 </style>

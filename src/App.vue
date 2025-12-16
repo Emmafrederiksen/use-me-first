@@ -61,7 +61,7 @@ export default {
   margin: 0 auto;
   background-color: #FEFBF6;
   min-height: 100vh;
-  padding-bottom: 3rem; /* plads til mobil-navbar */
+  padding-bottom: 2.5rem; /* plads til mobil-navbar */
 
 }
 

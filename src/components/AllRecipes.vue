@@ -144,7 +144,7 @@ export default {
 /* -------------------------------- */
 
 .recipes-wrapper {
-  margin: 3rem 1.5rem;
+  margin: 2rem 1.5rem;
 }
 
 .recipes-grid {
@@ -176,9 +176,8 @@ export default {
   width: 100%;
   height: 170px;
   object-fit: cover;
-  filter: brightness(50%);
+  filter: brightness(60%);
 }
-
 
 .recipe-title {
   position: absolute;
@@ -192,7 +191,7 @@ export default {
 }
 
 .admin-add-wrapper {
-  margin: 3rem 1.5rem 0 1.5rem;
+  margin: 2rem 1.5rem 0 1.5rem;
   text-align: right;
 }
 

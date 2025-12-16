@@ -175,7 +175,8 @@ export default {
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  padding: 2.5rem 0;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 }
 
 /* -------------------------------------- */
@@ -354,7 +355,7 @@ export default {
   width: 100%;
   padding-left: 1.5rem; /* Mobil spacing */
   padding-right: 1.5rem; 
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 /* -------------------------------------- */
@@ -554,6 +555,6 @@ export default {
 .toggle-right {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px; /* valgfrit */
+  margin-top: 15px; 
 }
 </style>
