@@ -44,7 +44,7 @@
         </button>
 
         <button class="pm-btn-used" @click="handleLogin">
-          <i class="bi bi-check2-circle" aria-hidden="true"></i>
+          <i class="bi bi-check-circle"></i>
           Log ind
         </button>
       </div>

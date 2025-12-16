@@ -64,7 +64,7 @@
 
           <!-- GEM-KNAP -->
           <button class="edit-save-btn" type="submit">
-            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+            <i class="bi bi-check-circle" aria-hidden="true"></i>
             Gem ændringer
           </button>
 
@@ -391,7 +391,7 @@ export default {
   border-radius: 999px;
   font-weight: 600;
   font-size: 1rem;
-  margin-top: 18px;
+  margin-top: 35px;
 
   display: flex;
   justify-content: center;
