@@ -391,7 +391,7 @@ export default {
   border-radius: 999px;
   font-weight: 600;
   font-size: 1rem;
-  margin-top: 18px;
+  margin-top: 35px;
 
   display: flex;
   justify-content: center;
