@@ -322,6 +322,10 @@ export default {
 }
 
 .recipe-admin-actions button:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
 .admin-logout-btn:hover {
   background: #b00000;
   color: white;
