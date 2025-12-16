@@ -290,6 +290,7 @@ export default {
 
   .subtitle {
     font-size: 1.375rem; /* = 22px */
+    
   }
 }
 

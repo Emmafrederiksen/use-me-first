@@ -1,7 +1,7 @@
 <template>
   <div class="carousel-wrapper" role="region" aria-label="Varer der udløber snart">
     <div class="d-flex justify-content-between align-items-center">
-      <h2>Brug mig først</h2>
+      <h2>Undgå madspil</h2>
       <!-- desktop-pile -->
       <div class="d-none d-sm-flex align-items-center arrow-buttons">
         <button class="arrow-btn" @click="scrollLeft" aria-label="Scroll venstre">
