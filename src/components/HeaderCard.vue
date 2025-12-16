@@ -245,6 +245,7 @@ export default {
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.30);
+  transition: 0.25s ease;
 }
 
 .admin-icon-btn i {
@@ -267,7 +268,7 @@ export default {
 
 .admin-icon-btn:hover i {
   color: white;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .admin-logout-btn i {
@@ -332,6 +333,12 @@ export default {
   border-color: #b00000;
   box-shadow: 0 8px 14px rgba(176, 0, 0, 0.35);
   transform: translateY(-2px);
+}
+
+.admin-logout-btn:hover i{
+  color: #ffffff;
+  font-size: 1.4rem;
+  transform: translateY(-1px);
 }
 
 .admin-logout-btn:active {
@@ -454,7 +461,12 @@ export default {
 }
 
 .burger-btn:hover {
-  opacity: 0.8;
+  color: #f27405;
+  transform: translateY(-2px);
+}
+
+.burger-btn:active {
+  transform: scale(0.90);
 }
 
 @media (max-width: 767px) {
