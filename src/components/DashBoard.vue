@@ -651,5 +651,15 @@ expiredItemsCount() {
   color: #ffffff;
 }
 
+.dark-mode .see-all-btn {
+  border: 2px solid;
+  border-color: rgb(52, 97, 56);
+}
+
+.dark-mode .see-all-btn:hover {
+  border: 2px solid;
+  border-color: #f27405;
+}
+
 
 </style>

@@ -377,11 +377,11 @@
 /* =============================== */
 
 .ingredients-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-}
+    display: flex;
+    align-items: flex-start;
+    gap: 6rem;
+    margin-bottom: 1.5rem;
+  }
 
 .ingredient-row {
   display: flex;
@@ -565,6 +565,13 @@
 
 @media (min-width: 600px) and (max-width: 991px) {
 
+  .ingredients-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
   .recipe-layout {
     display: grid;
     margin-left: 3rem;
@@ -606,6 +613,13 @@
 }
 
 @media (min-width: 992px) and (max-width: 1399px) {
+
+  .ingredients-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
 
   .recipe-layout {
     max-width: 800px;
@@ -698,6 +712,12 @@
 
 @media (min-width: 1400px) {
 
+  .ingredients-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
   .recipe-layout {
     max-width: 85%;
     margin-left: auto;
@@ -741,6 +761,8 @@
   }
 
   /* ---------- RÆKKE 2 ---------- */
+
+
 
   .ingredients-section {
     grid-column: 1;
@@ -843,7 +865,6 @@
 }
 
 .dark-mode .step-card {
-  background: linear-gradient(140deg, #16251c 0%, #274a37 100%);
   box-shadow: 0 8px 18px rgba(0,0,0,0.7);
 }
 
@@ -872,6 +893,15 @@
   color: #ffffff;
 }
 
+.dark-mode .icon-button {
+  border: 2px solid;
+  border-color: rgb(52, 97, 56);
+}
+
+.dark-mode .icon-button:hover {
+  border: 2px solid;
+  border-color: #f27405;
+}
 
 </style>
   

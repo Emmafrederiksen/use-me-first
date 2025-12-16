@@ -448,8 +448,18 @@ h2 {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
+  }  
 }
 
+
+.dark-mode .arrow-btn {
+  border: 2px solid;
+  border-color: rgb(52, 97, 56);
+}
+
+.dark-mode .arrow-btn:hover {
+  border: 2px solid;
+  border-color: #f27405;
+}
 
 </style>
