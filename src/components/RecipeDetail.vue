@@ -1,112 +1,136 @@
 <template>
-    <section class="recipe-header-card">
-      <div class="card recipe-card">
-       <img 
-        class="card-img" 
-        :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)"
-        :alt="recipe.title"
-        @open-menu="openMenu"
-      />
-      <div class="card-img-overlay d-flex flex-column justify-content-end">
-        <div class="header-inner">
-          <button class="icon-top d-flex justify-content-end border-0 bg-transparent p-0" 
-                  @click="goBack" 
-                  aria-label="Gå tilbage til forrige side">
-            <i class="bi bi-arrow-left-circle fs-1" aria-hidden="true"></i>
-          </button>
 
-          <div v-if="isAdmin" class="admin-action-buttons d-flex gap-3 position-absolute">
-            <button class="admin-btn-edit" @click="editRecipe" aria-label="Rediger opskrift">
-              <i class="bi bi-pencil" aria-hidden="true"></i>
-            </button>
-
-            <button class="admin-btn-delete" @click="showDeleteRecipeModal = true" aria-label="Slet opskrift">
-              <i class="bi bi-trash3" aria-hidden="true"></i>
-            </button>
-          </div>
-
-          <h1 class="recipe-title">{{ recipe.title }}</h1>
-        </div>
-</div>
-
-      </div>
-    </section>
-
-    <div class="time mt-4 mx-4 d-flex justify-content-end">
-      <div class="time-pill d-flex align-items-center py-1 rounded-4">
-        <i class="bi bi-clock me-2" aria-hidden="true"></i>
-        <span aria-label="Total tid">{{ recipe.totalTime }}</span>
-      </div>
-    </div>
-
-
-    <div class="mx-4 mt-4">
-        <h3>Beskrivelse</h3>
-        <p>{{ recipe.description }}</p>
-    </div>
-
-    <div class="mx-4 mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h3>Ingredienser</h3>
-          
-          <div class="portion-wrapper d-flex flex-column align-items-center">
-  
-          <p class="mb-1 fw-semibold">Antal</p> <!-- Labelen -->
-
-          <div class="portion-control d-flex align-items-center gap-2">
-            <button @click="decreasePortion" class="icon-button" aria-label="Mindre portion">
-              <i class="bi bi-dash-square fs-1 mx-1" aria-hidden="true"></i>
-            </button>
-            <span class="mb-0 mx-1" aria-live="polite">{{ portion }}</span>
-            <button @click="increasePortion" class="icon-button" aria-label="Større portion">
-              <i class="bi bi-plus-square fs-1 mx-1" aria-hidden="true"></i>
-            </button>
-          </div>
-    </div>
-
-        </div>  
-    
-        <div class="ingredient-row" 
-          v-for="(ing, index) in displayIngredients" 
-          :key="index">
-
-            <p class="ingredient-amount mt-2"> 
-              {{ ing.amount == null ? '' : ing.amount * portion }} {{ ing.unitName }} </p>
-
-            <p class="ingredient-name mt-2"> 
-              {{ ing.ingredientName }} 
-            </p>
-
-        </div>
-    </div>
-
-    <div class="mx-4 mt-5">
-        <h3 class="mb-4">Fremgangsmåde</h3>
-        <div>
-          <div role="list">
-            <div class="col-12" v-for="(step, index) in steps" :key="index" role="listitem" :aria-label="`Step ${step.step}: ${step.stepDescription}`">
-              <div class="card step-card">
-                <div class="card-body d-flex align-items-start gap-4">
-                  <p class="step-number"> {{ step.step < 10 ? '0' + step.step : step.step }}</p>
-                  <p class="step-text"> {{ step.stepDescription }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-    </div>
-
-
-  <ConfirmDeleteRecipeModal
-  :visible="showDeleteRecipeModal"
-  :recipeTitle="recipe.title"
-  @close="showDeleteRecipeModal = false"
-  @confirm="handleDeleteRecipeConfirmed"
+  <HeaderCard
+    variant="recipe"
+    :title-override="recipe.title"
+    :show-back="true"
+    :is-admin="isAdmin"
+    :show-recipe-actions="isAdmin"
+    @edit-recipe="editRecipe"
+    @delete-recipe="showDeleteRecipeModal = true"
+    @open-menu="openMenu"
   />
 
+  <div class="recipe-layout">
 
-  </template>
+    <div class="recipe-main">
+
+      <div class="recipe-image">
+        <img
+          :src="require(`@/assets/${recipe.image || 'default-recipe.jpg'}`)"
+          :alt="recipe.title"
+        />
+      </div>
+
+      <section class="info-grid">
+        <div class="time-wrapper">
+          <i class="bi bi-clock"></i>
+          <span>{{ recipe.totalTime }}</span>
+        </div>
+
+        <div class="info-left">
+          <h3>Beskrivelse</h3>
+          <p>{{ recipe.description }}</p>
+        </div>
+      </section>
+    
+      <section class="section-wrapper ingredients-section">
+
+        <div class="ingredients-header">
+          <h3>Ingredienser</h3>
+
+          <div class="portion-control">
+            <button
+              @click="decreasePortion"
+              class="icon-button"
+              aria-label="Mindre portion"
+            >
+              <i class="bi bi-dash"></i>
+            </button>
+
+            <span class="portion-value">{{ portion }}</span>
+
+            <button
+              @click="increasePortion"
+              class="icon-button"
+              aria-label="Større portion"
+            >
+              <i class="bi bi-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="ingredient-row"
+          v-for="(ing, index) in displayIngredients"
+          :key="index"
+          :class="{ checked: checkedIngredients.includes(index) }"
+          @click="toggleIngredient(index)"
+        >
+
+          <p class="ingredient-amount">
+            {{ ing.amount == null ? '' : ing.amount * portion }} {{ ing.unitName }}
+          </p>
+          
+          <p class="ingredient-name">
+            {{ ing.ingredientName }}
+            <i
+              v-if="checkedIngredients.includes(index)"
+              class="bi bi-check-circle-fill ingredient-check"
+            ></i>
+          </p>
+          
+        </div>
+
+      </section>
+
+      <!-- ===================== -->
+      <!-- STEPS                -->
+      <!-- ===================== -->
+      <section class="section-wrapper steps-section">
+
+        <h3>Fremgangsmåde</h3>
+
+        <div class="steps-list">
+          <div
+            class="step-card"
+            v-for="(step, index) in steps"
+            :key="index"
+            :class="{ completed: completedSteps.includes(step.step) }"
+            @click="toggleStep(step.step)"
+          >
+            <div class="step-inner">
+              <p class="step-number">
+                {{ step.step < 10 ? '0' + step.step : step.step }}
+              </p>
+
+              <p class="step-text">
+                {{ step.stepDescription }}
+              </p>
+
+              <i
+                v-if="completedSteps.includes(step.step)"
+                class="bi bi-check-circle-fill step-check"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+
+  
+  <ConfirmDeleteRecipeModal
+    :visible="showDeleteRecipeModal"
+    :recipeTitle="recipe.title"
+    @close="showDeleteRecipeModal = false"
+    @confirm="handleDeleteRecipeConfirmed"
+  />
+
+</template>
+
   
   <script>
 
@@ -116,9 +140,10 @@
   import UnitDataService from '@/services/UnitDataService';
   import Recipe_IngredientDataService from '@/services/Recipe_IngredientDataService';
   import ConfirmDeleteRecipeModal from "./ConfirmDeleteRecipeModal.vue";
+  import HeaderCard from './HeaderCard.vue';
+
   import { toast } from 'vue3-toastify';
   import 'vue3-toastify/dist/index.css';
-
 
   
   export default {
@@ -126,7 +151,8 @@
     name: 'RecipeDetail',
 
     components: {
-        ConfirmDeleteRecipeModal
+        ConfirmDeleteRecipeModal,
+        HeaderCard,
     },
 
     props: {
@@ -148,6 +174,9 @@
         units: [],              // units fra backend
         portion: 1, // startværdi for antal portioner
         showDeleteRecipeModal: false,
+        completedSteps: [],
+        checkedIngredients: []
+
       }
     },
 
@@ -208,7 +237,7 @@
           });
         },
 
-        goBack() {
+      goBack() {
         const cameFromEdit = sessionStorage.getItem("fromEdit");
 
         if (cameFromEdit === "1") {
@@ -219,6 +248,24 @@
         }
       },
 
+      toggleStep(stepNumber) {
+        const index = this.completedSteps.indexOf(stepNumber);
+
+        if (index === -1) {
+          this.completedSteps.push(stepNumber);
+        } else {
+          this.completedSteps.splice(index, 1);
+        }
+      },
+
+      toggleIngredient(index) {
+        const i = this.checkedIngredients.indexOf(index);
+        if (i === -1) {
+          this.checkedIngredients.push(index);
+        } else {
+          this.checkedIngredients.splice(i, 1);
+        }
+      }
 
     },
 
@@ -262,261 +309,569 @@
   
   <style scoped>
 
-  /* -------------------------------- */
-  /* Base styling (mobil som standard) */
-  /* -------------------------------- */
+/* =============================== */
+/* RECIPE LAYOUT – MOBIL FIRST     */
+/* =============================== */
 
-  .recipe-title {
-    margin: 0;
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 2rem;
-  }
-  
-
-  h3 {
-    font-weight: 700;
-    font-size: 18px;
-    margin-bottom: 1rem;
+.recipe-layout {
+  margin: 0 1.5rem;
+  animation: fadeInRecipeDetail 0.45s ease;
 }
 
-  .recipe-header-card {
-    width: 100%;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-    overflow: hidden;
-    margin-bottom: 2rem;
-  }
+.recipe-main {
+  width: 100%;
+}
 
-  .recipe-header-card .card {
-    border: none;       /* fjerner Bootstrap-card border */
-    border-radius: 0;   /* selve card’et behøver ikke radius, parent styrer det */
-  }
+.section-wrapper {
+  margin-top: 2.5rem
+}
 
-  .recipe-header-card .recipe-card {
-    position: relative;
-  }
-  
-  .recipe-header-card .card-img {
-    width: 100%;
-    height: 230px;
-    object-fit: cover;
-    filter: brightness(70%);
-    border-radius: inherit; /* arver parentens border-radius*/
-  }
-  
-  .recipe-header-card .card-img-overlay {
-    background: rgba(0,0,0,0.2); 
-    color: white;
-    padding: 0;
-  }
-  
-  .recipe-header-card .icon-top {
-    position: absolute;
-    top: 40px;;
-  }
-  
 
-  .icon-top i {
-    color: white;
-  }
+.recipe-image {
+  margin: 1.5rem 0 2rem;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 14px rgba(0,0,0,0.15);
+}
 
-  .time button {
-    background: #f8f9fa;
-    padding: 0.5rem 1rem;
-    border-radius: 15px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    color: #08300F;
-  }
+.recipe-image img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
 
-  .icon-button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
+
+/* =============================== */
+/* BESKRIVELSE + TID               */
+/* =============================== */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.info-right {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.time-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.info-left {
+  grid-column: 1; /* beskrivelse under på mobil */
+  margin-top: 1rem;
+}
+
+
+/* =============================== */
+/* INGREDIENT HEADER – MOBIL       */
+/* =============================== */
+
+.ingredients-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.ingredient-row {
+  display: flex;
+  margin-top: 0.5rem;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
 
-  .ingredient-row {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    margin-bottom: 0rem;
+.ingredient-row:active {
+  transform: scale(0.95);
+}
+
+.ingredient-row.checked {
+  opacity: 0.5;
+}
+
+.ingredient-row.checked .ingredient-name {
+  text-decoration: line-through;
+}
+
+.ingredient-row:hover {
+  background: rgba(218, 218, 218, 0.26);
+}
+
+.ingredient-check {
+  margin-left: 0.5rem;
+  color: #1f3121;
+  font-weight: 700;
+}
+
+.ingredient-amount {
+  width: 110px;
+  font-weight: 600;
+  margin-right: 1.5rem; 
+}
+
+.ingredient-name {
+  flex: 1;
+}
+
+
+/* =============================== */
+/* PORTION CONTROL – PLUS / MINUS  */
+/* =============================== */
+
+.portion-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+
+
+/* Tallet i midten */
+.portion-control span {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #2c2c2c;
+}
+
+/* Selve knapperne */
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #08300f;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+/* Ikonet */
+.icon-button i {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+/* Hover */
+.icon-button:hover {
+  background: #f27405;
+  color: white;
+  border-color: #f27405;
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.35);
+  transform: translateY(-2px);
+}
+
+.icon-button:hover i {
+  color: #ffffff;
+}
+
+/* Active / klik */
+.icon-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 8px rgba(242, 116, 5, 0.35);
+}
+
+
+/* --------------------- */
+/* STEP CARD             */
+/* --------------------- */
+
+.steps-section {
+  margin-top: 2rem; 
+}
+
+.step-card {
+  background: linear-gradient(140deg, #1f3121 0%, #446847 100%);
+  border-radius: 18px;
+  padding: 1.5rem 1.4rem;
+  color: white;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  margin-bottom: 1.2rem; /* LUFT mellem kort */
+  cursor: pointer;
+  transition: 0.25s ease;
+  position: relative;
+}
+
+.step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.25);
+}
+
+.step-card:active {
+  transform: scale(0.98);
+}
+
+.steps-list {
+  margin-top: 1.5rem; 
+}
+
+.step-number {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* STEP TEKST */
+.step-text {
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+.step-card.completed {
+  opacity: 0.55;
+}
+
+.step-card.completed .step-text {
+  text-decoration: line-through;
+}
+
+.step-check {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  font-size: 1.4rem;
+  color: #9cffb2;
+}
+
+.step-inner {
+  display: flex;
+  flex-direction: column; /* mobil default */
+}
+
+
+
+/* =============================== */
+/* TABLET (600px – 991px)          */
+/* =============================== */
+
+@media (min-width: 600px) and (max-width: 991px) {
+
+  .recipe-layout {
+    display: grid;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
+  }
+
+  .recipe-image img {
+    min-height: 280px;
+    height: 100%;
   }
 
   .ingredient-amount {
-    font-weight: 600;
     width: 110px;
+    font-weight: 600;
+    margin-right: 3rem; 
   }
 
-  .ingredient-name {
-    flex: 1;
+  .step-inner {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .step-number {
+    min-width: 60px;
+    text-align: right;
+    margin-top: 0;
+  }
+
+  .step-text {
+    margin-top: 0;
   }
 
   .step-card {
-    background: linear-gradient(140deg,#1f3121  0%,#446847 100%);
-    border: none;
-    border-radius: 15px;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 1rem;
+    padding: 1.5rem 3rem 1.5rem 1.4rem; 
   }
 
-.step-number {
-    font-size: 2.8rem;
+}
+
+@media (min-width: 992px) and (max-width: 1399px) {
+
+  .recipe-layout {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+
+  /* Hoved-grid: 2 kolonner */
+  .recipe-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
+    row-gap: 5rem;
+  }
+
+  /* ---------- RÆKKE 1 ---------- */
+
+  /* Tid + beskrivelse */
+  .info-grid {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .info-left {
+    margin-top: 0;
+  }
+
+  /* Billede */
+  .recipe-image {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .recipe-image img {
+    height: 100%;
+    min-height: 320px;
+  }
+
+  /* ---------- RÆKKE 2 ---------- */
+
+  .ingredients-section {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .steps-section {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .ingredient-amount {
+    width: 110px;
     font-weight: 600;
-    margin-top: -1rem;
+    margin-right: 4rem; 
+  }
+
+  .step-inner {
+    flex-direction: row; 
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .step-number {
+    min-width: 60px;
+    text-align: right;
+    margin-top: 0;
+  }
+
+  .step-text {
+    margin-top: 0;
+  }
+
+  .step-card {
+    padding: 1.5rem 3rem 1.5rem 1.4rem; 
+  }
 }
 
-.step-text {
-    font-size: 1rem;
-    font-weight: 400;
-    margin-top: 0.5rem;
+
+
+/* ------------------------------- */
+/*        DESKTOP (≥1400px)        */
+/* ------------------------------- */
+
+@media (min-width: 1400px) {
+
+  .recipe-layout {
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+  }
+
+  /* Hoved-grid: stadig 2 kolonner */
+  .recipe-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5rem;      /* lidt mere luft horisontalt */
+    row-gap: 6rem;         /* lidt mere vertikalt */
+  }
+
+  /* ---------- RÆKKE 1 ---------- */
+
+  /* Tid + beskrivelse */
+  .info-grid {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .info-left {
+    margin-top: 0;
+  }
+
+  /* Billede */
+  .recipe-image {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .recipe-image img {
+    height: 100%;
+    min-height: 360px;     /* større billede på store skærme */
+  }
+
+  /* ---------- RÆKKE 2 ---------- */
+
+  .ingredients-section {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .steps-section {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .ingredient-amount {
+    width: 110px;
+    font-weight: 600;
+    margin-right: 4rem; 
+  }
+
+  .step-inner {
+    flex-direction: row;        
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .step-number {
+    min-width: 60px;
+    text-align: right;
+    margin-top: 0;
+  }
+
+  .step-text {
+    margin-top: 0;
+  }
+
+  .step-card {
+    padding: 1.5rem 3rem 1.5rem 1.4rem; 
+  }
+
 }
 
-.admin-action-buttons {
-  top: 40px;
-  right: 48px;
-  z-index: 10;
+@media (min-width: 1800px) {
+  .recipe-layout {
+    max-width: 80%;
+    margin-top: 5rem;
+  }
+
+  .step-inner {
+    flex-direction: row;       
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .step-number {
+    min-width: 60px;
+    text-align: right;
+    margin-top: 0;
+  }
+
+  .step-text {
+    margin-top: 0;
+    
+  }
+
+  .step-card {
+    padding: 1.5rem 3.2rem 1.5rem 1.4rem; 
+  }
 }
 
-.admin-btn-edit {
-  background: #ffffff;
-  color: #08300f;        
-  border: 2px solid #08300f;
-  border-radius: 35%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+
+
+
+@keyframes fadeInRecipeDetail {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.admin-btn-edit i {
-  font-size: 18px;
+
+
+.dark-mode h3 {
+  color: #ffffff;
 }
 
-.admin-btn-delete {
-  background: #ffffff;
-  color: #ed1919;       
-  border: 2px solid #ed1919;
-  border-radius: 35%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+.dark-mode .recipe-image {
+  box-shadow: 0 12px 20px rgba(0,0,0,0.6);
+  filter: brightness(0.65);
 }
 
-.admin-btn-delete i {
-  font-size: 18px;
+.dark-mode .info-left p,
+.dark-mode .ingredient-name {
+  color: #f3f4f6;
 }
 
-.dark-mode .admin-btn-delete {
-  background: #2c2c2c;
-}
-.dark-mode .admin-btn-edit {
-  background: #2c2c2c;
-  color: #ffffff;        
-  border: 2px solid #ffffff;
+.dark-mode .ingredient-amount {
+  color: #f3f4f6;
 }
 
-.dark-mode h3,
-.dark-mode p,
-.dark-mode .bi-dash-square,
-.dark-mode .bi-plus-square,
-.dark-mode .time, 
+.dark-mode .ingredient-row:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.dark-mode .step-card {
+  background: linear-gradient(140deg, #16251c 0%, #274a37 100%);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.7);
+}
+
+.dark-mode .time-wrapper {
+  color: #f3f4f6;
+}
+
+.dark-mode .time-wrapper i {
+  color: #f3f4f6;
+}
+
+.dark-mode .ingredient-row.checked {
+  opacity: 0.45;
+}
+
+.dark-mode .ingredient-row.checked .ingredient-name {
+  text-decoration: line-through;
+  color: #f3f4f6;
+}
+
+.dark-mode .ingredient-check {
+  color: #9cffb2;
+}
+
 .dark-mode .portion-control span {
   color: #ffffff;
 }
 
-/* -------------------------------------- */
-/*         RESPONSIVT LAYOUT WRAPPER      */
-/* -------------------------------------- */
-
-.header-inner {
-  width: 100%;
-  padding-left: 1.5rem; /* Mobil spacing */
-  padding-right: 1.5rem; 
-  padding-top: 2rem;
-}
-
-/* ------------------------------ */
-/* TABLET (≥600px → 991px) */
-/* ------------------------------ */
-
-@media (min-width: 600px) {
-  .header-inner {
-    padding-left: 3rem;
-    padding-right: 3rem;
-    padding-top: 3rem;
-  }
-
-  .recipe-title {
-    font-size: 2rem; /* = 32px */
-  }
-}
-
-
-/* ------------------------------ */
-/* SMALL → MEDIUM LAPTOP (992px → 1399px) */
-/* ------------------------------ */
-
-@media (min-width: 992px) and (max-width: 1399px) {
-  .header-inner {
-    max-width: 800px;
-    padding-left: 0%;
-    padding-right: 0%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 3rem;
-  }
-
-  .recipe-title {
-    font-size: 2.250rem; /* = 36px */
-  }
-}
-
-/* -------------------------------------- */
-/* DESKTOP XL (≥ 1400px → 1799px)         */
-/* -------------------------------------- */
-@media (min-width: 1400px) and (max-width: 1799px) {
-  .header-inner {
-    max-width: 85%;
-    padding-left: 0%;
-    padding-right: 0%;
-    margin: 0 auto;
-    padding-top: 3rem;
-  }
-
-  .recipe-title {
-    font-size: 2.25rem; /* = 36px */
-  }
-}
-
-/* ------------------------------ */
-/* ULTRA WIDE (≥1800px) */
-/* ------------------------------ */
-
-@media (min-width: 1800px) {
-  .header-inner {
-    max-width: 80%;
-    padding-left: 0%;
-    padding-right: 0%;
-    margin: 0 auto;
-    padding-top: 3rem;
-  }
-  .recipe-title {
-    font-size: 2.25rem; /* = 36px */
-  }
-}
 
 </style>
   
