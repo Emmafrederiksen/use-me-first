@@ -1,8 +1,12 @@
 <template>
-  <div v-if="visible" class="confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
-
+  <div
+    v-if="visible"
+    class="confirm-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="confirmTitle"
+  >
     <div class="confirm-box">
-
       <!-- HEADER -->
       <div class="confirm-header">
         <div class="confirm-title-wrapper">
@@ -10,11 +14,14 @@
           <div class="modal-title-underline"></div>
         </div>
 
-        <button class="confirm-close" @click="$emit('close')" aria-label="Luk modal">
+        <button
+          class="confirm-close"
+          @click="$emit('close')"
+          aria-label="Luk modal"
+        >
           <i class="bi bi-x" aria-hidden="true"></i>
         </button>
       </div>
-
 
       <!-- BESKRIVELSE -->
       <div class="confirm-body">
@@ -28,14 +35,23 @@
           Annuller
         </button>
 
-        <button class="pm-btn-used" @click="$emit('confirm', actionType)">
-          <i class="bi bi-check2-circle" aria-hidden="true"></i>
-          Bekræft
+        <button
+          class="pm-btn-used"
+          :class="{ 'pm-btn-danger': actionType === 'delete' }"
+          @click="$emit('confirm', actionType)"
+        >
+          <template v-if="actionType === 'delete'">
+            <i class="bi bi-trash3" aria-hidden="true"></i>
+            Slet vare
+          </template>
+
+          <template v-else>
+            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+            Bekræft
+          </template>
         </button>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -51,7 +67,7 @@ export default {
       type: String,
       required: true,
     },
-    description : {
+    description: {
       type: String,
       required: true,
     },
@@ -88,11 +104,9 @@ export default {
   width: 90%;
   max-width: 420px;
   padding: 24px 22px 26px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
   position: relative;
 }
-
-
 
 /* ========================================= */
 /* HEADER                                     */
@@ -128,8 +142,8 @@ export default {
   font-size: 2rem;
   color: #333;
   cursor: pointer;
-  top: 15px;      /* løfter krydset op */
-  right: 15px;    /* flytter det lidt mere ud i hjørnet */
+  top: 15px; /* løfter krydset op */
+  right: 15px; /* flytter det lidt mere ud i hjørnet */
   position: absolute;
 }
 
@@ -172,7 +186,7 @@ export default {
 
 .pm-btn-cancel:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 14px rgba(8,48,15,0.25);
+  box-shadow: 0 8px 14px rgba(8, 48, 15, 0.25);
 }
 
 /* BEKRÆFT (orange) */
@@ -194,7 +208,7 @@ export default {
 
 .pm-btn-used:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 14px rgba(242,116,5,0.25);
+  box-shadow: 0 8px 14px rgba(242, 116, 5, 0.25);
   filter: brightness(1.05);
 }
 
@@ -224,11 +238,16 @@ export default {
   border: 2px solid #ffffff;
 }
 
-.dark-mode p, .dark-mode h3 {
+.dark-mode p,
+.dark-mode h3 {
   color: #ffffff;
 }
 
 .dark-mode .confirm-close {
   filter: invert(1);
+}
+
+.pm-btn-danger {
+  background-color: #dc3545;
 }
 </style>

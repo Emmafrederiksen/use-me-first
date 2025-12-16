@@ -64,7 +64,7 @@
 
           <!-- GEM-KNAP -->
           <button class="edit-save-btn" type="submit">
-            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+            <i class="bi bi-check-circle" aria-hidden="true"></i>
             Gem ændringer
           </button>
 
