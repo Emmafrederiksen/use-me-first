@@ -163,7 +163,6 @@ export default {
   font-size: 1rem;
   margin-top: 0.5rem;
   opacity: 0.95;
-  max-width: 215px;
 }
 
 /* -------------------------------------- */
@@ -291,7 +290,6 @@ export default {
 
   .subtitle {
     font-size: 1.375rem; /* = 22px */
-    max-width: none;
     
   }
 }

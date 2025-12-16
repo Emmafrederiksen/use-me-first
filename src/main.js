@@ -27,7 +27,7 @@ const router = createRouter({
             component: DashBoard,
             meta: {
                 title: 'Godmorgen, Laura! 👋',
-                subtitle: 'Dit daglige overblik, så dine varer bliver brugt i tide.',
+                subtitle: 'Dit daglige overblik – brug dine varer i tide.',
             }
         },
 
@@ -45,7 +45,7 @@ const router = createRouter({
             component: AddItem,
             meta: {
                 title: 'Tilføj varer',
-                subtitle: 'Indtast dine varer og få overblik over dit køleskab.',
+                subtitle: 'Indtast dine varer og få et overblik over hvad du har i dit køleskab.',
             }
         },
 
