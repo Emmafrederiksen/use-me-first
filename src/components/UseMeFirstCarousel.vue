@@ -64,7 +64,7 @@ export default {
     // hvor mange dage der stadig regnes som “snart” (ikke-grøn)
     daysUntilExpiry: { 
         type: Number, 
-        default: 4 
+        default: 2 
     },
 
     // max antal kort at vise

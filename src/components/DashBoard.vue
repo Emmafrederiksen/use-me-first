@@ -25,7 +25,7 @@
 
 
     <UseMeFirstCarouselVue 
-      :daysUntilExpiry="4" 
+      :daysUntilExpiry="2" 
       :maxVisibleItems="10" 
       :items="entries"
       @open-product="openFromCarousel"      
