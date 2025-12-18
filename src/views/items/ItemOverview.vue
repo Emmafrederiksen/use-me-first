@@ -77,8 +77,8 @@
 
 <script>
 
-import HeaderCard from './HeaderCard.vue';
-import ProductModal from './ProductModal.vue';
+import HeaderCard from '../../components/cards/HeaderCard.vue';
+import ProductModal from '../../components/modals/ProductModal';
 
 export default {
 

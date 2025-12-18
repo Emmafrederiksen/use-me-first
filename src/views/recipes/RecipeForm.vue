@@ -138,7 +138,7 @@
 <script>
 
 import UnitDataService from '@/services/UnitDataService';
-import HeaderCard from "./HeaderCard.vue";
+import HeaderCard from "../../components/cards/HeaderCard.vue";
 import RecipeDataService from '@/services/RecipeDataService';
 import IngredientDataService from '@/services/IngredientDataService';
 import RecipeStepsDataService from '@/services/RecipeStepsDataService';

@@ -8,7 +8,7 @@
 
 <script>
 
-import HeaderCard from './HeaderCard.vue';
+import HeaderCard from '../components/cards/HeaderCard.vue';
 
 export default {
 

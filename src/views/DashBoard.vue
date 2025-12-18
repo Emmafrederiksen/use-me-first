@@ -100,13 +100,13 @@
 
 <script>
 
-import HeaderCard from './HeaderCard.vue';
-import AddNewCard from './AddNewCard.vue';
+import HeaderCard from '../components/cards/HeaderCard.vue';
+import AddNewCard from '../components/cards/AddNewCard.vue';
 import Rugbroedschips from '@/assets/rugbroedschips.jpg';
 import Pandekager from '@/assets/pandekager.jpg';
 import Kylling from '@/assets/kylling-ret.jpg';
-import UseMeFirstCarouselVue from './UseMeFirstCarousel.vue';
-import ProductModal from './ProductModal.vue';
+import UseMeFirstCarouselVue from '../components/UseMeFirstCarousel.vue';
+import ProductModal from '../components/modals/ProductModal';
 
 export default {
 

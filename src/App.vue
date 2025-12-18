@@ -21,8 +21,8 @@
 
 
 <script>
-import SlideMenu from '@/components/SlideMenu.vue';
-import NavBar from '@/components/NavBar.vue';
+import SlideMenu from '@/components/navigation/SlideMenu.vue';
+import NavBar from '@/components/navigation/NavBar.vue';
 
 export default {
   name: 'App',

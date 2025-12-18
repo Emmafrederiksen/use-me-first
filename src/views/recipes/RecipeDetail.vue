@@ -139,8 +139,8 @@
   import IngredientDataService from '@/services/IngredientDataService';
   import UnitDataService from '@/services/UnitDataService';
   import Recipe_IngredientDataService from '@/services/Recipe_IngredientDataService';
-  import ConfirmDeleteRecipeModal from "./ConfirmDeleteRecipeModal.vue";
-  import HeaderCard from './HeaderCard.vue';
+  import ConfirmDeleteRecipeModal from "../../components/modals/ConfirmDeleteRecipeModal";
+  import HeaderCard from '../../components/cards/HeaderCard.vue';
 
   import { toast } from 'vue3-toastify';
   import 'vue3-toastify/dist/index.css';
