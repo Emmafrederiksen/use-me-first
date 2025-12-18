@@ -114,7 +114,6 @@ export default {
 
     isAdmin: { type: Boolean, default: false },
 
-    recipeImage: { type: String, default: "" },
     showRecipeActions: { type: Boolean, default: false }
 
 
