@@ -174,7 +174,7 @@ export default {
       const d = new Date(i.expiresAt); 
       d.setHours(0,0,0,0);
       const days = Math.round((d - today) / 86400000);
-      return days >= 0 && days <= 4;   // 0–4 dage
+      return days >= 0 && days <= 2;   // 0–2 dage
     }).length;
 
 },
