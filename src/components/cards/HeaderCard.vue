@@ -23,7 +23,7 @@
 
   <!-- 🔹 OPSKRIFT ADMIN ACTIONS -->
   <div
-    v-if="variant === 'recipe' && showRecipeActions && isAdmin"
+    v-if="showRecipeActions"
     class="recipe-admin-actions"
   >
     <button
@@ -114,7 +114,6 @@ export default {
 
     isAdmin: { type: Boolean, default: false },
 
-    variant: { type: String, default: "default" }, // "default" | "recipe"
     recipeImage: { type: String, default: "" },
     showRecipeActions: { type: Boolean, default: false }
 

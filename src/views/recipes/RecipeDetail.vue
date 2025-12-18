@@ -1,7 +1,6 @@
 <template>
 
   <HeaderCard
-    variant="recipe"
     :title-override="recipe.title"
     :show-back="true"
     :is-admin="isAdmin"
