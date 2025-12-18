@@ -57,15 +57,6 @@ export default {
     recipeTitle: String,
   },
 
-  watch: {
-    visible(newVal) {
-      if (newVal) {
-        this.$nextTick(() => {
-          this.$refs.cancelBtn?.focus();
-        });
-      }
-    },
-  },
 };
 </script>
 
