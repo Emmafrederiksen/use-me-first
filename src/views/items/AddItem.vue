@@ -1,7 +1,6 @@
 <template>
   <HeaderCard
     @open-menu="openMenu"
-    :titleOverride="'Tilføj vare'"
   />
 
   <div class="additem-wrapper">
