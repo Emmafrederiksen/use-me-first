@@ -151,11 +151,11 @@ export default {
   // Fallback testdata hvis alt er tomt
   if (this.items.length === 0) {
     this.items = [
-      { id: 1, name: 'Mælk', expiresAt: '2025-11-20', amount: 1, unit: 'Liter', location: 'Køleskab' },
-      { id: 2, name: 'Mælk', expiresAt: '2025-11-21', amount: 2, unit: 'Liter', location: 'Køleskab' },
-      { id: 3, name: 'Mælk', expiresAt: '2025-11-23', amount: 1, unit: 'Liter', location: 'Køleskab' },
-      { id: 4, name: 'Rugbrød', expiresAt: '2025-11-24', amount: 1, unit: 'Stk.', location: 'Køleskab' },
-      { id: 5, name: 'Kyllingebryst', expiresAt: '2025-11-28', amount: 1, unit: 'Bakke(r)', location: 'Køleskab'},
+      { id: 1, name: 'Mælk', expiresAt: '2025-12-20', amount: 1, unit: 'Liter', location: 'Køleskab' },
+      { id: 2, name: 'Mælk', expiresAt: '2025-12-21', amount: 2, unit: 'Liter', location: 'Køleskab' },
+      { id: 3, name: 'Mælk', expiresAt: '2026-01-04', amount: 1, unit: 'Liter', location: 'Køleskab' },
+      { id: 4, name: 'Rugbrød', expiresAt: '2025-12-27', amount: 1, unit: 'Stk.', location: 'Køleskab' },
+      { id: 5, name: 'Kyllingebryst', expiresAt: '2025-12-30', amount: 1, unit: 'Bakke(r)', location: 'Køleskab'},
       
 
     ];
